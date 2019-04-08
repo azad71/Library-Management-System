@@ -1,0 +1,178 @@
+<% include ../partials/header %>
+
+    
+<!--NAVIGATION BAR FOR ADMIN-->
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+       <div class="container">
+          <a class="navbar-brand" href="/admin">Home</a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+        
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav">
+              <li class="nav-item px-2 active">
+                <a class="nav-link" href="/admin/activities">Activities</a></a>
+              </li>
+              
+               <li class="nav-item px-2">
+                <a class="nav-link" href="/admin/bookInventory">Book Inventory</a>
+              </li>
+              
+               <li class="nav-item px-2">
+                <a class="nav-link" href="/admin/users">Users</a>
+              </li>
+              
+              </ul>
+              
+              <ul class="navbar-nav ml-auto">
+                <li class="nav-item dropdown mr-3">
+                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user"></i> Welcome Azad
+                  </a>
+                  <div class="dropdown-menu">
+                    <a href="/admin/profile" class="dropdown-item">
+                      <i class="fa fa-user-circle"></i> Profile
+                    </a>
+        
+                    <a href="/logout" class="dropdown-item">
+                      <i class="fa fa-user-times"></i> Logout
+                    </a>
+                  </div>
+                </li>
+                <li class="nav-item">
+                  <a href="/user/notification" class="nav-link">
+                      <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
+                  </a>
+                </li>
+              </ul>
+          </div>
+      </div>
+    </nav>
+
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-pencil"></i> Activities</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+          <a href="/admin" class="btn btn-light btn-block">
+          <i class="fa fa-arrow-left"></i> Back To Dashboard
+        </a>
+      </div>
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search posts...">
+          <span class="input-group-btn">
+            <button class="btn btn-primary">Search</button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Activities -->
+<section id="posts">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header text-center">
+            <h4>Recent Activities</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Info</th>
+                <th>Category</th>
+                <th>Date Posted</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Member1 requested to join</td>
+                <td>Register</td>
+                <td>July 11, 2017</td>
+                <td><a href="details.html" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-right"></i> Details
+                </a></td>
+              </tr>
+
+              <tr>
+                <td>Member2 requested to issue a book</td>
+                <td>Issue</td>
+                <td>July 09, 2017</td>
+                <td><a href="details.html" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-right"></i> Details
+                </a></td>
+              </tr>
+
+              <tr>
+                <td>Admin updated a book info</td>
+                <td>Book update</td>
+                <td>July 10, 2017</td>
+                <td><a href="details.html" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-right"></i> Details
+                </a></td>
+              </tr>
+
+              <tr>
+                <td>Admin added a new book</td>
+                <td>Add new book</td>
+                <td>July 14, 2017</td>
+                <td><a href="details.html" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-right"></i> Details
+                </a></td>
+              </tr>
+
+              <tr>
+                <td>Admin restricted a user</td>
+                <td>Ban</td>
+                <td>July 11, 2017</td>
+                <td><a href="details.html" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-right"></i> Details
+                </a></td>
+              </tr>
+
+              <tr>
+                <td>A member returned book</td>
+                <td>Return</td>
+                <td>July 11, 2017</td>
+                <td><a href="details.html" class="btn btn-secondary">
+                  <i class="fa fa-angle-double-right"></i> Details
+                </a></td>
+              </tr>
+              
+            </tbody>
+          </table>
+
+          <nav class="ml-3">
+            <ul class="pagination offset-md-4">
+              <li class="page-item disabled"><a href="#" class="page-link"><i class="fa fa-angle-double-left"></i> Previous</a></li>
+              <li class="page-item active"><a href="#" class="page-link">1</a></li>
+              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <li class="page-item"><a href="#" class="page-link">3</a></li>
+              <li class="page-item"><a href="#" class="page-link">Next <i class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<% include ../partials/footer %>

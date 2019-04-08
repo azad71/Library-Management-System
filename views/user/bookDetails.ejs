@@ -1,0 +1,107 @@
+<% include ../partials/header %>
+
+<!--NAVIGATION BAR FOR ADMIN-->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
+   <div class="container">
+      <a class="navbar-brand" href="/user">Home</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item px-2">
+            <a class="nav-link" href="/books/all/all/1" >Browse Books</a></a>
+          </li>
+        </ul>
+          
+         
+      </div>
+  </div>
+</nav>
+
+<!--BOOK DETAILS-->
+
+<div class="container mt-3">
+    <div class="row justify-content-center">
+        <div class="col-md-10">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="text-center"> <%= book.title %> </h4>
+                </div>
+                <small class="text-muted px-3 py-2">Author :  <%= book.author %> </small>
+                <small class="text-muted px-3 py-2">ISBN :  <%= book.ISBN %> </small>
+                <small class="text-muted px-3 py-2">Category :  <%= book.category %>  </small>
+                <small class="text-muted px-3 py-2">In Stock :  <%= book.stock %>  </small>
+                <div class="card-body">
+                    <p class="card-text">
+                        <%= book.description %> 
+                    </p>
+                </div>
+            </div>
+            
+            <div class="card my-3 bg-light">
+                <% if(currentUser) { %>
+                <p class="p-3">
+                  <button class="btn btn-primary float-right" type="button" data-toggle="collapse" data-target="#collapseCommentBox" aria-expanded="false" aria-controls="collapseCommentBox">
+                    Leave a comment
+                  </button>
+                </p>
+                <div class="collapse" id="collapseCommentBox">
+                 <form action="/books/details/<%=book._id%>" method="POST">
+                    <textarea name="comment[text]" class="form-control"></textarea>
+                    <input type="submit" class="btn btn-outline-success btn-sm m-1 float-right">
+                 </form>
+                </div>
+
+            <% } %>
+                
+                
+            <ul class="list-group list-group-flush">
+                
+            <%book.comments.forEach((comment) => { %>
+                <li class="list-group-item">
+                   
+                    <strong><%=comment.author.username%></strong>
+                    <span><em> at <%=comment.date.toDateString()%></em></span>
+                    <p><%=comment.text%></p>
+                    
+                     <% if(currentUser && comment.author.id.equals(currentUser._id)) {%>
+            
+                    <button id="edit" class="btn btn-primary px-1 py-0">
+                        <i class="fa fa-pencil"></i>
+                    </button>
+                        
+                    <form class="d-inline" action="/books/details/<%=book._id%>/<%=comment._id%>?_method=DELETE" method="POST">
+                        <button class="btn btn-sm btn-danger px-1 py-0">
+                            <i class="fa fa-trash"></i>
+                        </button>
+                    </form>
+             <% } %>
+                    
+                    <div class="d-none" id="editCommentBox">
+                     <form action="/books/details/<%=book._id%>/<%=comment._id%>" method="POST">
+                        <textarea name="comment[text]" class="form-control"><%=comment.text%></textarea>
+                        <input type="submit" class="btn btn-outline-success btn-sm m-1 float-right">
+                     </form>
+                    </div>
+                    
+                   
+               
+                </li>
+            <% }); %>
+            </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $('button').on('click',  function() {
+       $(this).prev().toggleClass('d-none'); 
+      $(this).next().next().toggleClass('d-none');
+    });
+</script>
+<% include ../partials/footer %>

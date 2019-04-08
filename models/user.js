@@ -1,0 +1,30 @@
+const mongoose = require("mongoose"),
+      passportLocalMongoose = require("passport-local-mongoose");
+
+const userSchema = new mongoose.Schema({
+   firstName : String,
+   lastName : String,
+   username : String,
+   email : String, 
+   password : String, 
+   joined : {type: Date, default: Date.now},
+   bookIssueInfo : [
+      {
+         book_info : {
+            id : {
+               type : mongoose.Schema.Types.ObjectId,
+               ref : "Issue",
+            }, 
+         },
+      }   
+   ],
+   issueCount : {type : Number, default : 0},
+   gender : String,
+   address : String,
+   violationFlag : {type : Boolean, default : false},
+   fines : {type : Number, default: 0},
+});
+
+userSchema.plugin(passportLocalMongoose);
+
+module.exports =  mongoose.model("User", userSchema);
