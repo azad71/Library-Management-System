@@ -171,53 +171,6 @@ app.get("/user/notification", (req, res) => {
    res.render("user/notification");
 });
 
-//user -> issue a book
-// app.post("/books/:book_id/issue/:user_id", isLoggedIn, (req, res) => {
-   
-//    Book.findById(req.params.book_id, (err, foundBook) => {
-//     if(err) {
-//        console.log("An error has occured finding the requested book");
-//     } else {
-//        User.findById(req.params.user_id, (err, foundUser) => {
-//           if(err) {
-//              console.log("An error occured finding the user");
-//              return res.redirect("/books/all/all/1");
-//           }  else {
-//                const issueInfo = {
-//                 book_id : {
-//                    id : foundBook._id,
-//                    title : foundBook.title,
-//                    author : foundBook.author,
-//                    ISBN : foundBook.ISBN,
-//                    category : foundBook.category,
-//                 },
-                
-//                 user_id : {
-//                    id : foundUser._id,
-//                    username : foundUser.username,
-//                 }, 
-//              };
-//              Issue.create(issueInfo, (err, newBookIssue) => {
-//                 if(err) {
-//                    console.log(err);
-//                 } else {
-//                    console.log(newBookIssue);
-//                    console.log(foundUser.bookIssueInfo);
-//                   foundUser.bookIssueInfo.push(newBookIssue.bookIssueInfo);
-//                   foundUser.save();
-//                   console.log(foundUser);
-//                   // foundBook.stock -= 1;
-//                   foundBook.save();
-//                   res.redirect("/books/all/all/1");
-                  
-//                 }
-//              });
-//           }
-//        });
-//     }
-//    });
-// });
-
 app.post("/books/:book_id/issue/:user_id", isLoggedIn, (req, res)=> {
    Book.findById(req.params.book_id, (err, foundBook) => {
       if(err) {
