@@ -18,7 +18,6 @@ const userSchema = new mongoose.Schema({
          },
       }   
    ],
-   issueCount : {type : Number, default : 0},
    gender : String,
    address : String,
    violationFlag : {type : Boolean, default : false},

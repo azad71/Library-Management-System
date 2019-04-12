@@ -64,7 +64,7 @@
 
 
       <div class="col-md-4">
-        <a href="/user/renew-return" class="btn btn-info btn-block">
+        <a href="/books/return-renew" class="btn btn-info btn-block">
           <i class="fa fa-retweet"></i> Renew/Return Book
         </a>
       </div>
@@ -112,84 +112,53 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>You requested for issuing The Old man and the sea</td></td>
-                <td>Issue</td>
-                <td>July 11, 2017</td>
-                <td>
-                  <a href="/adminHome" class="btn btn-sm btn-success">
-                   <i class="fa fa-check"></i> Pending
-                  </a>
-                  
-                  <a href="/adminHome" class="btn btn-sm btn-danger">
-                   <i class="fa fa-remove"></i> Cancel
-                  </a>
-                  
-                </td>
-              </tr>
-
-              <tr>
-                <td>You requested to return Programming in ANSI C</td>
-                <td>Return</td>
-                <td>July 09, 2017</td>
-                <td>
-                  <a href="/adminHome" class="btn btn-sm btn-success">
-                    <i class="fa fa-check"></i> Pending
-                 </a>
-                 
-                 <a href="/adminHome" class="btn btn-sm btn-danger">
-                    <i class="fa fa-remove"></i> Cancel
-                 </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td>You requested to renew The Old man and the sea</td>
-                <td>Renew</td>
-                <td>July 10, 2017</td>
-                 <td>
-                  <a href="/adminHome" class="btn btn-sm btn-success">
-                    <i class="fa fa-check"></i> Renewed
-                 </a>
-                 
-                 <a href="/adminHome" class="btn btn-sm btn-warning">
-                    <i class="fa fa-undo"></i> Return
-                 </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td>You commented on The old man and the sea</td>
-                <td>Comment</td>
-                <td>July 14, 2017</td>
-                <td><a href="/admin/details" class="btn btn-sm btn-secondary">
-                  <i class="fa fa-angle-double-right"></i> Details
-                </a></td>
-              </tr>
-
-              <tr>
-                <td>You paid $3.5 fines</td>
-                <td>Fine</td>
-                <td>July 11, 2017</td>
-                <td><button class="btn btn-sm btn-secondary">
-                  <i class="fa fa-check"></i> Paid Successfully
-                </button></td>
-              </tr>
-
-              <tr>
-                <td>You returned The old man and the sea</td>
-                <td>Return</td>
-                <td>July 11, 2017</td>
-                <td>
-                  <a href="/adminHome" class="btn btn-sm btn-success">
-                    <i class="fa fa-check"></i> Returned
-                 </a>
-                 
-                 <a href="/adminHome" class="btn btn-sm btn-info">
-                    <i class="fa fa-retweet"></i> Renew
-                 </a>
-                </td>
-              </tr>
+               <% activity.forEach(log => { %>
+                <% if(log.category == 'Issue' || log.category == 'Renew') { %>
+                     <tr>
+                        <td>You have issued <%=log.info.title%></td></td>
+                        <td><%=log.category%></td>
+                        <td>
+                          <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
+                          <p>Return :  <%=log.time.returnDate.toDateString()%></p>
+                          </td>
+                        <td>
+                         <a href="/books/return-renew" class="btn btn-sm btn-warning" role="button">Return/Renew</a>
+                        </td>
+                      </tr>  
+               <%  } else if(log.category == 'Return') { %>
+                      <tr>
+                          <td>You have returned <%=log.info.title%></td></td>
+                          <td><%=log.category%></td>
+                          <td>
+                            <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
+                            <p>Return :  <%=log.time.returnDate.toDateString()%></p>
+                            </td>
+                          <td>
+                            <a href="/books/return-renew" class="btn btn-sm btn-success disabled" role="button" aria-disabled="true">Returned Successfully!</a>
+                          </td>
+                      </tr>
+                 <%  } else if(log.category == 'Comment') { %>
+                        <tr>
+                          <td>You commented on <%=log.info.title%></td>
+                          <td><%= log.category %></td>
+                          <td>NULL</td>
+                          <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
+                            <i class="fa fa-angle-double-right"></i> Details
+                          </a></td>
+                        </tr>
+                 <%  } else if(log.category == 'Fine') {%>
+                         <tr>
+                          <td>You paid $<%=log.fine.amount%> fines</td>
+                          <td><%=log.category%></td>
+                          <td><%=log.fine.date%></td>
+                          <td>
+                            <button class="btn btn-sm btn-secondary">
+                              <i class="fa fa-check"></i> Paid Successfully
+                            </button>
+                          </td>
+                        </tr>
+                  <%  }  %>
+            <% }); %>
               
             </tbody>
           </table>

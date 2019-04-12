@@ -12,7 +12,8 @@ const issueSchema = new mongoose.Schema({
        category : String,
        stock : Number,
        issueDate : {type : Date, default : Date.now()},
-       returnDate : {type : Date, default : Date.now() + 7*24*60*60000}
+       returnDate : {type : Date, default : Date.now() + 7*24*60*60*1000},
+       isRenewed : {type : Boolean, default : false},
    }, 
    
    user_id : {
@@ -23,9 +24,7 @@ const issueSchema = new mongoose.Schema({
        
        username : String,
    },
-   
-   
-   
 });
+
 
 module.exports = mongoose.model("Issue", issueSchema);

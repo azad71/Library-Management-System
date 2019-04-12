@@ -9,6 +9,7 @@ const express = require("express"),
     Book = require("./models/book"),
     Comment = require("./models/comment"),
     Issue = require("./models/issue"),
+    Activity = require("./models/activity"),
     seedDB = require("./SeedDB");
 
 // seedDB();
@@ -105,14 +106,18 @@ app.get("/admin/notification", (req, res) => {
 //user -> landing page
 app.get("/user", isLoggedIn, (req, res) => {
    User.findById(req.user._id, (err, newUser) => {
-      // console.log(newUser);
+      console.log(newUser);
       if(err) {
          console.log(err);
          return res.redirect("/");
+      } else {
+         Activity.find({"user_id.id": req.user._id}).sort({entryTime : -1}).exec((err, foundActivity) => {
+            if(err) throw err;
+            // console.log(foundActivity);
+            res.render("user/index", {user : newUser, activity : foundActivity});
+         });
       }
-      res.render("user/index", {user : newUser, currentUser : req.user});
    });
-   
 });
 
 //user login handler
@@ -171,6 +176,7 @@ app.get("/user/notification", (req, res) => {
    res.render("user/notification");
 });
 
+//user -> issue a book
 app.post("/books/:book_id/issue/:user_id", isLoggedIn, (req, res)=> {
    Book.findById(req.params.book_id, (err, foundBook) => {
       if(err) {
@@ -209,7 +215,29 @@ app.post("/books/:book_id/issue/:user_id", isLoggedIn, (req, res)=> {
                 newIssuedBook.book_info.stock = foundBook.stock;
                 foundUser.save();
                 foundBook.save();
-                res.redirect("/books/all/all/1");
+                
+                const acitvity = {
+                   info : {
+                      id : foundBook._id,
+                      title : foundBook.title,
+                   },
+                   category : "Issue",
+                   time : {
+                      id : newIssuedBook._id,
+                      issueDate : newIssuedBook.book_info.issueDate,
+                      returnDate : newIssuedBook.book_info.returnDate,
+                   },
+                   user_id : {
+                      id : foundUser._id,
+                   }
+                };
+                Activity.create(acitvity, (err, newActivity) => {
+                   if(err) {
+                      throw err;
+                   } else {
+                      res.redirect("/books/all/all/1");
+                   }
+                });
                }
             });
             }
@@ -218,10 +246,114 @@ app.post("/books/:book_id/issue/:user_id", isLoggedIn, (req, res)=> {
    });
 });
 
-//user -> renew
-app.get("/user/renew-return", isLoggedIn, (req, res) => {
-   console.log(req.user);
-   res.render("user/renew");
+//user -> show return-renew page
+app.get("/books/return-renew", isLoggedIn, (req, res) => {
+   
+   Issue.find({"user_id.id" : req.user._id}, (err, foundUser) => {
+      if(err) {
+         console.log(err);
+      } else {
+         // console.log(foundUser);
+          res.render("user/return-renew", {user : foundUser});
+      }
+   });
+});
+
+//user -> renew book
+app.post("/books/:book_id/renew",isLoggedIn, (req, res) => {
+   Issue.find({"user_id.id" : req.user._id, "book_info.id" : req.params.book_id} , (err, foundBook) => {
+      if(err) {
+         console.log(err);
+      } else {
+         var time = foundBook[0].book_info.returnDate.getTime();
+         foundBook[0].book_info.returnDate = time + 7*24*60*60*1000;
+         foundBook[0].book_info.isRenewed = true;
+         foundBook[0].save();
+         
+         
+         const acitvity = {
+                   info : {
+                      id : foundBook[0]._id,
+                      title : foundBook[0].book_info.title,
+                   },
+                   category : "Renew",
+                   time : {
+                      id : foundBook[0]._id,
+                      issueDate : foundBook[0].book_info.issueDate,
+                      returnDate : foundBook[0].book_info.returnDate,
+                   },
+                   user_id : {
+                      id : req.user._id,
+                   }
+                };
+                
+         Activity.create(acitvity, (err, newAcitvity) => {
+            if(err) throw err;
+            res.redirect("/books/return-renew");
+         });
+      }
+   });
+});
+
+//user -> return book
+app.post("/books/:book_id/return", (req, res) => {
+  User.findById(req.user._id, (err, foundUser) => {
+    if(err) {
+       console.log("Error at finding the user");
+       return res.redirect("back");
+    } else {
+       
+      var tempId = [];
+            
+        foundUser.bookIssueInfo.forEach(book => {
+         tempId.push(String(book._id));
+        });
+        
+      var pos = tempId.indexOf(req.params.book_id);
+      foundUser.bookIssueInfo.splice(pos, 1);
+      foundUser.save();
+      
+      Book.findById(req.params.book_id, (err, foundBook) => {
+         if(err) {
+            console.log(err);
+            return res.redirect("back");
+         } else {
+            foundBook.stock += 1;
+            foundBook.save();
+             Issue.findOneAndRemove({"user_id.id" : req.user._id, "book_info.id" : req.params.book_id}, (err, deletedBook) => {
+               if(err) {
+                  console.log(err);
+                  return res.redirect("back");
+               } else {
+                  const acitvity = {
+                   info : {
+                      id : deletedBook.book_info.id,
+                      title : deletedBook.book_info.title,
+                   },
+                   category : "Return",
+                   time : {
+                      id : deletedBook._id,
+                      issueDate : deletedBook.book_info.issueDate,
+                      returnDate : deletedBook.book_info.returnDate,
+                   },
+                   user_id : {
+                      id : req.user._id,
+                   }
+                };
+                
+                  Activity.create(acitvity, (err, newAcitvity) => {
+                     if(err) throw err;
+                     else {
+                       
+                        res.redirect("/books/return-renew");
+                     }
+                  });
+               }
+            });
+         } 
+      });
+    }
+  });
 });
 
 //user -> book details
@@ -247,7 +379,7 @@ app.post("/books/details/:book_id", isLoggedIn, (req, res) => {
          return res.redirect("/books/all/all/1");
       } else {
          Comment.create(req.body.comment, (err, comment) => {
-            console.log(req.body.comment);
+            // console.log(req.body.comment);
             if(err) {
                console.log("Oops! An error occured finding the requested comment associated with this book");
                return res.redirect("/books/all/all/1");
