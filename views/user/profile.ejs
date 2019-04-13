@@ -3,7 +3,7 @@
 <!--NAVIGATION BAR FOR ADMIN-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
    <div class="container">
-      <a class="navbar-brand" href="/user">Home</a>
+      <a class="navbar-brand" href="/user/1">Home</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -11,30 +11,21 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <li class="nav-item  px-2">
-            <a class="nav-link" href="/books">Browse Books</a></a>
+            <a class="nav-link" href="/books/all/all/1">Browse Books</a></a>
           </li>
-          
-          <!-- <li class="nav-item px-2">-->
-          <!--  <a class="nav-link" href="/admin/bookInventory">Issue Book</a>-->
-          <!--</li>-->
-          
-          <!-- <li class="nav-item px-2">-->
-          <!--  <a class="nav-link" href="/admin/users">Users</a>-->
-          <!--</li>-->
-          
           </ul>
           
           <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown mr-3">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i> Welcome Azad
+                <i class="fa fa-user"></i> Welcome <%=currentUser.username%>
               </a>
               <div class="dropdown-menu">
-                <a href="/user/profile" class="dropdown-item">
+                <a href="/user/1/profile" class="dropdown-item">
                   <i class="fa fa-user-circle"></i> Profile
                 </a>
     
-                <a href="/logout" class="dropdown-item">
+                <a href="/userLogout" class="dropdown-item">
                   <i class="fa fa-user-times"></i> Logout
                 </a>
               </div>
@@ -66,7 +57,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 mr-auto">
-          <a href="/user" class="btn btn-light btn-block">
+          <a href="/user/1" class="btn btn-light btn-block">
           <i class="fa fa-arrow-left"></i> Back To Dashboard
         </a>
       </div>
@@ -97,22 +88,22 @@
     <div class="container">
         <div class="row">
             <div class="col-md-3">
-                  <img src="/image/profile.jpg" class="card-img-top rounded-circle">
+                  
+                  <img src="/image/profile/<%=currentUser.image || "profile.png"%>" class="card-img-top rounded-circle">
                   <a href="" class="text-muted ml-5" data-toggle="modal" data-target="#changePhotoModal"><i class="fa fa-camera"></i> Change Photo</a>
             </div>
             <div class="col-md-6">
                 <h4 class="text-center pb-3">Personal Informations</h4>
                 
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">First Name :   Azad</li>
-                  <li class="list-group-item">Last Name :   Mamun</li>
-                  <li class="list-group-item">Username :   azad71</li>
-                  <li class="list-group-item">Joined :    11-12-13</li>
-                  <li class="list-group-item">Department :   CSE </li>
-                  <li class="list-group-item">Email :   azad71@gmail.com </li>
-                  <li class="list-group-item">Address :  Block-A, Meraj Nogor, Kodomtoli, Dhaka-1362  </li>
-                  <li class="list-group-item text-danger font-weight-bold">Violation Flag :   None </li>
-                  <li class="list-group-item">Due Fines :   $6.25</li>
+                  <li class="list-group-item">First Name :   <%=currentUser.firstName%></li>
+                  <li class="list-group-item">Last Name :   <%=currentUser.lastName%></li>
+                  <li class="list-group-item">Username :   <%=currentUser.username%></li>
+                  <li class="list-group-item">Joined :    <%=currentUser.joined.toDateString()%></li>
+                  <li class="list-group-item">Email :  <%=currentUser.email%> </li>
+                  <li class="list-group-item">Address :  <%=currentUser.address%></li>
+                  <li class="list-group-item text-danger font-weight-bold">Violation Flag : <%=currentUser.violationFlag%> </li>
+                  <li class="list-group-item">Due Fines :   $<%=currentUser.fines%></li>
                 </ul>
             </div>
             
@@ -214,6 +205,7 @@
 </div>
 
 <!--Change Photo Modal-->
+
 <div class="modal fade" id="changePhotoModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
@@ -224,20 +216,16 @@
         <button class="close" data-dismiss="modal" ><span>&times;</span></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form method="POST" action="/user/1/image" enctype="multipart/form-data">
           <div class="form-group">
             <label for="photo" class="form-control-label">Change Photo</label>
-            <input type="file" class="form-control">
+            <input type="file"  name="image" class="form-control">
+            <input type="submit" class="btn btn-sm btn-primary m-2 btn-block" value="Submit">
           </div>
-
         </form>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="btn btn-primary" data-dismiss="modal">Save Changes</button>
       </div>
     </div>
   </div>
 </div>
+
 <% include ../partials/footer %>

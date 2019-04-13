@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema({
    username : String,
    email : String, 
    password : String, 
-   joined : {type: Date, default: Date.now},
+   joined : {type: Date, default: Date.now()},
    bookIssueInfo : [
       {
          book_info : {
@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema({
    ],
    gender : String,
    address : String,
+   image : String,
    violationFlag : {type : Boolean, default : false},
    fines : {type : Number, default: 0},
 });

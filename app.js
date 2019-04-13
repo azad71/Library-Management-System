@@ -3,8 +3,11 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     mongoose = require("mongoose"),
     passport = require("passport"),
+    multer = require("multer"),
+    path = require("path"),
     methodOverride = require("method-override"),
     localStrategy = require("passport-local"),
+    resize = require("./resize"),
     User = require("./models/user"),
     Book = require("./models/book"),
     Comment = require("./models/comment"),
@@ -42,7 +45,11 @@ app.use(function(req, res, next) {
 });
 
 
-
+const upload = multer({
+  limits: {
+    fileSize: 4 * 1024 * 1024,
+  }
+});
 
 app.get('/', (req, res) => {
    res.render("landing"); 
@@ -104,17 +111,31 @@ app.get("/admin/notification", (req, res) => {
 
 //USER ROUTES
 //user -> landing page
-app.get("/user", isLoggedIn, (req, res) => {
+app.get("/user/:page", isLoggedIn, (req, res) => {
+   const perPage = 5;
+   var page = req.params.page || 1;
+   
    User.findById(req.user._id, (err, newUser) => {
-      console.log(newUser);
+      // console.log(newUser);
       if(err) {
          console.log(err);
          return res.redirect("/");
       } else {
-         Activity.find({"user_id.id": req.user._id}).sort({entryTime : -1}).exec((err, foundActivity) => {
-            if(err) throw err;
-            // console.log(foundActivity);
-            res.render("user/index", {user : newUser, activity : foundActivity});
+         Activity.find({"user_id.id": req.user._id})
+         .sort({entryTime : -1})
+         .skip((perPage*page) - perPage)
+         .limit(perPage)
+         .exec((err, foundActivity) => {
+            if (err) throw err;
+            Activity.countDocuments().exec((err, count) => {
+               if(err) throw err;
+               res.render("user/index", {
+               user : newUser,
+               current : page,
+               pages: Math.ceil(count / perPage),
+               activity : foundActivity,
+               });
+            }); 
          });
       }
    });
@@ -126,7 +147,7 @@ app.get("/userLogin", (req, res) => {
 });
 
 app.post("/userLogin", passport.authenticate("local", {
-        successRedirect : "/user",
+        successRedirect : "/user/1",
         failureRedirect : "/userLogin",
     }), (req, res)=> {
 });
@@ -155,7 +176,7 @@ app.post("/signUp", (req, res) => {
          return res.render("user/userSignup");
       }
       passport.authenticate("local")(req, res, function() {
-         res.redirect("/user");
+         res.redirect("/user/1");
       });
    });
 });
@@ -167,8 +188,26 @@ app.get("/userLogout", (req, res) => {
 });
 
 //user -> profile
-app.get("/user/profile", (req, res) => {
+app.get("/user/:page/profile", isLoggedIn, (req, res) => {
    res.render("user/profile");
+});
+
+// user -> upload photo
+app.post("/user/:page/image", upload.single("image"), (req, res) => {
+  User.findById(req.user._id, (err, foundUser) => {
+     if(err) throw err;
+     const imagePath = path.join(__dirname, '/public/image/profile');
+     const fileUpload = new resize(imagePath);
+     if (!req.file) {
+       res.status(401).json({error: 'Please provide an image'});
+     }
+     const filename = fileUpload.save(req.file.buffer);
+     console.log(filename);
+     foundUser.image = filename;
+     foundUser.save();
+     console.log(foundUser.image);
+     res.redirect("/user/1/profile");
+     });
 });
 
 //user -> notification
@@ -631,6 +670,7 @@ function isLoggedIn (req, res, next) {
     }
     res.redirect("/");
 }
+
 
 
 app.listen(process.env.PORT, process.env.IP, () =>{
