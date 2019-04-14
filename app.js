@@ -122,7 +122,7 @@ app.get("/user/:page", isLoggedIn, (req, res) => {
          return res.redirect("/");
       } else {
          Activity.find({"user_id.id": req.user._id})
-         .sort({entryTime : -1})
+         .sort('-entryTime')
          .skip((perPage*page) - perPage)
          .limit(perPage)
          .exec((err, foundActivity) => {
@@ -202,12 +202,10 @@ app.post("/user/:page/image", upload.single("image"), (req, res) => {
        res.status(401).json({error: 'Please provide an image'});
      }
      const filename = fileUpload.save(req.file.buffer);
-     console.log(filename);
      foundUser.image = filename;
      foundUser.save();
-     console.log(foundUser.image);
      res.redirect("/user/1/profile");
-     });
+   });
 });
 
 //user -> notification
