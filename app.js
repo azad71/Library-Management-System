@@ -7,6 +7,8 @@ const express = require("express"),
     path = require("path"),
     methodOverride = require("method-override"),
     localStrategy = require("passport-local"),
+    fs = require("fs"),
+    flash = require("connect-flash"),
     resize = require("./resize"),
     User = require("./models/user"),
     Book = require("./models/book"),
@@ -19,6 +21,7 @@ const express = require("express"),
 
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
+app.use(flash());
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended : true}));
 mongoose.connect("mongodb://localhost/LMS1", {useNewUrlParser : true});
@@ -41,6 +44,8 @@ passport.deserializeUser(User.deserializeUser());
 
 app.use(function(req, res, next) {
    res.locals.currentUser = req.user;
+   res.locals.error         = req.flash("error");
+   res.locals.success       = req.flash("success");
    next();
 });
 
@@ -129,6 +134,7 @@ app.get("/user/:page", isLoggedIn, (req, res) => {
             if (err) throw err;
             Activity.countDocuments().exec((err, count) => {
                if(err) throw err;
+               //  req.flash('success', 'Hello, ' + req.user.username + ' Welcome to Dashboard');
                res.render("user/index", {
                user : newUser,
                current : page,
@@ -176,6 +182,7 @@ app.post("/signUp", (req, res) => {
          return res.render("user/userSignup");
       }
       passport.authenticate("local")(req, res, function() {
+        
          res.redirect("/user/1");
       });
    });
@@ -193,23 +200,149 @@ app.get("/user/:page/profile", isLoggedIn, (req, res) => {
 });
 
 // user -> upload photo
-app.post("/user/:page/image", upload.single("image"), (req, res) => {
+app.post("/user/:page/image", isLoggedIn, upload.single("image"), (req, res) => {
   User.findById(req.user._id, (err, foundUser) => {
      if(err) throw err;
-     const imagePath = path.join(__dirname, '/public/image/profile');
-     const fileUpload = new resize(imagePath);
-     if (!req.file) {
+     const imagePath = path.join(__dirname, '/public/image/profile/');
+    if(foundUser.image) {
+       fs.unlink(imagePath+foundUser.image, (err) => {
+          if (err) throw err;
+       });
+    }
+    
+    const fileUpload = new resize(imagePath);
+    if (!req.file) {
        res.status(401).json({error: 'Please provide an image'});
      }
-     const filename = fileUpload.save(req.file.buffer);
-     foundUser.image = filename;
-     foundUser.save();
-     res.redirect("/user/1/profile");
+    const filename = fileUpload.save(req.file.buffer);
+    foundUser.image = filename;
+    foundUser.save();
+    
+    const activity = {
+            category : "Update/Upload Photo",
+            user_id : {
+               id : req.user._id,
+             }
+          };
+    Activity.create(activity, (err, newActivity) => {
+       if(err) {
+          console.log("Failed to log activity at upload photo");
+          return res.redirect("back");
+       }
+       res.redirect("/user/1/profile");
+    });
+    
    });
 });
 
+//user -> update password
+app.put("/user/1/update-password", isLoggedIn, (req, res) => {
+   User.findByUsername(req.user.username, (err, foundUser) => {
+      if(err) throw err;
+      
+      foundUser.changePassword(req.body.oldPassword, req.body.password, (err)=> {
+         if(err) {
+            // req.flash("error", "Old password is incorrct");
+            res.redirect("back");
+         }
+         foundUser.save();
+         
+         const activity = {
+            category : "Update Password",
+            user_id : {
+               id : req.user._id,
+             }
+          };
+         
+         Activity.create(activity, (err, newAcitvity) => {
+            if(err) {
+               console.log("Failed to log activity at update password");
+               res.redirect("back");
+            }
+            res.redirect("/userLogin");
+         });
+      });
+   }); 
+});
+
+//user -> update profile
+app.put("/user/1/update-profile", isLoggedIn, (req, res) => {
+   const userUpdateInfo = {
+     "firstName" : req.body.firstName,
+     "lastName" : req.body.lastName,
+     "email" : req.body.email,
+     "gender" : req.body.gender,
+     "address" : req.body.address,
+   };
+   //userUpdateInfo can be refactored further by implementing user[firstName], user[lastName] thus req.body.user
+   User.findByIdAndUpdate(req.user._id, userUpdateInfo, (err) => {
+      if (err) {
+         console.log("Error at updating profile finding requested user in User Schema");
+         return res.redirect("back");
+      }
+      const activity = {
+         category : "Update Profile",
+         user_id : {
+            id : req.user._id,
+          }
+       };
+      
+      Activity.create(activity, (err, newAcitvity) => {
+         if(err) {
+            console.log("Failed to log activity at update profile");
+            return res.redirect("back");
+         }
+         res.redirect("back");
+      });
+   });
+});
+
+//user -> delete profile
+app.delete("/user/1/delete-profile", isLoggedIn, (req, res) => {
+    const imagePath = path.join(__dirname, '/public/image/profile/'+req.user.image);
+    if(req.user.image) {
+       fs.unlink(imagePath, (err) => {
+          if (err) {
+             console.log("Failed to delete image at delete profile");
+             return res.redirect("back");
+          }
+       });
+    }
+   User.findByIdAndRemove(req.user._id, (err, foundUser) => {
+      if(err) {
+         console.log("Failed to find user at delete profile");
+         return res.redirect("back");
+      } else {
+         
+         Issue.deleteMany({"user_id.id" : foundUser._id}, (err, foundIssues) => {
+            if(err) {
+               console.log("Failed to find all issues related to this user at delete profile");
+               return res.redirect("back");
+            } else {
+               Comment.deleteMany({"author.id" : foundUser._id}, (err, foundComments) => {
+                  if(err) {
+                     console.log("Failed to find all comments related to this user at delete profile");
+                     return res.redirect("back");
+                  } else {
+                     Activity.deleteMany({"user_id.id" : foundUser._id}, (err, foundActivities) => {
+                        if(err) {
+                           console.log("Failed to find all activities of this user at delete profile");
+                           return res.redirect("back");
+                        } else {
+                           res.redirect("/");
+                        }
+                     });
+                  }
+               });
+            }
+         });
+      }
+   });
+});
+
+
 //user -> notification
-app.get("/user/notification", (req, res) => {
+app.get("/user/1/notification", (req, res) => {
    res.render("user/notification");
 });
 

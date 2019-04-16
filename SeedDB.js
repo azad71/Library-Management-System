@@ -19,7 +19,7 @@ function seedDB() {
             title : faker.lorem.words(),
             author : author[Math.floor(Math.random() * author.length)],
             ISBN : faker.random.number(),
-            stock : Math.floor(Math.random() * 51),
+            stock : Math.floor(Math.random() * 30),
             description : faker.lorem.paragraphs(5),
             category : category[Math.floor(Math.random() * category.length)],
         };

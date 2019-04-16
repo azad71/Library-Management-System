@@ -32,7 +32,7 @@
                 </li>
                 
                 <li class="nav-item">
-                    <a href="/user/notification" class="nav-link">
+                    <a href="/user/1/notification" class="nav-link">
                         <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
                     </a>
                 </li>
@@ -167,6 +167,39 @@
                                 </td>
                               <td>
                                 <a href="/books/return-renew" class="btn btn-sm btn-info" role="button">Return</a>
+                              </td>
+                          </tr>
+                  <% } else if(log.category == 'Update Profile') { %>
+                            <tr>
+                              <td>You have recently updated your profile info</td></td>
+                              <td><%=log.category%></td>
+                              <td>
+                                <%=log.entryTime.toDateString()%>
+                                </td>
+                              <td>
+                                <a href="/user/1/profile" class="btn btn-sm btn-success" role="button">Visit Profile</a>
+                              </td>
+                          </tr>
+                  <% } else if(log.category == 'Update Password') { %>
+                            <tr>
+                              <td>You have recently updated your password</td></td>
+                              <td><%=log.category%></td>
+                              <td>
+                                <%=log.entryTime.toDateString()%>
+                                </td>
+                              <td>
+                                <button class="btn btn-sm btn-success">Changed Successfully!</button>
+                              </td>
+                          </tr>
+                  <% } else if(log.category == 'Update/Upload Photo') { %>
+                            <tr>
+                              <td>You have recently updated your profile picture</td></td>
+                              <td><%=log.category%></td>
+                              <td>
+                                <%=log.entryTime.toDateString()%>
+                                </td>
+                              <td>
+                                <button class="btn btn-sm btn-success">Changed Successfully!</button>
                               </td>
                           </tr>
                   <% } %>
