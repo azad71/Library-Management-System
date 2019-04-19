@@ -43,18 +43,21 @@
                 </a>
             </li>
           </ul>
+          <% } else { %>
+          <a href="/signUp" class="btn btn-primary btn-sm ml-auto">Sign up</a>
           <% } %>
       </div>
   </div>
 </nav>
 
 <!--SEARCH BAR-->
-<section id="search_bar" class="mt-3 py-4 bg-light">
+<section id="search_bar" class="my-3 py-4 bg-light">
   <div class="container">
    <form action="/books/all/all/1" method="POST">
     <div class="row">
         <div class="col-md-5 p-1">
           <select name="filter" class="form-control">
+            <option selected disabled>Select Category</option>
             <option  name="title">By Title</option>
             <option  name="author">By Author</option>
             <option  name="category">By Category</option>
@@ -73,6 +76,8 @@
     </form>
   </div>
 </section>
+
+<% include partials/alerts %>
 
 <!--BOOKS-->
 <section id="browse_books" class="mt-5">
@@ -127,7 +132,7 @@
             </p>
            
             
-            <% if(currentUser && books[i].stock > 0) {  var match = false%>
+            <% if(currentUser && books[i].stock > 0) { var match = false%>
                 <% user.bookIssueInfo.forEach(book_info => { %>
                     <% if(book_info._id.equals(books[i]._id)) { %> 
                        <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Issued!</a>

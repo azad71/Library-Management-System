@@ -31,6 +31,7 @@ const activitySchema = new mongoose.Schema({
         amount : Number,
         date : Date,
     },
+    
     entryTime : {
         type : Date,
         default : Date.now(),

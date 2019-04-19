@@ -80,16 +80,19 @@
             <i class="fa fa-remove"></i> Delete Profile
           </a>
         </div>
-      <% } %>
+      <% } else { %>
       
       <div class="col-md-3">
         <a href="" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProfileModal">
           <i class="fa fa-remove"></i> Delete Profile
         </a>
       </div>
+    <% } %> 
     </div>
   </div>
 </section>
+
+<% include ../partials/alerts %>
 
 <!--PROFILE-->
 <section class="mt-4">
