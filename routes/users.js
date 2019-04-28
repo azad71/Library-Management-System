@@ -4,14 +4,12 @@ const express = require("express"),
       passport = require("passport"),
       middleware = require("../middleware");
 
-
 //Importing models
 const User = require("../models/user"),
       Activity = require("../models/activity"),
       Book = require("../models/book"),
       Issue = require("../models/issue"),
       Comment = require("../models/comment");
-
 
 //user -> landing page
 router.get("/user/:page", middleware.isLoggedIn, (req, res) => {
@@ -25,7 +23,7 @@ router.get("/user/:page", middleware.isLoggedIn, (req, res) => {
          return res.redirect("/");
       } else {
          Activity.find({"user_id.id": req.user._id})
-         .sort('-entryTime')
+         .sort({entryTime: 'desc'})
          .skip((perPage*page) - perPage)
          .limit(perPage)
          .exec((err, foundActivity) => {
@@ -61,6 +59,7 @@ router.get("/signUp", (req, res) => {
 });
 
 router.post("/signUp", (req, res) => {
+   
    const newUser = new User({
       firstName : req.body.firstName,
       lastName : req.body.lastName,
@@ -70,17 +69,13 @@ router.post("/signUp", (req, res) => {
       address : req.body.address,
    });
    
-   // console.log(newUser);
-   
    User.register(newUser, req.body.password, (err, user) =>{
-      // console.log(user);
       if(err) {
-         // console.log(err);
          return res.render("user/userSignup");
       }
-      passport.authenticate("local")(req, res, function() {
+      passport.authenticate("local")(req, res, ()=> {
         
-         res.redirect("/user/1");
+        res.redirect("/user/1");
       });
    });
 });
@@ -109,6 +104,7 @@ router.put("/user/1/update-password", middleware.isLoggedIn, (req, res) => {
             category : "Update Password",
             user_id : {
                id : req.user._id,
+               username : req.user.username,
              }
           };
          
@@ -143,6 +139,7 @@ router.put("/user/1/update-profile", middleware.isLoggedIn, (req, res) => {
          category : "Update Profile",
          user_id : {
             id : req.user._id,
+            username : req.user.username,
           }
        };
       
@@ -156,49 +153,6 @@ router.put("/user/1/update-profile", middleware.isLoggedIn, (req, res) => {
    });
 });
 
-//user -> delete profile
-router.delete("/user/1/delete-profile", middleware.isLoggedIn, (req, res) => {
-    const imagePath = path.join(__dirname, '/public/image/profile/'+req.user.image);
-    if(req.user.image) {
-       fs.unlink(imagePath, (err) => {
-          if (err) {
-             console.log("Failed to delete image at delete profile");
-             return res.redirect("back");
-          }
-       });
-    }
-   User.findByIdAndRemove(req.user._id, (err, foundUser) => {
-      if(err) {
-         console.log("Failed to find user at delete profile");
-         return res.redirect("back");
-      } else {
-         
-         Issue.deleteMany({"user_id.id" : foundUser._id}, (err, foundIssues) => {
-            if(err) {
-               console.log("Failed to find all issues related to this user at delete profile");
-               return res.redirect("back");
-            } else {
-               Comment.deleteMany({"author.id" : foundUser._id}, (err, foundComments) => {
-                  if(err) {
-                     console.log("Failed to find all comments related to this user at delete profile");
-                     return res.redirect("back");
-                  } else {
-                     Activity.deleteMany({"user_id.id" : foundUser._id}, (err, foundActivities) => {
-                        if(err) {
-                           console.log("Failed to find all activities of this user at delete profile");
-                           return res.redirect("back");
-                        } else {
-                           res.redirect("/");
-                        }
-                     });
-                  }
-               });
-            }
-         });
-      }
-   });
-});
-
 
 //user -> notification
 router.get("/user/1/notification", (req, res) => {
@@ -207,6 +161,10 @@ router.get("/user/1/notification", (req, res) => {
 
 //user -> issue a book
 router.post("/books/:book_id/issue/:user_id", middleware.isLoggedIn, (req, res)=> {
+   if(req.user.violationFlag) {
+      req.flash("error", "You are flagged for violating rules/delay on returning books/paying fines. Untill the flag is lifted, You can't issue any books");
+      return res.redirect("back");
+   }
    Book.findById(req.params.book_id, (err, foundBook) => {
       if(err) {
          console.log("Error at finding book");
@@ -258,6 +216,7 @@ router.post("/books/:book_id/issue/:user_id", middleware.isLoggedIn, (req, res)=
                    },
                    user_id : {
                       id : foundUser._id,
+                      username : foundUser.username,
                    }
                 };
                 Activity.create(acitvity, (err, newActivity) => {
@@ -313,6 +272,7 @@ router.post("/books/:book_id/renew", middleware.isLoggedIn, (req, res) => {
                    },
                    user_id : {
                       id : req.user._id,
+                      username : req.user.username,
                    }
                 };
                 
@@ -367,6 +327,7 @@ router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
                    },
                    user_id : {
                       id : req.user._id,
+                      username : req.user.username,
                    }
                 };
                 
@@ -392,7 +353,6 @@ router.get("/books/details/:book_id", (req, res) => {
         console.log(err);
         return res.redirect("/books/all/all/1");
      } else {
-      //  console.log(foundBook)
         res.render("user/bookDetails", {book : foundBook});
      }
   });
@@ -418,7 +378,26 @@ router.post("/books/details/:book_id", middleware.isLoggedIn, (req, res) => {
                comment.save();
                book.comments.push(comment._id);
                book.save();
-               res.redirect("/books/details/"+req.params.book_id);
+               
+               const activity = {
+                   info : {
+                      id : book._id,
+                      title : book.title,
+                   },
+                   category : "Comment",
+                   user_id : {
+                      id : req.user._id,
+                      username : req.user.username,
+                   }
+                };
+                
+                Activity.create(activity, (err, newActvity) => {
+                   if(err) {
+                      console.log("Failed to create activities at /books/details/:book_id POST");
+                      return res.redirect("back");
+                   }
+                   res.redirect("/books/details/"+req.params.book_id);
+                });
             }
          });
       }
@@ -430,9 +409,32 @@ router.post("/books/details/:book_id/:comment_id", middleware.isLoggedIn, (req, 
    Comment.findByIdAndUpdate(req.params.comment_id, req.body.comment, (err, updatedDetails) => {
       if(err) {
          console.log("Oops! an error occured commenting on this book");
-         return res.redirect("/books/details/"+req.params.book_id);
+         return res.redirect("back");
       } else {
-         res.redirect("/books/details/"+req.params.book_id);
+         Book.findById(req.params.book_id, (err, book) => {
+            if(err) {
+              console.log("Failed to find book at /books/details/:book_id/:comment_id POST");
+              return res.redirect("back");
+            }
+            const activity = {
+                   info : {
+                      id : book._id,
+                      title : book.title,
+                   },
+                   category : "Update Comment",
+                   user_id : {
+                      id : req.user._id,
+                      username : req.user.username,
+                   }
+                };
+            Activity.create(activity, (err, newActvity) => {
+               if(err) {
+                 console.log("Failed to find book at /books/details/:book_id/:comment_id POST");
+                 return res.redirect("back");
+               }
+               res.redirect("/books/details/"+req.params.book_id);
+            });
+         });
       }
    });
 });
@@ -443,8 +445,29 @@ router.delete("/books/details/:book_id/:comment_id", middleware.isLoggedIn, (req
        if(err) {
            res.redirect("back");
        } else {
-         //  req.flash("success", "Comment deleted");
-           res.redirect("/books/details/" + req.params.book_id);
+           Book.findById(req.params.book_id, (err, book) => {
+              if(err) res.redirect("back");
+              
+              const activity = {
+                   info : {
+                      id : book._id,
+                      title : book.title,
+                   },
+                   category : "Delete Comment",
+                   user_id : {
+                      id : req.user._id,
+                      username : req.user.username,
+                   }
+                };
+                
+                Activity.create(activity, (err, newActivity) => {
+                   if(err) {
+                      console.log("Failed to create activity at /books/details/:book_id/:comment_id DELETE");
+                      return res.redirect("back");
+                   }
+                    res.redirect("/books/details/" + req.params.book_id);
+                });
+           });
        }
     }); 
 });

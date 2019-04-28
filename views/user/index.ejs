@@ -142,7 +142,7 @@
                         <tr>
                           <td>You commented on <%=log.info.title%></td>
                           <td><%= log.category %></td>
-                          <td>NULL</td>
+                          <td><%=log.entryTime.toDateString()%></td>
                           <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
                             <i class="fa fa-angle-double-right"></i> Details
                           </a></td>
@@ -203,7 +203,25 @@
                                 <button class="btn btn-sm btn-success">Changed Successfully!</button>
                               </td>
                           </tr>
-                  <% } %>
+                  <% } else if(log.category == 'Update Comment') { %>
+                        <tr>
+                          <td>You have updated your comment on <%=log.info.title%></td>
+                          <td><%= log.category %></td>
+                          <td><%=log.entryTime.toDateString()%></td>
+                          <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
+                            <i class="fa fa-angle-double-right"></i> Details
+                          </a></td>
+                        </tr>
+                 <%  } else if(log.category == 'Delete Comment') { %>
+                        <tr>
+                          <td>You have deleted your comment on <%=log.info.title%></td>
+                          <td><%= log.category %></td>
+                          <td><%=log.entryTime.toDateString()%></td>
+                          <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
+                            <i class="fa fa-angle-double-right"></i> Details
+                          </a></td>
+                        </tr>
+                 <%  } %>
             <% }); %>
               
             </tbody>

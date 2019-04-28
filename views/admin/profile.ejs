@@ -2,53 +2,7 @@
 
     
 <!--NAVIGATION BAR FOR ADMIN-->
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
-       <div class="container">
-          <a class="navbar-brand" href="/admin">Home</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/activities">Activities</a></a>
-              </li>
-              
-               <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/bookInventory">Book Inventory</a>
-              </li>
-              
-               <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/users">Users</a>
-              </li>
-              
-              </ul>
-              
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown mr-3">
-                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> Welcome Azad
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="/admin/profile" class="dropdown-item">
-                      <i class="fa fa-user-circle"></i> Profile
-                    </a>
-        
-                    <a href="/logout" class="dropdown-item">
-                      <i class="fa fa-user-times"></i> Logout
-                    </a>
-                  </div>
-                </li>
-                <li class="nav-item">
-                  <a href="/user/notification" class="nav-link">
-                      <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
-                  </a>
-                </li>
-              </ul>
-          </div>
-      </div>
-    </nav>
+<% include ../partials/adminNav %>
 
 
 <header id="main-header" class="py-2 bg-primary text-white">
@@ -63,25 +17,38 @@
 
 <!-- PROFILE DETAILS -->
 <section id="profile" class="py-4 mb-4 bg-faded">
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
-      <div class="col-md-3 mr-auto">
+      <div class="col">
         <a href="/admin" class="btn btn-secondary btn-block">
           <i class="fa fa-arrow-left"></i> Back To Dashboard
         </a>
       </div>
       
-       <div class="col-md-3">
-        <a href="index.html" class="btn btn-warning btn-block" data-toggle="modal" data-target="#userNameModal">
-          <i class="fa fa-lock"></i> Change User name
+       <div class="col">
+        <a href="" class="btn btn-primary btn-block" data-toggle="modal" data-target="#userNameModal">
+          <i class="fa fa-user"></i> Edit Profile
         </a>
       </div>
 
-      <div class="col-md-3">
-        <a href="index.html" class="btn btn-success btn-block" data-toggle="modal" data-target="#passwordModal">
-          <i class="fa fa-lock"></i> Change Password
+      <div class="col">
+        <a href="" class="btn btn-warning btn-block" data-toggle="modal" data-target="#passwordModal">
+          <i class="fa fa-lock"></i> Update Password
         </a>
       </div>
+      
+       <div class="col">
+        <a href="/adminSignup" class="btn btn-success btn-block">
+          <i class="fa fa-plus"></i> Add New Admin
+        </a>
+      </div>
+      
+       <div class="col">
+        <a href="/admin/delete-profile" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProfileModal">
+          <i class="fa fa-close"></i> Delete Account
+        </a>
+      </div>
+      
     </div>
   </div>
 </section>
@@ -97,8 +64,8 @@
             <h4>Admin Info</h4>
           </div>
           <div class="card-block">
-            <p>User name : azad71</p>
-            <p>Password : 123456789</p>
+            <p>User name : <%=currentUser.username%></p>
+            <p>Email : <%=currentUser.email%></p>
           </div>
         </div>
       </div>
@@ -116,62 +83,90 @@
         <button class="close" data-dismiss="modal" ><span>&times;</span></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/admin/update-password?_method=PUT" method="POST">
           <div class="form-group">
             <label for="password" class="form-control-label">Old Password</label>
-            <input type="password" class="form-control">
+            <input type="password" name="oldPassword" class="form-control">
           </div>
           <div class="form-group">
             <label for="password" class="form-control-label">New Password</label>
-            <input type="password" class="form-control">
+            <input id="password" type="password" name="password" class="form-control">
           </div>
 
           <div class="form-group">
             <label for="password" class="form-control-label">Confirm Password</label>
-            <input type="password" class="form-control">
+            <input id="confirmPassword" type="password" name="confirmPassword" class="form-control">
+             <span id='message'></span>
           </div>
-
+          <button id="button" class="btn btn-warning btn-block">Submit</button>
         </form>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
-      </div>
+      </div> 
     </div>
   </div>
 </div>
 
 <!--USER MODAL-->
-
 <div class="modal fade" id="userNameModal">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
-      <div class="modal-header bg-warning text-white">
+      <div class="modal-header bg-primary text-white">
         <h5 class="modal-title" id="passwordModalLabel">
-          Edit Username
+          Edit Profile
         </h5>
         <button class="close" data-dismiss="modal" ><span>&times;</span></button>
       </div>
       <div class="modal-body">
-        <form>
+        <form action="/admin/profile" method="POST">
           <div class="form-group">
-            <label for="username" class="form-control-label">Old Username</label>
-            <input type="text" class="form-control">
+            <label for="admin[username]" class="form-control-label">Edit Username</label>
+            <input name="admin[username]" type="text" class="form-control" value="<%=currentUser.username%>">
           </div>
+          
           <div class="form-group">
-            <label for="username" class="form-control-label">New Username</label>
-            <input type="text" class="form-control">
+            <label for="admin[email]" class="form-control-label">Edit Email</label>
+            <input name="admin[email]" type="email" class="form-control" value="<%=currentUser.email%>">
           </div>
+          <button class="btn btn-primary btn-block">Update!</button>
         </form>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="btn btn-warning" data-dismiss="modal">Save Changes</button>
       </div>
     </div>
   </div>
 </div>
+
+<!--Delete Profile Modal-->
+<div class="modal fade" id="deleteProfileModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteProfileModalLabel">
+          Once you press yes, you will lose the admin facility permanently. Are you sure?
+        </h5>
+        <button class="close" data-dismiss="modal" ><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form action="/admin/delete-profile?_method=DELETE" method="POST">
+          
+          <input type="submit" value="Yes" class="btn btn-danger btn-block m-1">
+          
+        </form>
+        <input type="button" value="No" data-dismiss="modal" class="btn btn-success btn-block m-1">
+      </div> 
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  $('#confirmPassword').on('keyup', function () {
+    if ($(this).val() == $('#password').val()) {
+      $('#message').html('Matched').css('color', 'green');
+      $('#button').removeClass("d-none")
+    } 
+    else{
+      $('#message').html('Not matched!').css('color', 'red');
+      $('#button').addClass("d-none");
+    }
+});
+</script>
 
 <% include ../partials/footer %>

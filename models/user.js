@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
    image : String,
    violationFlag : {type : Boolean, default : false},
    fines : {type : Number, default: 0},
+   isAdmin : {type : Boolean, default : false},
 });
 
 userSchema.plugin(passportLocalMongoose);

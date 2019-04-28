@@ -2,54 +2,7 @@
 
     
 <!--NAVIGATION BAR FOR ADMIN-->
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0 sticky-top">
-       <div class="container">
-          <a class="navbar-brand" href="/admin">Home</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item px-2 ">
-                <a class="nav-link" href="/admin/activities">Activities</a></a>
-              </li>
-              
-               <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/bookInventory">Book Inventory</a>
-              </li>
-              
-               <li class="nav-item px-2 active">
-                <a class="nav-link" href="/admin/users">Users</a>
-              </li>
-              
-              </ul>
-              
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown mr-3">
-                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> Welcome Azad
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="/admin/profile" class="dropdown-item">
-                      <i class="fa fa-user-circle"></i> Profile
-                    </a>
-        
-                    <a href="/logout" class="dropdown-item">
-                      <i class="fa fa-user-times"></i> Logout
-                    </a>
-                  </div>
-                </li>
-                
-                <li class="nav-item">
-                  <a href="/user/notification" class="nav-link">
-                      <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
-                  </a>
-                </li>
-              </ul>
-          </div>
-      </div>
-    </nav>
+<% include ../partials/adminNav %>
 
 <header id="main-header" class="py-2 bg-primary text-white">
   <div class="container">
@@ -66,21 +19,25 @@
   <div class="container">
     <div class="row">
       <div class="col-md-3 mr-auto">
-          <a href="/admin" class="btn btn-light btn-block">
+          <a href="/admin?page=5&category=Issue" class="btn btn-light btn-block">
           <i class="fa fa-arrow-left"></i> Back To Dashboard
         </a>
       </div>
       <div class="col-md-6">
-        <div class="input-group">
-          <input type="text" class="form-control" placeholder="Search user...">
-          <span class="input-group-btn">
-            <button class="btn btn-primary">Search</button>
-          </span>
-        </div>
+        <form action="/admin/users/1" method="POST">
+           <div class="input-group">
+            <input name="searchUser" type="text" class="form-control" placeholder="Search User by First Name, Last Name, username, E-mail">
+            <span class="input-group-btn">
+              <button class="btn btn-primary">Search</button>
+            </span>
+          </div>
+        </form>
       </div>
     </div>
   </div>
 </section>
+
+<% include ../partials/alerts %>
 
 <!-- USERS -->
 <section id="users">
@@ -97,7 +54,7 @@
                 <th>Name</th>
                 <th>User name</th>
                 <th>Email</th>
-                <th>Password</th>
+                 <th>Gender</th>
                 <th>Date Regisetered</th>
                 <th>Violation flag</th>
                 <th>Fine</th>
@@ -105,130 +62,75 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>Herbert Schildt</td>
-                <td>hschildt58</td>
-                <td>hschildt58@gmail.com</td>
-                <td>ubbalubbadubdub</td>
-                <td>July 11, 2011</td>
-                <td>No</td>
-                <td>$5.00</td>
+              
+            <% users.forEach(user => { %>
+              <%if (user.isAdmin) return; %>
+                <tr>
+                <td><%=user.firstName + " " + user.lastName%></td>
+                <td><a href="/admin/users/profile/<%=user._id%>" title="Visit this user"><%=user.username%></a></td>
+                <td><%=user.email%></td>
+                 <td><%=user.gender%></td>
+                <td><%=user.joined.toDateString()%></td>
+                <td><%=user.violationFlag%></td>
+                <td>$<%=user.fines%></td>
                 <td>
-                  <a href="#" title="Delete User" class="btn btn-sm btn-danger">
+                  <%if(user.bookIssueInfo.length > 0) { %>
+                  <a href="/admin/users/delete/<%=user._id%>" title="This user has books in possession. Are you sure to delete this user?" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i>
                   </a>
-                  <a href="#" title="Warn user" class="btn btn-sm btn-warning">
-                    <i class="fa fa-flag"></i>
-                  </a>
-                </td>
-              </tr>
-
-              <tr>
-                <td>Herbert Schildt</td>
-                <td>hschildt58</td>
-                <td>hschildt58@gmail.com</td>
-                <td>ubbalubbadubdub</td>
-                <td>July 11, 2011</td>
-                <td>No</td>
-                <td>$5.00</td>
-                 <td>
-                  <a href="#" title="Delete User" class="btn btn-sm btn-danger">
+                <%  } else { %>
+                  <a href="/admin/users/delete/<%=user._id%>" title="Delete User" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i>
                   </a>
-                  <a href="#" title="Warn user" class="btn btn-sm btn-warning">
-                    <i class="fa fa-flag"></i>
-                  </a>
+                <% } %>
+                
+                <% if(user.violationFlag) { %> 
+                    <a href="/admin/users/flagged/<%=user._id%>" title="Lift the flag" class="btn btn-sm btn-warning">
+                      <i class="fa fa-flag"></i>
+                    </a>
+                <%  } else {  %>
+                    <a href="/admin/users/flagged/<%=user._id%>" title="Warn user" class="btn btn-sm btn-success">
+                      <i class="fa fa-flag"></i>
+                    </a>
+                <%  } %>
                 </td>
               </tr>
-
-
-              <tr>
-                <td>Herbert Schildt</td>
-                <td>hschildt58</td>
-                <td>hschildt58@gmail.com</td>
-                <td>ubbalubbadubdub</td>
-                <td>July 11, 2011</td>
-                <td>No</td>
-                <td>$5.00</td>
-                 <td>
-                  <a href="#" title="Delete User" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                  <a href="#" title="Warn user" class="btn btn-sm btn-warning">
-                    <i class="fa fa-flag"></i>
-                  </a>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td>Herbert Schildt</td>
-                <td>hschildt58</td>
-                <td>hschildt58@gmail.com</td>
-                <td>ubbalubbadubdub</td>
-                <td>July 11, 2011</td>
-                <td>No</td>
-                <td>$5.00</td>
-                 <td>
-                  <a href="#" title="Delete User" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                  <a href="#" title="Warn user" class="btn btn-sm btn-warning">
-                    <i class="fa fa-flag"></i>
-                  </a>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td>Herbert Schildt</td>
-                <td>hschildt58</td>
-                <td>hschildt58@gmail.com</td>
-                <td>ubbalubbadubdub</td>
-                <td>July 11, 2011</td>
-                <td>No</td>
-                <td>$5.00</td>
-                 <td>
-                  <a href="#" title="Delete User" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                  <a href="#" title="Warn user" class="btn btn-sm btn-warning">
-                    <i class="fa fa-flag"></i>
-                  </a>
-                </td>
-              </tr>
-
-
-              <tr>
-                <td>Herman Mainer</td>
-                <td>herman5</td>
-                <td>herman5@gmail.com</td>
-                <td>ubbalubbadubdub</td>
-                <td>March 05, 2010</td>
-                <td>Yes</td>
-                <td>$0.00</td>
-                 <td>
-                  <a href="#" title="Delete User" class="btn btn-sm btn-danger">
-                    <i class="fa fa-trash"></i>
-                  </a>
-                  <a href="#" title="Warn user" class="btn btn-sm btn-warning">
-                    <i class="fa fa-flag"></i>
-                  </a>
-                </td>
-              </tr>
-
+            <% }); %>
             </tbody>
           </table>
 
-          <nav class="ml-3">
-            <ul class="pagination offset-md-4">
-              <li class="page-item disabled"><a href="#" class="page-link"><i class="fa fa-angle-double-left"></i> Previous</a></li>
-              <li class="page-item active"><a href="#" class="page-link">1</a></li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">Next <i class="fa fa-angle-double-right"></i></a></li>
+          <% if (pages > 0) { %>
+            <nav class="mx-auto mb-2">
+              <ul class="pagination ">
+            
+            <% if (current == 1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+            <% } else { %>
+                <li class="page-item"><a href="/admin/users/1" class="page-link">First</a></li>
+            <% } %>
+            
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="page-item disabled"><a class="page-link">...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                      <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="/admin/users/<%= i %>"> <%= i %></a> </li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                          <li class="page-item disabled"><a class="page-link">...</a></li>
+                      <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a href="/admin/users/<%= pages %>" class="page-link">Last</a></li>
+                <% } %>
             </ul>
           </nav>
+          <% } %>
         </div>
       </div>
     </div>

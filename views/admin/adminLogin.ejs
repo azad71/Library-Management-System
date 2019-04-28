@@ -1,5 +1,7 @@
 <% include ../partials/header %>
 
+<% include ../partials/alerts %>
+
 <section id="adminLoginForm">
   <div class="container mt-5">
     <div class="row">
@@ -9,7 +11,7 @@
             <h4>Admin Login</h4>
           </div>
             <div class="card-block">
-              <form class="p-3" action="/admin" method="POST">
+              <form class="p-3" action="/adminLogin" method="POST">
                 <div class="form-group">
                   <label class="form-control-label">Username</label>
                   <input type="text" name="username" placeholder="Username" class="form-control">

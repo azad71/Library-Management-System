@@ -10,6 +10,14 @@ middleware.isLoggedIn = function(req, res, next) {
     res.redirect("/");
 };
 
+middleware.isAdmin = function(req, res, next) {
+    if(req.isAuthenticated() && req.user.isAdmin) {
+        return next();
+    }
+    req.flash("error", "Sorry, this route is allowed for admin only");
+    res.redirect("/");
+};
+
 middleware.upload = multer({
       limits: {
         fileSize: 4 * 1024 * 1024,

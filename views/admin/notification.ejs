@@ -1,53 +1,7 @@
 <% include ../partials/header %>
 
 <!--NAVIGATION BAR FOR ADMIN-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
-       <div class="container">
-          <a class="navbar-brand" href="/admin">Home</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/activities">Activities</a></a>
-              </li>
-              
-               <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/bookInventory">Book Inventory</a>
-              </li>
-              
-               <li class="nav-item px-2">
-                <a class="nav-link" href="/admin/users">Users</a>
-              </li>
-              
-              </ul>
-              
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown mr-3">
-                  <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> Welcome Azad
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="/admin/profile" class="dropdown-item">
-                      <i class="fa fa-user-circle"></i> Profile
-                    </a>
-        
-                    <a href="/logout" class="dropdown-item">
-                      <i class="fa fa-user-times"></i> Logout
-                    </a>
-                  </div>
-                </li>
-                <li class="nav-item">
-                <a href="/admin/notification" class="nav-link">
-                    <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
-                </a>
-            </li>
-              </ul>
-          </div>
-      </div>
-    </nav>
+<% include ../partials/adminNav %>
 
 <!--DASHBOARD SECTION-->
 <header id="main-header" class="py-2 bg-info text-white">

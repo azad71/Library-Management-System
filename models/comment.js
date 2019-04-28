@@ -9,7 +9,16 @@ const commentSchema = new mongoose.Schema({
         },
         username : String,
     },
-    date : {type : Date, default : Date.now},
+    
+    book : {
+        id : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Book",
+        },
+        title : String,
+    },
+    
+    date : {type : Date, default : Date.now()},
 });
 
 module.exports = mongoose.model("Comment", commentSchema);
