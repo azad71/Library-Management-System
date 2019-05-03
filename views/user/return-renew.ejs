@@ -1,46 +1,7 @@
 <% include ../partials/header %>
 
-<!--NAVIGATION BAR FOR ADMIN-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
-   <div class="container">
-      <a class="navbar-brand" href="/user/1">Home</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item px-2">
-            <a class="nav-link" href="/books/all/all/1">Browse Books</a></a>
-          </li>
-          
-          </ul>
-          
-          <ul class="navbar-nav ml-auto">
-            <li class="nav-item dropdown mr-3">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i> Welcome <%=currentUser.username%>
-              </a>
-              <div class="dropdown-menu">
-                <a href="/user/1/profile" class="dropdown-item">
-                  <i class="fa fa-user-circle"></i> Profile
-                </a>
-    
-                <a href="/userLogout" class="dropdown-item">
-                  <i class="fa fa-user-times"></i> Logout
-                </a>
-              </div>
-            </li>
-            
-            <li class="nav-item">
-                <a href="/user/notification" class="nav-link">
-                    <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
-                </a>
-            </li>
-          </ul>
-      </div>
-  </div>
-</nav>
+<!--NAVIGATION BAR FOR USER-->
+<% include ../partials/userNav %>
 
 
 <!--DASHBOARD SECTION-->
@@ -84,12 +45,11 @@
                 <td><%=book.book_info.category%></td>
                 <td>
                   
-                  <% if(book.book_info.isRenewed == true) { %>
-                    <!--<form  action="/books/<%=book.book_info.id%>/renew" method="POST" class="d-inline">-->
-                    <!-- <input class="btn btn-xs btn-success" type="submit" value="Renew">-->
-                    <!--</form>-->
+                  <% if(book.book_info.isRenewed) { %>
                     <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Renewed!</a>
-                <%  } else { %>
+                <%  } else if(currentUser.violationFlag && book.book_info.returnDate < Date.now()) { %>
+                    <a class="btn btn-xs btn-warning" title="You can't renew book when you are flagged">Renew</a>
+              <%  } else { %>
                     <form  action="/books/<%=book.book_info.id%>/renew" method="POST" class="d-inline">
                      <input class="btn btn-xs btn-warning" type="submit" value="Renew">
                     </form>

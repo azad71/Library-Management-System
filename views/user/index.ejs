@@ -1,46 +1,8 @@
 <% include ../partials/header %>
 
-<!--NAVIGATION BAR FOR ADMIN-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0">
-       <div class="container">
-          <a class="navbar-brand" href="/user/1">Home</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-        
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav">
-              <li class="nav-item px-2">
-                <a class="nav-link" href="/books/all/all/1" >Browse Books</a></a>
-              </li>
-            </ul>
-              
-              <ul class="navbar-nav ml-auto">
-                <li class="nav-item dropdown mr-3">
-                  <a class="nav-link dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user"></i> Welcome <%= user.username %>
-                  </a>
-                  <div class="dropdown-menu">
-                    <a href="/user/1/profile" class="dropdown-item">
-                      <i class="fa fa-user-circle"></i> Profile
-                    </a>
-        
-                    <a href="/userLogout" class="dropdown-item">
-                      <i class="fa fa-user-times"></i> Logout
-                    </a>
-                  </div>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="/user/1/notification" class="nav-link">
-                        <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
-                    </a>
-                </li>
-              </ul>
-          </div>
-      </div>
-    </nav>
-    
+<!--NAVIGATION BAR FOR USER-->
+<% include ../partials/userNav %>
+
 <!--DASHBOARD SECTION-->
 <header id="main-header" class="py-2 bg-primary text-white">
   <div class="container">
@@ -116,7 +78,7 @@
                <% activity.forEach(log => { %>
                 <% if(log.category == 'Issue') { %>
                      <tr>
-                        <td>You have issued <%=log.info.title%></td></td>
+                        <td>You have <span class="table-text">issued</span> <%=log.info.title%></td></td>
                         <td><%=log.category%></td>
                         <td>
                           <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
@@ -128,7 +90,7 @@
                       </tr>  
                <%  } else if(log.category == 'Return') { %>
                       <tr>
-                          <td>You have returned <%=log.info.title%></td></td>
+                          <td>You have <span class="table-text">returned</span> <%=log.info.title%></td></td>
                           <td><%=log.category%></td>
                           <td>
                             <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
@@ -140,7 +102,7 @@
                       </tr>
                  <%  } else if(log.category == 'Comment') { %>
                         <tr>
-                          <td>You commented on <%=log.info.title%></td>
+                          <td>You <span class="table-text">commented</span> on <%=log.info.title%></td>
                           <td><%= log.category %></td>
                           <td><%=log.entryTime.toDateString()%></td>
                           <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
@@ -149,7 +111,7 @@
                         </tr>
                  <%  } else if(log.category == 'Fine') {%>
                          <tr>
-                          <td>You paid $<%=log.fine.amount%> fines</td>
+                          <td>You <span class="table-text">paid</span> $<%=log.fine.amount%> fines</td>
                           <td><%=log.category%></td>
                           <td><%=log.fine.date%></td>
                           <td>
@@ -160,7 +122,7 @@
                         </tr>
                   <%  } else if(log.category == 'Renew') { %>
                            <tr>
-                              <td>You have renewed <%=log.info.title%></td></td>
+                              <td>You have <span class="table-text">renewed</span> <%=log.info.title%></td>
                               <td><%=log.category%></td>
                               <td>
                                 <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
@@ -172,7 +134,7 @@
                           </tr>
                   <% } else if(log.category == 'Update Profile') { %>
                             <tr>
-                              <td>You have recently updated your profile info</td></td>
+                              <td>You have recently <span class="table-text">updated your profile info</span> </td>
                               <td><%=log.category%></td>
                               <td>
                                 <%=log.entryTime.toDateString()%>
@@ -183,7 +145,7 @@
                           </tr>
                   <% } else if(log.category == 'Update Password') { %>
                             <tr>
-                              <td>You have recently updated your password</td></td>
+                              <td>You have recently <span class="table-text">updated your password</span></td>
                               <td><%=log.category%></td>
                               <td>
                                 <%=log.entryTime.toDateString()%>
@@ -194,7 +156,7 @@
                           </tr>
                   <% } else if(log.category == 'Update/Upload Photo') { %>
                             <tr>
-                              <td>You have recently updated your profile picture</td></td>
+                              <td>You have recently <span class="table-text">updated your profile picture</span></td>
                               <td><%=log.category%></td>
                               <td>
                                 <%=log.entryTime.toDateString()%>
@@ -205,7 +167,7 @@
                           </tr>
                   <% } else if(log.category == 'Update Comment') { %>
                         <tr>
-                          <td>You have updated your comment on <%=log.info.title%></td>
+                          <td>You have <span class="table-text">updated your comment</span> on <%=log.info.title%></td>
                           <td><%= log.category %></td>
                           <td><%=log.entryTime.toDateString()%></td>
                           <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
@@ -214,7 +176,7 @@
                         </tr>
                  <%  } else if(log.category == 'Delete Comment') { %>
                         <tr>
-                          <td>You have deleted your comment on <%=log.info.title%></td>
+                          <td>You have <span class="table-text">deleted your comment</span> on <%=log.info.title%></td>
                           <td><%= log.category %></td>
                           <td><%=log.entryTime.toDateString()%></td>
                           <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
@@ -283,22 +245,9 @@
     <div class="modal-content">
       <div class="modal-header bg-danger text-white">
         <h5 class="modal-title" id="payFineModalLabel">
-          Pay fines
+          This route is still under development. will be added in next version
         </h5>
         <button class="close" data-dismiss="modal" ><span>&times;</span></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="title" class="form-control-label">Enter amount </label>
-            <input type="number" min="1" placeholder="Less than $1 is not valid payment" class="form-control">
-          </div>
-        </form>
-      </div>
-
-      <div class="modal-footer">
-        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button class="btn btn-danger" data-dismiss="modal">Pay</button>
       </div>
     </div>
   </div>

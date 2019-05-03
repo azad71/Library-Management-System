@@ -22,6 +22,22 @@ router.get("/user/:page", middleware.isLoggedIn, (req, res) => {
          console.log(err);
          return res.redirect("/");
       } else {
+         
+         if(newUser.bookIssueInfo.length > 0) {
+            Issue.find({"user_id.id" : newUser._id}, (err, foundIssues) => {
+               if(err) return res.redirect("back");
+               
+               for(let issue of foundIssues) {
+                  if(issue.book_info.returnDate < Date.now()) {
+                     newUser.violationFlag = true;
+                     newUser.save();
+                     req.flash("warning", "You are flagged for failed to return " + issue.book_info.title + " in time");
+                     break;
+                  }
+               }
+            });
+         }
+         
          Activity.find({"user_id.id": req.user._id})
          .sort({entryTime : 'desc'})
          .skip((perPage*page) - perPage)
@@ -153,11 +169,11 @@ router.put("/user/1/update-profile", middleware.isLoggedIn, (req, res) => {
    });
 });
 
-
 //user -> notification
 router.get("/user/1/notification", (req, res) => {
    res.render("user/notification");
 });
+
 
 //user -> issue a book
 router.post("/books/:book_id/issue/:user_id", middleware.isLoggedIn, (req, res)=> {
@@ -298,13 +314,12 @@ router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
        
       var tempId = [];
             
-        foundUser.bookIssueInfo.forEach(book => {
+      foundUser.bookIssueInfo.forEach(book => {
          tempId.push(String(book._id));
-        });
+      });
         
       var pos = tempId.indexOf(req.params.book_id);
       foundUser.bookIssueInfo.splice(pos, 1);
-      foundUser.save();
       
       Book.findById(req.params.book_id, (err, foundBook) => {
          if(err) {
@@ -317,32 +332,33 @@ router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
                if(err) {
                   console.log(err);
                   return res.redirect("back");
-               } else {
-                  const acitvity = {
-                   info : {
-                      id : deletedBook.book_info.id,
-                      title : deletedBook.book_info.title,
-                   },
-                   category : "Return",
-                   time : {
-                      id : deletedBook._id,
-                      issueDate : deletedBook.book_info.issueDate,
-                      returnDate : deletedBook.book_info.returnDate,
-                   },
-                   user_id : {
-                      id : req.user._id,
-                      username : req.user.username,
-                   }
-                };
-                
-                  Activity.create(acitvity, (err, newAcitvity) => {
-                     if(err) throw err;
-                     else {
-                       
-                        res.redirect("/books/return-renew");
-                     }
-                  });
                }
+               if(deletedBook.book_info.returnDate < Date.now()) {
+                  foundUser.violationFlag = false;
+                  foundUser.save();
+               }
+               
+               const acitvity = {
+                info : {
+                   id : deletedBook.book_info.id,
+                   title : deletedBook.book_info.title,
+                },
+                category : "Return",
+                time : {
+                   id : deletedBook._id,
+                   issueDate : deletedBook.book_info.issueDate,
+                   returnDate : deletedBook.book_info.returnDate,
+                },
+                user_id : {
+                   id : req.user._id,
+                   username : req.user.username,
+                }
+             };
+             
+               Activity.create(acitvity, (err, newAcitvity) => {
+                  if(err) throw err;
+                  res.redirect("/books/return-renew");
+               });
             });
          } 
       });
@@ -357,7 +373,6 @@ router.get("/books/details/:book_id", (req, res) => {
         console.log(err);
         return res.redirect("/books/all/all/1");
      } else {
-         console.log(foundBook);
         res.render("user/bookDetails", {book : foundBook});
      }
   });

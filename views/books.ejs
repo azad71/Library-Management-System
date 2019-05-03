@@ -1,13 +1,14 @@
 <% include partials/header %>
 
-
-<!--NAVIGATION BAR FOR ADMIN-->
+<!--NAVIGATION BAR-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0 sticky-top">
    <div class="container">
      <% if(!currentUser) { %>
       <a class="navbar-brand" href="/">Home</a>
-      <% } else { %>
+      <% } else if(!currentUser.isAdmin) { %>
       <a class="navbar-brand" href="/user/1">Home</a>
+      <% } else if(currentUser.isAdmin) { %>
+      <a class="navbar-brand" href="/admin">Home</a>
       <% } %>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -27,18 +28,26 @@
                 <i class="fa fa-user"></i> Welcome <%=user.username%>
               </a>
               <div class="dropdown-menu">
-                <a href="/user/<%=user._id%>" class="dropdown-item">
-                  <i class="fa fa-user-circle"></i> Profile
-                </a>
-    
-                <a href="/userLogout" class="dropdown-item">
+                <%if(!currentUser.isAdmin) { %>
+                  <a href="/user/<%=user._id%>" class="dropdown-item">
+                    <i class="fa fa-user-circle"></i> Profile
+                  </a>
+                  <a href="/userLogout" class="dropdown-item">
                   <i class="fa fa-user-times"></i> Logout
                 </a>
+              <% } else { %>
+                   <a href="/admin/profile" class="dropdown-item">
+                    <i class="fa fa-user-circle"></i> Profile
+                  </a>
+                  <a href="/userLogout" class="dropdown-item">
+                    <i class="fa fa-user-times"></i> Logout
+                  </a>
+              <% } %>
               </div>
             </li>
             
             <li class="nav-item">
-                <a href="/user/notification" class="nav-link">
+                <a href="/user/1/notification" class="nav-link">
                     <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
                 </a>
             </li>

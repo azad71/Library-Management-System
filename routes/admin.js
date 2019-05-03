@@ -528,8 +528,8 @@ router.put("/admin/update-password", middleware.isAdmin, (req, res) => {
 });
 
 //admin -> notifications
-router.get("/admin/notification", (req, res) => {
-   res.render("admin/notification");
+router.get("/admin/notifications", (req, res) => {
+   res.send("This route is still under development. will be added in next version");
 });
 
 
