@@ -26,7 +26,9 @@ app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(sanitizer());
-mongoose.connect("mongodb://localhost/LMS1", {useNewUrlParser : true});
+// mongoose.connect("mongodb://localhost/LMS1", {useNewUrlParser : true});
+mongoose.connect("mongodb://azad71:magna-carta#1215@ds257054.mlab.com:57054/library_management_system", {useNewUrlParser : true});
+
 mongoose.set('useFindAndModify', false);
 
 
