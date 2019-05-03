@@ -20,14 +20,14 @@ const express = require("express"),
     indexRoutes = require("./routes/index"),
     middleware = require("./middleware");
 
-
+console.log(process.env.db_url);
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(sanitizer());
 // mongoose.connect("mongodb://localhost/LMS1", {useNewUrlParser : true});
-mongoose.connect("mongodb://azad71:magna-carta#1215@ds257054.mlab.com:57054/library_management_system", {useNewUrlParser : true});
+mongoose.connect(process.env.db_url, {useNewUrlParser : true});
 
 mongoose.set('useFindAndModify', false);
 
