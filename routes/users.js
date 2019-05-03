@@ -320,7 +320,7 @@ router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
         
       var pos = tempId.indexOf(req.params.book_id);
       foundUser.bookIssueInfo.splice(pos, 1);
-      
+   
       Book.findById(req.params.book_id, (err, foundBook) => {
          if(err) {
             console.log(err);

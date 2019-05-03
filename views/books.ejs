@@ -23,13 +23,20 @@
           
            <% if(currentUser) { %>
           <ul class="navbar-nav ml-auto">
+            
+             <%if(currentUser.violationFlag) { %>
+              <li class="nav-item align-self-center mr-2">
+                <i class="fa fa-flag text-danger"></i>
+              </li>
+            <% } %>
+            
             <li class="nav-item dropdown mr-3">
               <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
                 <i class="fa fa-user"></i> Welcome <%=user.username%>
               </a>
               <div class="dropdown-menu">
                 <%if(!currentUser.isAdmin) { %>
-                  <a href="/user/<%=user._id%>" class="dropdown-item">
+                  <a href="/user/1/profile" class="dropdown-item">
                     <i class="fa fa-user-circle"></i> Profile
                   </a>
                   <a href="/userLogout" class="dropdown-item">
