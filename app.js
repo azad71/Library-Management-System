@@ -20,14 +20,15 @@ const express = require("express"),
     indexRoutes = require("./routes/index"),
     middleware = require("./middleware");
 
-console.log(process.env.db_url);
+
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({extended : true}));
 app.use(sanitizer());
-// mongoose.connect("mongodb://localhost/LMS1", {useNewUrlParser : true});
-mongoose.connect(process.env.db_url, {useNewUrlParser : true});
+
+const url = process.env.db_url || "mongodb://localhost/LMS1";
+mongoose.connect(url, {useNewUrlParser : true});
 
 mongoose.set('useFindAndModify', false);
 
