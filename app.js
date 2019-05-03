@@ -14,14 +14,12 @@ const express = require("express"),
     Activity = require("./models/activity"),
     Issue = require("./models/issue"),
     Comment = require("./models/comment"),
-   //  seedDB = require("./SeedDB"),
     userRoutes = require("./routes/users"),
     adminRoutes = require("./routes/admin"),
     bookRoutes = require("./routes/books"),
     indexRoutes = require("./routes/index"),
     middleware = require("./middleware");
 
-// seedDB();
 
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
@@ -50,7 +48,7 @@ passport.deserializeUser(User.deserializeUser());
 
 
 app.use(function(req, res, next) {
-   res.locals.currentUser = req.user;
+   res.locals.currentUser   = req.user;
    res.locals.error         = req.flash("error");
    res.locals.success       = req.flash("success");
    res.locals.warning       = req.flash("warning"); 

@@ -23,7 +23,7 @@ router.get("/user/:page", middleware.isLoggedIn, (req, res) => {
          return res.redirect("/");
       } else {
          Activity.find({"user_id.id": req.user._id})
-         .sort({entryTime: 'desc'})
+         .sort({entryTime : 'desc'})
          .skip((perPage*page) - perPage)
          .limit(perPage)
          .exec((err, foundActivity) => {
@@ -163,6 +163,10 @@ router.get("/user/1/notification", (req, res) => {
 router.post("/books/:book_id/issue/:user_id", middleware.isLoggedIn, (req, res)=> {
    if(req.user.violationFlag) {
       req.flash("error", "You are flagged for violating rules/delay on returning books/paying fines. Untill the flag is lifted, You can't issue any books");
+      return res.redirect("back");
+   }
+   if(req.user.bookIssueInfo.length >= 5) {
+      req.flash("warning", "You can't issue more than 5 books at a time");
       return res.redirect("back");
    }
    Book.findById(req.params.book_id, (err, foundBook) => {
@@ -353,6 +357,7 @@ router.get("/books/details/:book_id", (req, res) => {
         console.log(err);
         return res.redirect("/books/all/all/1");
      } else {
+         console.log(foundBook);
         res.render("user/bookDetails", {book : foundBook});
      }
   });

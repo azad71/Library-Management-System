@@ -11,6 +11,8 @@ router.get("/books/:filter/:value/:page", (req, res, next) => {
    var perPage = 16;
    var page = req.params.page || 1;
    
+   // console.log(req.params.filter, req.params.value);
+   
    if(req.params.filter == "title") {
       Book
       .find({ "title" : req.params.value} )
@@ -108,8 +110,6 @@ router.get("/books/:filter/:value/:page", (req, res, next) => {
       });
    }
 });
-
-
 
 //Book Search
 router.post("/books/:filter/:value/:page", (req, res, next) => {
