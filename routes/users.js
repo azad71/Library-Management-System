@@ -367,7 +367,7 @@ router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
 });
 
 //user -> book details
-router.get("/books/details/:book_id", (req, res) => {
+router.get("/books/details/:book_id",  (req, res) => {
   Book.findById(req.params.book_id).populate("comments").exec((err, foundBook) => {
      if(err) {
         console.log(err);
@@ -379,7 +379,7 @@ router.get("/books/details/:book_id", (req, res) => {
 });
 
 //user -> create new comment
-router.post("/books/details/:book_id", middleware.isLoggedIn, (req, res) => {
+router.post("/books/details/:book_id/comment", middleware.isLoggedIn, (req, res) => {
    // console.log(req.params.book_id);
    Book.findById(req.params.book_id, (err, book) => {
       // console.log(book);
