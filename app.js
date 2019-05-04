@@ -63,15 +63,11 @@ app.use(function(req, res, next) {
 //photo upload
 app.post("/user/:page/image", middleware.isLoggedIn, middleware.upload.single("image"), (req, res) => {
   User.findById(req.user._id, (err, foundUser) => {
-     if(err) throw err;
-     const imagePath = path.join(__dirname, '/public/image/profile/');
-      if(foundUser.image) {
-       fs.unlink(imagePath+foundUser.image, (err) => {
-          if (err) {
-              console.log("Failed to delete previous photo at photo upload");
-              return res.redirect("back");
-          }
-       });
+    if(err) throw err;
+    
+    const imagePath = path.join(__dirname, '/public/image/profile/');
+    if(fs.existsSync(imagePath+foundUser.image)) {
+        deleteImage(imagePath+foundUser.image);
     }
     
     const fileUpload = new resize(imagePath);
@@ -96,21 +92,23 @@ app.post("/user/:page/image", middleware.isLoggedIn, middleware.upload.single("i
       res.redirect("/user/1/profile");
     });
     
-   });
+  });
 });
 
 //user -> delete profile
 app.delete("/user/1/delete-profile", middleware.isLoggedIn, (req, res) => {
-    if(req.user.image) {
-        deleteImage(req.user.image);
-    }
    User.findByIdAndRemove(req.user._id, (err, foundUser) => {
-      if(err) {
-         console.log("Failed to find user at delete profile");
-         return res.redirect("back");
-      } else {
+        if(err) {
+            console.log("Failed to find user at delete profile");
+            return res.redirect("back");
+        } else {
+          
+        const imagePath = path.join(__dirname, '/public/image/profile/');
+        if(fs.existsSync(imagePath+foundUser.image)) {
+            deleteImage(imagePath+foundUser.image);
+        }
          
-         Issue.deleteMany({"user_id.id" : foundUser._id}, (err, foundIssues) => {
+        Issue.deleteMany({"user_id.id" : foundUser._id}, (err, foundIssues) => {
             if(err) {
                console.log("Failed to find all issues related to this user at delete profile");
                return res.redirect("back");
@@ -140,35 +138,35 @@ app.delete("/user/1/delete-profile", middleware.isLoggedIn, (req, res) => {
 app.get("/admin/users/delete/:user_id", middleware.isAdmin, (req, res) => {
     User.findByIdAndRemove(req.params.user_id, (err, deletedUser) => {
        
-      if(err) {
-          console.log("Failed to find user at /admin/users/delete/:user_id GET");
-          return res.redirect("back");
-      }
+    if(err) {
+      console.log("Failed to find user at /admin/users/delete/:user_id GET");
+      return res.redirect("back");
+    }
        
-      if(deletedUser.image) {
-          deleteImage(deletedUser.image);
-      }
+    const imagePath = path.join(__dirname, '/public/image/profile/');
+    if(fs.existsSync(imagePath+deletedUser.image)) {
+        deleteImage(imagePath+deletedUser.image);
+    }
        
-      Issue.deleteMany({"user_id.id" : deletedUser._id}, (err)=> {
-          if(err) {
-              console.log("Failed to found issues at /admin/users/delete/:user_id GET");
-              return res.redirect("back");
-          }
-          Comment.deleteMany({"author.id" : deletedUser._id}, (err) => {
+    Issue.deleteMany({"user_id.id" : deletedUser._id}, (err)=> {
+        if(err) {
+            console.log("Failed to found issues at /admin/users/delete/:user_id GET");
+            return res.redirect("back");
+        }
+        Comment.deleteMany({"author.id" : deletedUser._id}, (err) => {
+            if(err) {
+                console.log("Failed to find all comments related to this user at /admin/users/delete/:user_id GET");
+                return res.redirect("back");
+            } 
               
-              if(err) {
-                  console.log("Failed to find all comments related to this user at /admin/users/delete/:user_id GET");
-                  return res.redirect("back");
-              } 
-              
-              Activity.deleteMany({"user_id.id" : deletedUser._id}, (err) => {
+            Activity.deleteMany({"user_id.id" : deletedUser._id}, (err) => {
                   
-                  if(err) {
-                      console.log("Failed to find all activities related to this user at /admin/users/delete/:user_id GET");
-                      return res.redirect("back");
-                  }
-                  req.flash("success", "An user named " + deletedUser.firstName + " " + deletedUser.lastName + " is just deleted!");
-                  res.redirect("/admin/users/1"); 
+                if(err) {
+                    console.log("Failed to find all activities related to this user at /admin/users/delete/:user_id GET");
+                    return res.redirect("back");
+                }
+                req.flash("success", "An user named " + deletedUser.firstName + " " + deletedUser.lastName + " is just deleted!");
+                res.redirect("/admin/users/1"); 
               });
           });
       });
@@ -183,14 +181,13 @@ app.use(adminRoutes);
 app.use(bookRoutes);
 app.use(indexRoutes);
 
-function deleteImage(image, next) {
-    const imagePath = path.join(__dirname, '/public/image/profile/'+image);
-       fs.unlink(imagePath, (err) => {
-          if (err) {
-             console.log("Failed to delete image at delete profile");
-             return next(err);
-          }
-       });
+function deleteImage(imagePath, next) {
+    fs.unlink(imagePath, (err) => {
+      if (err) {
+         console.log("Failed to delete image at delete profile");
+         return next(err);
+      }
+  });
 }
 
 app.listen(process.env.PORT, process.env.IP, () =>{
