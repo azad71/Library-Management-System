@@ -1,7 +1,6 @@
 //Importing modules
 const express = require("express"),
       router = express.Router(),
-      passport = require("passport"),
       middleware = require("../middleware");
 
 //Importing models
@@ -56,50 +55,6 @@ router.get("/user/:page", middleware.isLoggedIn, (req, res) => {
          });
       }
    });
-});
-
-//user login handler
-router.get("/userLogin", (req, res) => {
-   res.render("user/userLogin");
-});
-
-router.post("/userLogin", passport.authenticate("local", {
-        successRedirect : "/user/1",
-        failureRedirect : "/userLogin",
-    }), (req, res)=> {
-});
-
-//user sign up handler
-router.get("/signUp", (req, res) => {
-   res.render("user/userSignup");
-});
-
-router.post("/signUp", (req, res) => {
-   
-   const newUser = new User({
-      firstName : req.body.firstName,
-      lastName : req.body.lastName,
-      username : req.body.username,
-      email : req.body.email,
-      gender : req.body.gender,
-      address : req.body.address,
-   });
-   
-   User.register(newUser, req.body.password, (err, user) =>{
-      if(err) {
-         return res.render("user/userSignup");
-      }
-      passport.authenticate("local")(req, res, ()=> {
-        
-        res.redirect("/user/1");
-      });
-   });
-});
-
-//user -> user logout handler
-router.get("/userLogout", (req, res) => {
-   req.logout();
-   res.redirect("/");
 });
 
 //user -> profile
@@ -173,7 +128,6 @@ router.put("/user/1/update-profile", middleware.isLoggedIn, (req, res) => {
 router.get("/user/1/notification", (req, res) => {
    res.render("user/notification");
 });
-
 
 //user -> issue a book
 router.post("/books/:book_id/issue/:user_id", middleware.isLoggedIn, (req, res)=> {
@@ -305,65 +259,113 @@ router.post("/books/:book_id/renew", middleware.isLoggedIn, (req, res) => {
 });
 
 //user -> return book
-router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
-  User.findById(req.user._id, (err, foundUser) => {
-    if(err) {
-       console.log("Error at finding the user");
-       return res.redirect("back");
-    } else {
+// router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
+//  User.findById(req.user._id, (err, foundUser) => {
+//     if(err) {
+//        console.log("Error at finding the user");
+//        return res.redirect("back");
+//     } else {
        
-      var tempId = [];
+//       var tempId = [];
             
-      foundUser.bookIssueInfo.forEach(book => {
-         tempId.push(String(book._id));
-      });
+//       foundUser.bookIssueInfo.forEach(book => {
+//          tempId.push(String(book._id));
+//       });
         
-      var pos = tempId.indexOf(req.params.book_id);
-      foundUser.bookIssueInfo.splice(pos, 1);
+//       var pos = tempId.indexOf(req.params.book_id);
+//       foundUser.bookIssueInfo.splice(pos, 1);
    
-      Book.findById(req.params.book_id, (err, foundBook) => {
-         if(err) {
-            console.log(err);
-            return res.redirect("back");
-         } else {
-            foundBook.stock += 1;
-            foundBook.save();
-             Issue.findOneAndRemove({"user_id.id" : req.user._id, "book_info.id" : req.params.book_id}, (err, deletedBook) => {
-               if(err) {
-                  console.log(err);
-                  return res.redirect("back");
-               }
-               if(deletedBook.book_info.returnDate < Date.now()) {
-                  foundUser.violationFlag = false;
-                  foundUser.save();
-               }
+//       Book.findById(req.params.book_id, (err, foundBook) => {
+//          if(err) {
+//             console.log(err);
+//             return res.redirect("back");
+//          } else {
+//             foundBook.stock += 1;
+//             foundBook.save();
+//             Issue.findOneAndRemove({"user_id.id" : req.user._id, "book_info.id" : req.params.book_id}, (err, deletedBook) => {
+//                if(err) {
+//                   console.log(err);
+//                   return res.redirect("back");
+//                }
+//                if(deletedBook.book_info.returnDate < Date.now()) {
+//                   foundUser.violationFlag = false;
+//                   foundUser.save();
+//                }
                
-               const acitvity = {
-                info : {
-                   id : deletedBook.book_info.id,
-                   title : deletedBook.book_info.title,
-                },
-                category : "Return",
-                time : {
-                   id : deletedBook._id,
-                   issueDate : deletedBook.book_info.issueDate,
-                   returnDate : deletedBook.book_info.returnDate,
-                },
-                user_id : {
-                   id : req.user._id,
-                   username : req.user.username,
-                }
-             };
+//                const acitvity = {
+//                 info : {
+//                    id : deletedBook.book_info.id,
+//                    title : deletedBook.book_info.title,
+//                 },
+//                 category : "Return",
+//                 time : {
+//                    id : deletedBook._id,
+//                    issueDate : deletedBook.book_info.issueDate,
+//                    returnDate : deletedBook.book_info.returnDate,
+//                 },
+//                 user_id : {
+//                    id : req.user._id,
+//                    username : req.user.username,
+//                 }
+//              };
              
-               Activity.create(acitvity, (err, newAcitvity) => {
-                  if(err) throw err;
-                  res.redirect("/books/return-renew");
-               });
-            });
-         } 
+//                Activity.create(acitvity, (err, newAcitvity) => {
+//                   if(err) throw err;
+//                   res.redirect("/books/return-renew");
+//                });
+//             });
+//          } 
+//       });
+//     }
+//  });
+// });
+router.post("/books/:book_id/return", middleware.isLoggedIn, (req, res) => {
+   const [...tempId] = req.user.bookIssueInfo;
+   const pos = tempId.indexOf(req.params.book_id);
+   
+   Book.findById(req.params.book_id, (err, foundBook) => {
+      if(err) {
+         console.log("Failed to find books at /books/:book_id/return POST");
+         return res.redirect("back");
+      }
+      foundBook.stock += 1;
+      foundBook.save();
+          
+      Issue.findOneAndRemove({"user_id.id" : req.user._id, "book_info.id" : req.params.book_id}, (err, deletedBook) => {
+         if(err) {
+            console.log("Failed to remove issues at /books/:book_id/return POST");
+            return res.redirect("back");
+         }
+          
+         if(deletedBook.book_info.returnDate < Date.now()) {
+            req.user.violationFlag = false;
+         }
+           
+         req.user.bookIssueInfo.splice(pos, 1);
+         req.user.save();
+         const acitvity = {
+            info : {
+               id : deletedBook.book_info.id,
+               title : deletedBook.book_info.title,
+            },
+            category : "Return",
+            time : {
+               id : deletedBook._id,
+               issueDate : deletedBook.book_info.issueDate,
+               returnDate : deletedBook.book_info.returnDate,
+            },
+            user_id : {
+               id : req.user._id,
+               username : req.user.username,
+            }
+         };
+         
+         Activity.create(acitvity, (err, newAcitvity) => {
+            if(err) throw err;
+              res.redirect("/books/return-renew");
+         });
       });
-    }
-  });
+   });
 });
 
 //user -> book details
