@@ -71,7 +71,11 @@ This module can be accessed by anyone
 * Show all books
 * Find books on filtered search
 
+## Few notes about this app
+
 Code borrowed for pagination and photo resize from [here](https://evdokimovm.github.io/)
+
+It's not a full-fledged library management system neither optimized for commercial use as some standards like RESTful routing, efficient Data Modeling, authentication, error handling are not applied properly.
 
 
 
