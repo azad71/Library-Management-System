@@ -1,0 +1,142 @@
+<% include ../partials/header %>
+
+    
+<!--NAVIGATION BAR FOR ADMIN-->
+<% include ../partials/adminNav %>
+
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-users"></i> Users</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+          <a href="/admin" class="btn btn-light btn-block">
+          <i class="fa fa-arrow-left"></i> Back To Dashboard
+        </a>
+      </div>
+      <div class="col-md-6">
+        <form action="/admin/users/1" method="POST">
+           <div class="input-group">
+            <input name="searchUser" type="text" class="form-control" placeholder="Search User by First Name, Last Name, username, E-mail">
+            <span class="input-group-btn">
+              <button class="btn btn-primary">Search</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% include ../partials/alerts %>
+
+<!-- USERS -->
+<section id="users">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Users</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Name</th>
+                <th>User name</th>
+                <th>Email</th>
+                 <th>Gender</th>
+                <th>Date Regisetered</th>
+                <th>Violation flag</th>
+                <th>Fine</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              
+            <% users.forEach(user => { %>
+              <%if (user.isAdmin) return; %>
+                <tr>
+                <td><%=user.firstName + " " + user.lastName%></td>
+                <td><a href="/admin/users/profile/<%=user._id%>" title="Visit this user"><%=user.username%></a></td>
+                <td><%=user.email%></td>
+                 <td><%=user.gender%></td>
+                <td><%=user.joined.toDateString()%></td>
+                <td><%=user.violationFlag%></td>
+                <td>$<%=user.fines%></td>
+                <td>
+                  <%if(user.bookIssueInfo.length > 0) { %>
+                  <a href="/admin/users/delete/<%=user._id%>" title="This user has books in possession. Are you sure to delete this user?" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                <%  } else { %>
+                  <a href="/admin/users/delete/<%=user._id%>" title="Delete User" class="btn btn-sm btn-danger">
+                    <i class="fa fa-trash"></i>
+                  </a>
+                <% } %>
+                
+                <% if(user.violationFlag) { %> 
+                    <a href="/admin/users/flagged/<%=user._id%>" title="Lift the flag" class="btn btn-sm btn-warning">
+                      <i class="fa fa-flag"></i>
+                    </a>
+                <%  } else {  %>
+                    <a href="/admin/users/flagged/<%=user._id%>" title="Warn user" class="btn btn-sm btn-success">
+                      <i class="fa fa-flag"></i>
+                    </a>
+                <%  } %>
+                </td>
+              </tr>
+            <% }); %>
+            </tbody>
+          </table>
+
+          <% if (pages > 0) { %>
+            <nav class="mx-auto mb-2">
+              <ul class="pagination ">
+            
+            <% if (current == 1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+            <% } else { %>
+                <li class="page-item"><a href="/admin/users/1" class="page-link">First</a></li>
+            <% } %>
+            
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="page-item disabled"><a class="page-link">...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                      <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="/admin/users/<%= i %>"> <%= i %></a> </li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                          <li class="page-item disabled"><a class="page-link">...</a></li>
+                      <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a href="/admin/users/<%= pages %>" class="page-link">Last</a></li>
+                <% } %>
+            </ul>
+          </nav>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<% include ../partials/footer %>

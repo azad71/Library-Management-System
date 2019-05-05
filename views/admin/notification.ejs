@@ -1,0 +1,111 @@
+<% include ../partials/header %>
+
+<!--NAVIGATION BAR FOR ADMIN-->
+<% include ../partials/adminNav %>
+
+<!--DASHBOARD SECTION-->
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-bell"></i> Notification</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--ACTIONS-->
+<section id="actions" class="py-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+          <a href="/user" class="btn btn-light btn-block">
+          <i class="fa fa-arrow-left"></i> Back To Dashboard
+        </a>
+      </div>
+      
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" placeholder="Search notifications...">
+          <span class="input-group-btn">
+            <button class="btn btn-primary">Search</button>
+          </span>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</section>
+
+<!--NOTIFICATIONS-->
+<section class="mt-4 py-3">
+    <div class="container">
+        <div class="col-md-10 mx-auto">
+        
+        <div class="card">
+          <div class="card-header text-center">
+            <h4>Recent Notifications</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Info</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>User1 due $5.00 fines. Notify to pay fines</td></td>
+                <td>Fine</td>
+                <td>July 11, 2017</td>
+                <td>
+                  <a href="#" class="btn btn-sm btn-warning">
+                   <i class="fa fa-bell"></i>
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td>User2's return date for The old man and the sea is about to over</td>
+                <td>Return</td>
+                <td>July 09, 2017</td>
+                <td>
+                  <a href="#" class="btn btn-sm btn-warning">
+                   <i class="fa fa-bell"></i>
+                  </a>
+                </td>
+              </tr>
+
+              <tr>
+                <td>User3 has violated a terms and conditions</td>
+                <td>Violation</td>
+                <td>July 10, 2017</td>
+                 <td>
+                  <a href="#" class="btn btn-sm btn-warning">
+                   <i class="fa fa-bell"></i>
+                  </a>
+                </td>
+              </tr>
+              
+            </tbody>
+          </table>
+          
+          <nav class="ml-3">
+            <ul class="pagination offset-md-4">
+              <li class="page-item disabled"><a href="#" class="page-link"><i class="fa fa-angle-double-left"></i> Previous</a></li>
+              <li class="page-item active"><a href="#" class="page-link">1</a></li>
+              <li class="page-item"><a href="#" class="page-link">2</a></li>
+              <li class="page-item"><a href="#" class="page-link">3</a></li>
+              <li class="page-item"><a href="#" class="page-link">Next <i class="fa fa-angle-double-right"></i></a></li>
+            </ul>
+          </nav>
+          
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<% include ../partials/footer %>

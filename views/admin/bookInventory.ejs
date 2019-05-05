@@ -1,0 +1,123 @@
+<% include ../partials/header %>
+
+    
+<!--NAVIGATION BAR FOR ADMIN-->
+<% include ../partials/adminNav %>
+
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-pencil"></i> Book Inventory</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--ACTIONS-->
+<section id="search_bar" class="my-3 py-4 bg-light">
+  <div class="container">
+   <form action="/admin/bookInventory/all/all/1" method="POST">
+    <div class="row">
+        <div class="col-md-5 p-1">
+          <select name="filter" class="form-control">
+            <option selected disabled>Select Category</option>
+            <option  name="title">By Title</option>
+            <option  name="author">By Author</option>
+            <option  name="category">By Category</option>
+            <option  name="ISBN">By ISBN</option>
+          </select>
+        </div>
+        
+         <div class="col-md-5 p-1">
+          <input name="searchName"  type="text" class="form-control" placeholder="Search Books">
+        </div>
+        
+         <div class="col-md-2 p-1">
+          <input type="submit" class="btn btn-outline-primary btn-block" value="Search">
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<% include ../partials/alerts %>
+
+<!-- BOOK INVENTORY -->
+<section id="bookInventory" class="mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>ISBN</th>
+                <th>Catergory</th>
+                <th>In Stock</th>
+                <th>Edit</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+          <% books.forEach(book => { %>
+              
+              <tr>
+                <td><%= book.title %></td>
+                <td><%= book.author %> </td>
+                <td><%= book.ISBN %></td>
+                <td><%= book.category %></td>
+                <td><%= book.stock %></td>
+                <td>
+                    <span>
+                        <a href="/admin/book/update/<%=book._id%>" class="btn btn-info btn-sm">Update</a>
+                        <a href="/admin/book/delete/<%=book._id%>" class="btn btn-sm btn-danger">Delete</a>
+                    </span>
+                </td>
+              </tr>
+          <% }); %>
+              
+            </tbody>
+          </table>
+
+          <% if (pages > 0) { %>
+            <nav class="ml-3 mb-2">
+              <ul class="pagination offset-md-3">
+            
+            <% if (current == 1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+            <% } else { %>
+                <li class="page-item"><a href="/admin/bookInventory/<%=filter%>/<%=value%>/1" class="page-link">First</a></li>
+            <% } %>
+            
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="page-item disabled"><a class="page-link">...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                      <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="/admin/bookInventory/<%=filter%>/<%=value%>/<%= i %>"> <%= i %></a> </li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                          <li class="page-item disabled"><a class="page-link">...</a></li>
+                      <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a href="/admin/bookInventory/<%=filter%>/<%=value%>/<%= pages %>" class="page-link">Last</a></li>
+                <% } %>
+            </ul>
+          </nav>
+          <% } %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% include ../partials/footer %>

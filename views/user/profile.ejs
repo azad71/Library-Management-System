@@ -1,0 +1,239 @@
+<% include ../partials/header %>
+
+<!--NAVIGATION BAR FOR USER-->
+<% include ../partials/userNav %>
+
+<!--DASHBOARD SECTION-->
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-user"></i> Profile</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--ACTIONS-->
+<section id="actions" class="py-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+          <a href="/user/1" class="btn btn-light btn-block">
+          <i class="fa fa-arrow-left"></i> Back To Dashboard
+        </a>
+      </div>
+      
+      <div class="col-md-3">
+        <a href="" class="btn btn-primary btn-block" data-toggle="modal" data-target="#changePasswordModal">
+          <i class="fa fa-key"></i> Change Password
+        </a>
+      </div>
+      
+      <div class="col-md-3">
+        <a href="" class="btn btn-warning btn-block" data-toggle="modal" data-target="#updateProfileModal">
+          <i class="fa fa-refresh"></i> Update Profile
+        </a>
+      </div>
+      
+      <% if(currentUser.bookIssueInfo.length > 0) { %>
+        <div class="col-md-3">
+          <a class="btn btn-danger btn-block" disabled title="You have to return all borrowed/renewed books first">
+            <i class="fa fa-remove"></i> Delete Profile
+          </a>
+        </div>
+      <% } else { %>
+      
+      <div class="col-md-3">
+        <a href="" class="btn btn-danger btn-block" data-toggle="modal" data-target="#deleteProfileModal">
+          <i class="fa fa-remove"></i> Delete Profile
+        </a>
+      </div>
+    <% } %> 
+    </div>
+  </div>
+</section>
+
+<% include ../partials/alerts %>
+
+<!--PROFILE-->
+<section class="mt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+              <img src="/image/profile/<%=currentUser.image || "profile.png"%>" class="card-img-top rounded-circle">
+              <a href="" class="text-muted ml-5" data-toggle="modal" data-target="#changePhotoModal"><i class="fa fa-camera"></i> Change Photo</a>
+            </div>
+            <div class="col-md-6">
+                <h4 class="text-center pb-3">Personal Informations</h4>
+                
+                <ul class="list-group list-group-flush">
+                  <li class="list-group-item">First Name :   <%=currentUser.firstName%></li>
+                  <li class="list-group-item">Last Name :   <%=currentUser.lastName%></li>
+                  <li class="list-group-item">Username :   <%=currentUser.username%></li>
+                  <li class="list-group-item">Joined :    <%=currentUser.joined.toDateString()%></li>
+                  <li class="list-group-item">Email :  <%=currentUser.email%> </li>
+                  <li class="list-group-item">Address :  <%=currentUser.address%></li>
+                  <li class="list-group-item text-danger font-weight-bold">Violation Flag : <%=currentUser.violationFlag%> </li>
+                  <li class="list-group-item">Due Fines :   $<%=currentUser.fines%></li>
+                </ul>
+            </div>
+            
+            <div class="col-md-3">
+                <h4 class="text-center pb-3">Terms & Conditions</h4>
+                <ul>
+                    <li>Rule x should be abided by everyone</li>
+                    <li>Rule x should be abided by everyone</li>
+                    <li>Rule x should be abided by everyone</li>
+                    <li>Rule x should be abided by everyone</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Delete Profile Modal-->
+<div class="modal fade" id="deleteProfileModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-danger text-white">
+        <h5 class="modal-title" id="deleteProfileModalLabel">
+          Once you press yes, all of your issues, comments and activities will be deleted permanently. Are you sure?
+        </h5>
+        <button class="close" data-dismiss="modal" ><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/1/delete-profile?_method=DELETE" method="POST">
+          
+          <input type="submit" value="Yes" class="btn btn-danger btn-block m-1">
+          
+        </form>
+        <input type="button" value="No" data-dismiss="modal" class="btn btn-success btn-block m-1">
+      </div> 
+    </div>
+  </div>
+</div>
+
+
+<!--Change Password Modal-->
+<div class="modal fade" id="changePasswordModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="passwordModalLabel">
+          Edit Password
+        </h5>
+        <button class="close" data-dismiss="modal" ><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/1/update-password?_method=PUT" method="POST">
+          <div class="form-group">
+            <label for="password" class="form-control-label">Old Password</label>
+            <input type="password" name="oldPassword" class="form-control">
+          </div>
+          <div class="form-group">
+            <label for="password" class="form-control-label">New Password</label>
+            <input id="password" type="password" name="password" class="form-control">
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="form-control-label">Confirm Password</label>
+            <input id="confirmPassword" type="password" name="confirmPassword" class="form-control">
+             <span id='message'></span>
+          </div>
+          <button id="button" class="btn btn-primary btn-block">Submit</button>
+        </form>
+      </div> 
+    </div>
+  </div>
+</div>
+
+<!--Update Profile Modal-->
+<div class="modal fade" id="updateProfileModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-white">
+        <h5 class="modal-title" id="updateProfileModalLabel">
+          Edit Profile
+        </h5>
+        <button class="close" data-dismiss="modal" ><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form action="/user/1/update-profile?_method=PUT" method="POST">
+          <div class="form-group">
+            <label for="firstName" class="form-control-label">Edit First Name</label>
+            <input type="text" name="firstName" class="form-control"  value="<%=currentUser.firstName%>">
+          </div>
+          <div class="form-group">
+            <label for="lastName" class="form-control-label">Edit Last Name</label>
+            <input type="text" name="lastName" class="form-control" value="<%=currentUser.lastName%>">
+          </div>
+          
+          <div class="form-group">
+            <label for="email" class="form-control-label">Change Email</label>
+            <input type="email" name="email" class="form-control" value="<%=currentUser.email%>">
+          </div>
+          
+          <div class="form-group">
+            <label class="form-control-label">Gender</label>
+            <select name="gender" class="form-control">
+              <%if(currentUser.gender == 'Male') { %>
+                <option selected name="male">Male</option>
+            <% } else if(currentUser.gender =='Female') { %>
+                <option selected name="female">Female</option>
+            <% } else { %>  
+              <option selected name="others">Others</option>
+            <% } %>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="address" class="form-control-label">Address</label>
+            <input type="text" name="address" class="form-control" value="<%=currentUser.address%>">
+          </div>
+          
+          <button class="btn btn-warning btn-block">Submit</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--Change Photo Modal-->
+<div class="modal fade" id="changePhotoModal">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="passwordModalLabel">
+          Change Photo
+        </h5>
+        <button class="close" data-dismiss="modal" ><span>&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" action="/user/1/image" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="photo" class="form-control-label">Change Photo</label>
+            <input type="file"  name="image" class="form-control">
+          </div>
+           <input type="submit" class="btn btn-sm btn-primary m-2" value="Submit">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+  $('#confirmPassword').on('keyup', function () {
+    if ($(this).val() == $('#password').val()) {
+      $('#message').html('Matched').css('color', 'green');
+      $('#button').removeClass("d-none")
+    } 
+    else{
+      $('#message').html('Not matched!').css('color', 'red');
+      $('#button').addClass("d-none");
+    }
+});
+</script>
+
+<% include ../partials/footer %>

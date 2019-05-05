@@ -1,0 +1,134 @@
+<% include ../partials/header %>
+
+    
+<!--NAVIGATION BAR FOR ADMIN-->
+<% include ../partials/adminNav %>
+
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-pencil"></i> User Activities</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+          <a href="/admin" class="btn btn-light btn-block">
+          <i class="fa fa-arrow-left"></i> Back To Dashboard
+        </a>
+      </div>
+      <div class="col-md-6">
+        <form action="/admin/users/activities/<%=activities[0].user_id.id%>" method="POST">
+          <div class="input-group">
+            <input name="category" type="text" class="form-control" placeholder="Search activities by category...">
+            <span class="input-group-btn">
+              <button class="btn btn-primary">Search</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- Activities -->
+<section id="posts">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header text-center">
+            <h4>Recent Activities</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Info</th>
+                <th>Category</th>
+                <th>Date Posted</th>
+              </tr>
+            </thead>
+            <tbody>
+              <%for(let i = 0; i < activities.length; i++) { %>
+    
+                <tr>
+                <% if(activities[i].category =="Issue") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> issued <%=activities[i].info.title%> 
+                      </td>
+                      <td>Issue</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } else if(activities[i].category =="Return") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> returned <%=activities[i].info.title%> 
+                      </td>
+                      <td>Return</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% }  else if(activities[i].category =="Renew") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> renewed <%=activities[i].info.title%> 
+                      </td>
+                      <td>Renew</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Update Profile") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> updated profile
+                      </td>
+                      <td>Update Profile</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Update Password") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> updated password
+                      </td>
+                      <td>Update Password</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Update/Upload Photo") { %>
+                       <td>
+                         <%=activities[i].user_id.username || 'This user'%> update/upload profile
+                      </td>
+                      <td>Update/Upload Profile</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Comment") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> commented on <%=activities[i].info.title%>
+                      </td>
+                      <td>Comment</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } else if(activities[i].category =="Update Comment") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> updated comment on <%=activities[i].info.title%>
+                      </td>
+                      <td>Update Comment</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } else if(activities[i].category =="Delete Comment") { %>
+                      <td>
+                         <%=activities[i].user_id.username || 'This user'%> deleted comment on <%=activities[i].info.title%>
+                      </td>
+                      <td>Delete Comment</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } %>
+              </tr>
+                
+              <%  } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<% include ../partials/footer %>

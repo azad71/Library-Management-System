@@ -1,0 +1,193 @@
+<% include ../partials/header %>
+
+<!--NAVIGATION BAR FOR ADMIN-->
+<% include ../partials/adminNav %>
+
+<!--DASHBOARD SECTION-->
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-gear"></i> Dashboard</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--SEARCH BAR-->
+<section id="actions" class="py-4">
+  <div class="container">
+    <div class="row justify-content-end">
+      <div class="col-md-6">
+        
+        <form action="/admin" method="POST">
+           <div class="input-group">
+            <input name="searchUser" type="text" class="form-control" placeholder="Find activities by username, category">
+            <span class="input-group-btn">
+              <button class="btn btn-primary">Search</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% include ../partials/alerts %>
+
+<!-- POSTS -->
+<section id="posts" class="my-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="card">
+          <div class="card-header text-center">
+            <h4>Recent User Activities</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Info</th>
+                <th>Category</th>
+                <th>Date Posted</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              <%for(let i = 0; i < activities.length; i++) { %>
+    
+                <tr>
+                <% if(activities[i].category =="Issue") { %>
+                      <td>
+                         <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                           <%=activities[i].user_id.username || 'This user'%></a>  issued <%=activities[i].info.title%>
+                      </td>
+                      <td>Issue</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } else if(activities[i].category =="Return") { %>
+                      <td>
+                        <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> returned <%=activities[i].info.title%>
+                      </td>
+                      <td>Return</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% }  else if(activities[i].category =="Renew") { %>
+                      <td>
+                        <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> renewed <%=activities[i].info.title%>
+                      </td>
+                      <td>Renew</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Update Profile") { %>
+                      <td>
+                        <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> updated profile
+                      </td>
+                      <td>Update Profile</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Update Password") { %>
+                      <td>
+                          <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> updated password
+                      </td>
+                      <td>Update Password</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Update/Upload Photo") { %>
+                       <td>
+                         <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> updated/uploaded profile
+                      </td>
+                      <td>Update/Upload Profile</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                      
+                  <% }  else if(activities[i].category =="Comment") { %>
+                      <td>
+                         <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> commented <%=activities[i].info.title%>
+                      </td>
+                      <td>Comment</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } else if(activities[i].category =="Update Comment") { %>
+                      <td>
+                         <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> updated comment on <%=activities[i].info.title%>
+                      </td>
+                      <td>Update Comment</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } else if(activities[i].category =="Delete Comment") { %>
+                      <td>
+                        <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
+                          <%=activities[i].user_id.username || 'This user'%> </a> deleted comment on <%=activities[i].info.title%>
+                      </td>
+                      <td>Delete Comment</td>
+                      <td><%=activities[i].entryTime.toDateString()%></td>
+                  <% } %>
+              </tr>
+                
+              <%  } %>
+              
+            </tbody>
+          </table>
+          
+         <% if (pages > 0) { %>
+            <nav class="mx-auto mb-2">
+              <ul class="pagination ">
+            
+            <% if (current == 1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+            <% } else { %>
+                <li class="page-item"><a href="/admin?page=1" class="page-link">First</a></li>
+            <% } %>
+
+            <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                  <li class="page-item disabled"><a class="page-link">...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                      <li class="page-item active"><a class="page-link"><%= i %></a></li>
+                    <% } else { %>
+                      <li class="page-item"><a class="page-link" href="/admin?page=<%= i %>"> <%= i %></a> </li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                          <li class="page-item disabled"><a class="page-link">...</a></li>
+                      <% } %>
+                    <% } %>
+                    <% if (current == pages) { %>
+                        <li class="page-item disabled"><a class="page-link">Last</a></li>
+                    <% } else { %>
+                        <li class="page-item"><a href="/admin?page=<%= pages %>" class="page-link">Last</a></li>
+                <% } %>
+            </ul>
+          </nav>
+          <% } %>
+          
+        </div>
+      </div>
+      
+      <div class="col-md-3">
+        <div class="card text-center bg-primary text-white p-3 mb-3">
+          <div class="card-block">
+            <h3>Books</h3>
+            <h1 class="display-4"><i class="fa fa-pencil"></i> <%=books.length%></h1>
+            <a href="/admin/bookInventory/all/all/1" class="btn btn-outline-light">View</a>
+          </div>
+        </div>
+
+        <div class="card text-center bg-success text-white p-3 mb-3">
+          <div class="card-block">
+            <h3>Users</h3>
+            <h1 class="display-4"><i class="fa fa-users"></i> <%=users.length%> </h1>
+            <a href="/admin/users/1" class="btn btn-outline-light">Users</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<% include ../partials/footer %>
+

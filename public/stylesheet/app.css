@@ -1,0 +1,27 @@
+.btn-group-xs > .btn, .btn-xs {
+  padding: .40rem .40rem;
+  font-size: .8rem;
+  line-height: .5;
+  border-radius: .2rem;
+}
+
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
+
+footer { 
+  flex: 0 0 auto;
+  display: flex;
+  color: #ccc;
+  margin: 1em;
+  padding: 1em;
+  width: 80%;
+  border-top: 1px solid blue;
+  justify-content: center;
+}
+
+.table-text {
+  color: red;
+  font-weight: bold;
+}

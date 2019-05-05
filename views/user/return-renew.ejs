@@ -1,0 +1,82 @@
+<% include ../partials/header %>
+
+<!--NAVIGATION BAR FOR USER-->
+<% include ../partials/userNav %>
+
+
+<!--DASHBOARD SECTION-->
+<header id="main-header" class="py-2 bg-info text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-retweet"></i> Renew/Return</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!--NOTIFICATIONS-->
+<section class="mt-4 py-3">
+    <div class="container">
+        <div class="col mx-auto">
+        
+        <div class="card">
+          <div class="card-header text-center">
+            <h4>All Renewables/Returnables</h4>
+          </div>
+          <table class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Issue date</th>
+                <th>Return date</th>
+                <th>Category</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <% user.forEach(book => { %>
+                <tr>
+                <td>You have issued <%=book.book_info.title%></td></td>
+                <td><%=book.book_info.author%></td>
+                <td><%=book.book_info.issueDate.toDateString()%></td>
+                <td><%=book.book_info.returnDate.toDateString()%></td>
+                <td><%=book.book_info.category%></td>
+                <td>
+                  
+                  <% if(book.book_info.isRenewed) { %>
+                    <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Renewed!</a>
+                <%  } else if(currentUser.violationFlag && book.book_info.returnDate < Date.now()) { %>
+                    <a class="btn btn-xs btn-warning" title="You can't renew book when you are flagged">Renew</a>
+              <%  } else { %>
+                    <form  action="/books/<%=book.book_info.id%>/renew" method="POST" class="d-inline">
+                     <input class="btn btn-xs btn-warning" type="submit" value="Renew">
+                    </form>
+              <%  } %>
+                  
+                  <form action="/books/<%=book.book_info.id%>/return" method="POST" class="d-inline">
+                   <input class="btn btn-xs btn-info" type="submit" value="Return">
+                  </form>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+          
+          <!--<nav class="ml-3">-->
+          <!--  <ul class="pagination offset-md-4">-->
+          <!--    <li class="page-item disabled"><a href="#" class="page-link"><i class="fa fa-angle-double-left"></i> Previous</a></li>-->
+          <!--    <li class="page-item active"><a href="#" class="page-link">1</a></li>-->
+          <!--    <li class="page-item"><a href="#" class="page-link">2</a></li>-->
+          <!--    <li class="page-item"><a href="#" class="page-link">3</a></li>-->
+          <!--    <li class="page-item"><a href="#" class="page-link">Next <i class="fa fa-angle-double-right"></i></a></li>-->
+          <!--  </ul>-->
+          <!--</nav>-->
+          
+        </div>
+      </div>
+    </div>
+</section>
+
+<% include ../partials/footer %>
