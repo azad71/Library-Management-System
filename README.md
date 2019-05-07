@@ -25,6 +25,9 @@ Open git bash or command line tools at application file and run following npm co
 #### Install dev dependencies if needed
 `npm install nodemon faker --save-dev`
 
+## Run the application
+All data in this application stored in MongoDB. Make sure MongoDB installed in your machine or environment. Keep `mongod` running on background and run `node app.js` on app folder. That's it! 
+
 ## Functionalitites
 
 Whole app is divided into three modules.
