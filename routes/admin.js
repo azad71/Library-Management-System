@@ -10,38 +10,15 @@ const express = require("express"),
       Issue = require("../models/issue"),
       Comment = require("../models/comment");
 
+// importing controller
+const adminController = require('../controllers/admin');
+
+router.get("/dashboard", middleware.isAdmin, adminController.getDashboard);
+
 //admin -> dashboard
-router.get("/admin",middleware.isAdmin,  (req, res) => {
-  var perPage = 10;
-  var page = req.query.page || 1;
-  User.find({}, (err, users) => {
-     if (err) throw new Error("Failed to find users at /admin GET");
-     
-     Book.find({}, (err, books) => {
-        if (err) throw new Error("Failed to find books at /admin GET");
-        
-        Activity.find()
-        .sort({entryTime : 'desc'})
-        .skip((perPage * page) - perPage)
-        .limit(perPage)
-        .exec((err, activities) => {
-           if (err) throw new Error("Failed to find activities at /admin GET");
-           
-           Activity.countDocuments().exec((err, count) => {
-              if(err) throw new Error("Failed to find activities count at /admin GET");
-            
-               res.render("admin/index", {
-                  users : users,
-                  books : books,
-                  activities : activities,
-                  current : page,
-                  pages: Math.ceil(count / perPage),
-               });      
-           });
-        });
-     });
-  });
-});
+
+
+
 
 //admin -> find activities of all users on admin dashboard
 router.post("/admin", middleware.isAdmin, (req, res) => {

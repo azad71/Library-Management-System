@@ -3,6 +3,8 @@ const express = require("express"),
       router = express.Router(),
       middleware = require("../middleware");
 
+// import controller
+const userController = require('../controllers/user');
 //Importing models
 const User = require("../models/user"),
       Activity = require("../models/activity"),
@@ -10,119 +12,18 @@ const User = require("../models/user"),
       Issue = require("../models/issue"),
       Comment = require("../models/comment");
 
-//user -> landing page
-router.get("/user/:page", middleware.isLoggedIn, (req, res) => {
-   const perPage = 5;
-   var page = req.params.page || 1;
-   
-   User.findById(req.user._id, (err, newUser) => {
-      // console.log(newUser);
-      if(err) {
-         console.log(err);
-         return res.redirect("/");
-      } else {
-         
-         if(newUser.bookIssueInfo.length > 0) {
-            Issue.find({"user_id.id" : newUser._id}, (err, foundIssues) => {
-               if(err) return res.redirect("back");
-               
-               for(let issue of foundIssues) {
-                  if(issue.book_info.returnDate < Date.now()) {
-                     newUser.violationFlag = true;
-                     newUser.save();
-                     req.flash("warning", "You are flagged for failed to return " + issue.book_info.title + " in time");
-                     break;
-                  }
-               }
-            });
-         }
-         
-         Activity.find({"user_id.id": req.user._id})
-         .sort({entryTime : 'desc'})
-         .skip((perPage*page) - perPage)
-         .limit(perPage)
-         .exec((err, foundActivity) => {
-            if (err) throw err;
-            Activity.countDocuments().exec((err, count) => {
-               if(err) throw err;
-               res.render("user/index", {
-               user : newUser,
-               current : page,
-               pages: Math.ceil(count / perPage),
-               activity : foundActivity,
-               });
-            }); 
-         });
-      }
-   });
-});
 
-//user -> profile
-router.get("/user/:page/profile", middleware.isLoggedIn, (req, res) => {
-   res.render("user/profile");
-});
+// user -> dashboard
+router.get("/user/:page", middleware.isLoggedIn, userController.getUserDashboard);
+
+// user -> profile
+router.get("/user/:page/profile", middleware.isLoggedIn, userController.getUserProfile);
 
 //user -> update password
-router.put("/user/1/update-password", middleware.isLoggedIn, (req, res) => {
-   User.findByUsername(req.user.username, (err, foundUser) => {
-      if(err) throw err;
-      
-      foundUser.changePassword(req.body.oldPassword, req.body.password, (err)=> {
-         if(err) throw new Error("IncorrectPasswordError: Password or username is incorrect");
-         foundUser.save();
-         
-         const activity = {
-            category : "Update Password",
-            user_id : {
-               id : req.user._id,
-               username : req.user.username,
-             }
-          };
-         
-         Activity.create(activity, (err, newAcitvity) => {
-            if(err) {
-               console.log("Failed to log activity at update password");
-               res.redirect("back");
-            }
-            req.flash("success", "Your password is recently updated. Please log in again to confirm");
-            res.redirect("/userLogin");
-         });
-      });
-   }); 
-});
+router.put("/user/1/update-password", middleware.isLoggedIn, userController.putUpdatePassword);
 
 //user -> update profile
-router.put("/user/1/update-profile", middleware.isLoggedIn, (req, res) => {
-   const userUpdateInfo = {
-     "firstName" : req.body.firstName,
-     "lastName" : req.body.lastName,
-     "email" : req.body.email,
-     "gender" : req.body.gender,
-     "address" : req.body.address,
-   };
-   //userUpdateInfo can be refactored further by implementing user[firstName], user[lastName] thus req.body.user
-   User.findByIdAndUpdate(req.user._id, userUpdateInfo, (err) => {
-      if (err) {
-         console.log("Error at updating profile finding requested user in User Schema");
-         return res.redirect("back");
-      }
-      const activity = {
-         category : "Update Profile",
-         user_id : {
-            id : req.user._id,
-            username : req.user.username,
-          }
-       };
-      
-      Activity.create(activity, (err, newAcitvity) => {
-         if(err) {
-            console.log("Failed to log activity at update profile");
-            return res.redirect("back");
-         }
-         res.redirect("back");
-      });
-   });
-});
+router.put("/user/1/update-profile", middleware.isLoggedIn, userController.putUpdateUserProfile);
 
 //user -> notification
 router.get("/user/1/notification", (req, res) => {

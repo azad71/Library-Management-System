@@ -17,8 +17,11 @@ const express = require("express"),
     userRoutes = require("./routes/users"),
     adminRoutes = require("./routes/admin"),
     bookRoutes = require("./routes/books"),
-    indexRoutes = require("./routes/index"),
-    middleware = require("./middleware");
+    authRoutes = require("./routes/auth"),
+    middleware = require("./middleware"),
+    Seed = require('./seed');
+
+ //Seed(1000);
 
 
 app.set("view engine", "ejs");
@@ -28,7 +31,7 @@ app.use(bodyParser.urlencoded({extended : true}));
 app.use(sanitizer());
 
 const url = process.env.db_url || "mongodb://localhost/LMS1";
-mongoose.connect(url, {useNewUrlParser : true});
+mongoose.connect(url, {useNewUrlParser : true, useUnifiedTopology: true,});
 
 mongoose.set('useFindAndModify', false);
 
@@ -179,7 +182,7 @@ app.get("/admin/users/delete/:user_id", middleware.isAdmin, (req, res) => {
 app.use(userRoutes);
 app.use(adminRoutes);
 app.use(bookRoutes);
-app.use(indexRoutes);
+app.use(authRoutes);
 
 function deleteImage(imagePath, next) {
     fs.unlink(imagePath, (err) => {
@@ -190,7 +193,7 @@ function deleteImage(imagePath, next) {
   });
 }
 
-app.listen(process.env.PORT, process.env.IP, () =>{
+app.listen(3000, () =>{
    console.log("LMS server is running..."); 
 });
     

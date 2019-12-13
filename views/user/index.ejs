@@ -75,111 +75,111 @@
               </tr>
             </thead>
             <tbody>
-               <% activity.forEach(log => { %>
-                <% if(log.category == 'Issue') { %>
+               <% activities.forEach(activity => { %>
+                <% if(activity.category == 'Issue') { %>
                      <tr>
-                        <td>You have <span class="table-text">issued</span> <%=log.info.title%></td></td>
-                        <td><%=log.category%></td>
+                        <td>You have <span class="table-text">issued</span> <%=activity.info.title%></td></td>
+                        <td><%=activity.category%></td>
                         <td>
-                          <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
-                          <p>Return :  <%=log.time.returnDate.toDateString()%></p>
+                          <p>Issue :  <%=activity.time.issueDate.toDateString()%></p>
+                          <p>Return :  <%=activity.time.returnDate.toDateString()%></p>
                           </td>
                         <td>
                          <a href="/books/return-renew" class="btn btn-sm btn-warning" role="button">Return/Renew</a>
                         </td>
                       </tr>  
-               <%  } else if(log.category == 'Return') { %>
+               <%  } else if(activity.category == 'Return') { %>
                       <tr>
-                          <td>You have <span class="table-text">returned</span> <%=log.info.title%></td></td>
-                          <td><%=log.category%></td>
+                          <td>You have <span class="table-text">returned</span> <%=activity.info.title%></td></td>
+                          <td><%=activity.category%></td>
                           <td>
-                            <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
-                            <p>Return :  <%=log.time.returnDate.toDateString()%></p>
+                            <p>Issue :  <%=activity.time.issueDate.toDateString()%></p>
+                            <p>Return :  <%=activity.time.returnDate.toDateString()%></p>
                             </td>
                           <td>
                             <a href="/books/return-renew" class="btn btn-sm btn-success disabled" role="button" aria-disabled="true">Returned Successfully!</a>
                           </td>
                       </tr>
-                 <%  } else if(log.category == 'Comment') { %>
+                 <%  } else if(activity.category == 'Comment') { %>
                         <tr>
-                          <td>You <span class="table-text">commented</span> on <%=log.info.title%></td>
-                          <td><%= log.category %></td>
-                          <td><%=log.entryTime.toDateString()%></td>
-                          <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
+                          <td>You <span class="table-text">commented</span> on <%=activity.info.title%></td>
+                          <td><%= activity.category %></td>
+                          <td><%=activity.entryTime.toDateString()%></td>
+                          <td><a href="/books/details/<%=activity.info.id%>" class="btn btn-sm btn-secondary">
                             <i class="fa fa-angle-double-right"></i> Details
                           </a></td>
                         </tr>
-                 <%  } else if(log.category == 'Fine') {%>
+                 <%  } else if(activity.category == 'Fine') {%>
                          <tr>
-                          <td>You <span class="table-text">paid</span> $<%=log.fine.amount%> fines</td>
-                          <td><%=log.category%></td>
-                          <td><%=log.fine.date%></td>
+                          <td>You <span class="table-text">paid</span> $<%=activity.fine.amount%> fines</td>
+                          <td><%=activity.category%></td>
+                          <td><%=activity.fine.date%></td>
                           <td>
                             <button class="btn btn-sm btn-secondary">
                               <i class="fa fa-check"></i> Paid Successfully
                             </button>
                           </td>
                         </tr>
-                  <%  } else if(log.category == 'Renew') { %>
+                  <%  } else if(activity.category == 'Renew') { %>
                            <tr>
-                              <td>You have <span class="table-text">renewed</span> <%=log.info.title%></td>
-                              <td><%=log.category%></td>
+                              <td>You have <span class="table-text">renewed</span> <%=activity.info.title%></td>
+                              <td><%=activity.category%></td>
                               <td>
-                                <p>Issue :  <%=log.time.issueDate.toDateString()%></p>
-                                <p>Return :  <%=log.time.returnDate.toDateString()%></p>
+                                <p>Issue :  <%=activity.time.issueDate.toDateString()%></p>
+                                <p>Return :  <%=activity.time.returnDate.toDateString()%></p>
                                 </td>
                               <td>
                                 <a href="/books/return-renew" class="btn btn-sm btn-info" role="button">Return</a>
                               </td>
                           </tr>
-                  <% } else if(log.category == 'Update Profile') { %>
+                  <% } else if(activity.category == 'Update Profile') { %>
                             <tr>
                               <td>You have recently <span class="table-text">updated your profile info</span> </td>
-                              <td><%=log.category%></td>
+                              <td><%=activity.category%></td>
                               <td>
-                                <%=log.entryTime.toDateString()%>
+                                <%=activity.entryTime.toDateString()%>
                                 </td>
                               <td>
                                 <a href="/user/1/profile" class="btn btn-sm btn-success" role="button">Visit Profile</a>
                               </td>
                           </tr>
-                  <% } else if(log.category == 'Update Password') { %>
+                  <% } else if(activity.category == 'Update Password') { %>
                             <tr>
                               <td>You have recently <span class="table-text">updated your password</span></td>
-                              <td><%=log.category%></td>
+                              <td><%=activity.category%></td>
                               <td>
-                                <%=log.entryTime.toDateString()%>
+                                <%=activity.entryTime.toDateString()%>
                                 </td>
                               <td>
                                 <button class="btn btn-sm btn-success">Changed Successfully!</button>
                               </td>
                           </tr>
-                  <% } else if(log.category == 'Update/Upload Photo') { %>
+                  <% } else if(activity.category == 'Update/Upload Photo') { %>
                             <tr>
                               <td>You have recently <span class="table-text">updated your profile picture</span></td>
-                              <td><%=log.category%></td>
+                              <td><%=activity.category%></td>
                               <td>
-                                <%=log.entryTime.toDateString()%>
+                                <%=activity.entryTime.toDateString()%>
                                 </td>
                               <td>
                                 <button class="btn btn-sm btn-success">Changed Successfully!</button>
                               </td>
                           </tr>
-                  <% } else if(log.category == 'Update Comment') { %>
+                  <% } else if(activity.category == 'Update Comment') { %>
                         <tr>
-                          <td>You have <span class="table-text">updated your comment</span> on <%=log.info.title%></td>
-                          <td><%= log.category %></td>
-                          <td><%=log.entryTime.toDateString()%></td>
-                          <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
+                          <td>You have <span class="table-text">updated your comment</span> on <%=activity.info.title%></td>
+                          <td><%= activity.category %></td>
+                          <td><%=activity.entryTime.toDateString()%></td>
+                          <td><a href="/books/details/<%=activity.info.id%>" class="btn btn-sm btn-secondary">
                             <i class="fa fa-angle-double-right"></i> Details
                           </a></td>
                         </tr>
-                 <%  } else if(log.category == 'Delete Comment') { %>
+                 <%  } else if(activity.category == 'Delete Comment') { %>
                         <tr>
-                          <td>You have <span class="table-text">deleted your comment</span> on <%=log.info.title%></td>
-                          <td><%= log.category %></td>
-                          <td><%=log.entryTime.toDateString()%></td>
-                          <td><a href="/books/details/<%=log.info.id%>" class="btn btn-sm btn-secondary">
+                          <td>You have <span class="table-text">deleted your comment</span> on <%=activity.info.title%></td>
+                          <td><%= activity.category %></td>
+                          <td><%=activity.entryTime.toDateString()%></td>
+                          <td><a href="/books/details/<%=activity.info.id%>" class="btn btn-sm btn-secondary">
                             <i class="fa fa-angle-double-right"></i> Details
                           </a></td>
                         </tr>

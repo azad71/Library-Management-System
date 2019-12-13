@@ -5,13 +5,14 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "nodemon app.js"
   },
   "author": "Azad Mamun",
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
+    "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-sanitizer": "^1.0.5",
@@ -27,6 +28,6 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.19.4"
   }
 }

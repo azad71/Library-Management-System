@@ -8,16 +8,14 @@ const userSchema = new mongoose.Schema({
    email : String, 
    password : String, 
    joined : {type: Date, default: Date.now()},
-   bookIssueInfo : [
-      {
-         book_info : {
-            id : {
-               type : mongoose.Schema.Types.ObjectId,
-               ref : "Issue",
-            }, 
-         },
-      }   
-   ],
+   bookIssueInfo : [{
+      book_info : {
+         id : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : "Issue",
+         }, 
+      },
+   }],
    gender : String,
    address : String,
    image : String,
