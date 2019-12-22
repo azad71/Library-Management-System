@@ -73,3 +73,21 @@ exports.findBooks = async(req, res, next) => {
       console.log(err)
    }
 }
+
+// find book details working procedure
+/*
+   1. fetch book from db by id
+   2. populate book with associated comments
+   3. render user/bookDetails template and send the fetched book
+*/
+
+exports.getBookDetails = async(req, res, next) => {
+   try {
+      const book_id = req.params.book_id;
+      const book = await Book.findById(book_id).populate("comments");
+      res.render("user/bookDetails", {book: book});
+   } catch (err) {
+      console.log(err);
+      return res.redirect("back");
+   }
+}
