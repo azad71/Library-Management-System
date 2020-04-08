@@ -21,11 +21,11 @@
     <div class="row">
         <div class="col-md-5 p-1">
           <select name="filter" class="form-control">
-            <option selected disabled>Select Category</option>
-            <option  name="title">By Title</option>
-            <option  name="author">By Author</option>
-            <option  name="category">By Category</option>
-            <option  name="ISBN">By ISBN</option>
+            <option selected disabled>Select Option...</option>
+            <option  name="title">Title</option>
+            <option  name="author">Author</option>
+            <option  name="category">Category</option>
+            <!-- <option  name="ISBN">By ISBN</option> -->
           </select>
         </div>
         
@@ -100,7 +100,7 @@
                     <% if (i == current) { %>
                       <li class="page-item active"><a class="page-link"><%= i %></a></li>
                     <% } else { %>
-                      <li class="page-item"><a class="page-link" href="/admin/bookInventory/<%=filter%>/<%=value%>/<%= i %>"> <%= i %></a> </li>
+                      <li class="page-item"><a class="page-link" href="/admin/bookInventory/<%=filter%>/<%=value%>/<%=i%>"> <%=i%></a> </li>
                     <% } %>
                     <% if (i == Number(current) + 4 && i < pages) { %>
                           <li class="page-item disabled"><a class="page-link">...</a></li>
@@ -109,7 +109,7 @@
                     <% if (current == pages) { %>
                         <li class="page-item disabled"><a class="page-link">Last</a></li>
                     <% } else { %>
-                        <li class="page-item"><a href="/admin/bookInventory/<%=filter%>/<%=value%>/<%= pages %>" class="page-link">Last</a></li>
+                        <li class="page-item"><a href="/admin/bookInventory/<%=filter%>/<%=value%>/<%=pages%>" class="page-link">Last</a></li>
                 <% } %>
             </ul>
           </nav>

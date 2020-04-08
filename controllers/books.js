@@ -1,6 +1,8 @@
 const Book = require('../models/book');
 const PER_PAGE = 16;
 
+
+
 exports.getBooks = async(req, res, next) => {
     var page = req.params.page || 1;
     const filter = req.params.filter;
@@ -18,8 +20,8 @@ exports.getBooks = async(req, res, next) => {
        const books = await Book
        .find(searchObj)
        .skip((PER_PAGE * page) - PER_PAGE)
-       .limit(PER_PAGE)
- 
+       .limit(PER_PAGE);
+
        // Get the count of total available book of given filter
        const count = await Book.find(searchObj).countDocuments();
  

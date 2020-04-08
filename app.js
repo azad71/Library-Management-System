@@ -194,6 +194,6 @@ function deleteImage(imagePath, next) {
 }
 
 app.listen(3000, () =>{
-   console.log("LMS server is running..."); 
+   console.log(`LMS server is running at: http://localhost:3000`); 
 });
     

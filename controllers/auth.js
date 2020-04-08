@@ -30,13 +30,14 @@ exports.postAdminSignUp = async(req, res, next) => {
                 isAdmin : true,
             });
 
-            await User.register(newAdmin, req.body.passport);
+            const user = await User.register(newAdmin, req.body.password);
             await passport.authenticate("local")(req, res, () => {
                 req.flash("success", "Hello, " + user.username + " Welcome to Admin Dashboard");
                 res.redirect("/admin");
             })
         }
     } catch(err) {
+        console.log(err);
         req.flash("error", "Given info matches someone registered as User. Please provide different info for registering as Admin");
         return res.render("signup");
     } 

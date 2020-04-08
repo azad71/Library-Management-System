@@ -83,9 +83,6 @@
                         <td>
                           <p>Issue :  <%=activity.time.issueDate.toDateString()%></p>
                           <p>Return :  <%=activity.time.returnDate.toDateString()%></p>
-                          </td>
-                        <td>
-                         <a href="/books/return-renew" class="btn btn-sm btn-warning" role="button">Return/Renew</a>
                         </td>
                       </tr>  
                <%  } else if(activity.category == 'Return') { %>
@@ -95,9 +92,6 @@
                           <td>
                             <p>Issue :  <%=activity.time.issueDate.toDateString()%></p>
                             <p>Return :  <%=activity.time.returnDate.toDateString()%></p>
-                            </td>
-                          <td>
-                            <a href="/books/return-renew" class="btn btn-sm btn-success disabled" role="button" aria-disabled="true">Returned Successfully!</a>
                           </td>
                       </tr>
                  <%  } else if(activity.category == 'Comment') { %>
@@ -127,9 +121,6 @@
                               <td>
                                 <p>Issue :  <%=activity.time.issueDate.toDateString()%></p>
                                 <p>Return :  <%=activity.time.returnDate.toDateString()%></p>
-                                </td>
-                              <td>
-                                <a href="/books/return-renew" class="btn btn-sm btn-info" role="button">Return</a>
                               </td>
                           </tr>
                   <% } else if(activity.category == 'Update Profile') { %>

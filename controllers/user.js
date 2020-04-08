@@ -31,13 +31,13 @@ exports.getUserDashboard = async(req, res, next) => {
         }
         const activities = await Activity
             .find({"user_id.id": req.user._id})
-            .sort({entryTime: 'desc'})
+            .sort('-entryTime')
             .skip((PER_PAGE * page) - PER_PAGE)
             .limit(PER_PAGE);
 
         const activity_count = await Activity
-        .find({"user_id.id": req.user._id})
-        .countDocuments();
+            .find({"user_id.id": req.user._id})
+            .countDocuments();
 
         res.render("user/index", {
             user : user,
