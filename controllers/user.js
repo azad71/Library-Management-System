@@ -1,9 +1,17 @@
+// importing dependencies
+const sharp = require('sharp');
+const uid = require('uid');
+const fs = require('fs');
+
 // importing models
 const User = require("../models/user"),
       Activity = require("../models/activity"),
       Book = require("../models/book"),
       Issue = require("../models/issue"),
       Comment = require("../models/comment");
+
+// importing utilities
+const deleteImage = require('../utils/delete_image');
 
 // GLOBAL_VARIABLES
 const PER_PAGE = 5;
@@ -113,6 +121,55 @@ exports.putUpdateUserProfile = async(req, res, next) => {
         return res.redirect('back');
     }
 }
+
+// upload image
+exports.postUploadUserImage = async (req, res, next) => {
+    try {
+        const user_id = req.user._id;
+        const user = await User.findById(user_id);
+
+        let imageUrl;
+        if(req.file) {
+            imageUrl = `${uid()}__${req.file.originalname}`;
+            let filename = `images/${imageUrl}`;
+            let previousImagePath = `images/${user.image}`;
+
+            const imageExist = fs.existsSync(previousImagePath);
+            if(imageExist) {
+                deleteImage(previousImagePath);
+            }
+            await sharp(req.file.path)
+                .rotate()
+                .resize(500, 500)
+                .toFile(filename);
+            
+            fs.unlink(req.file.path, err => {
+                if(err) {
+                    console.log(err);
+                }
+            })
+        } else {
+            imageUrl = 'profile.png';
+        }
+        
+        user.image = imageUrl;
+        await user.save();
+        
+        const activity = new Activity({
+            category : "Upload Photo",
+            user_id : {
+              id : req.user._id,
+              username: user.username,
+             }
+        });
+        await activity.save();
+        
+        res.redirect("/user/1/profile");
+    } catch(err) {
+        console.log(err);
+        res.redirect('back');
+    }
+};
 
 //user -> notification
 exports.getNotification = async(req, res, next) => {
@@ -450,6 +507,30 @@ exports.deleteComment = async(req, res, next) => {
     } catch(err) {
         console.log(err);
         return res.redirect("back");
+    }
+}
+
+// user -> delete user account
+exports.deleteUserAccount = async (req, res, next) => {
+    try {
+        const user_id = req.user._id;
+
+        const user = await User.findById(user_id);
+        await user.remove();
+
+        let imagePath = `images/${user.image}`;
+        if(fs.existsSync(imagePath)) {
+            deleteImage(imagePath);
+        }
+
+        await Issue.deleteMany({"user_id.id": user_id});
+        await Comment.deleteMany({"author.id":user_id});
+        await Activity.deleteMany({"user_id.id": user_id});
+
+        res.redirect("/");
+    } catch (err) {
+        console.log(err);
+        res.redirect('back');
     }
 }
 

@@ -55,6 +55,9 @@ router.get("/admin/users/activities/:user_id", middleware.isAdmin, adminControll
 //admin -> show activities by category
 router.post("/admin/users/activities/:user_id", middleware.isAdmin, adminController.postShowActivitiesByCategory);
 
+// admin -> delete a user
+router.get("/admin/users/delete/:user_id", middleware.isAdmin, adminController.getDeleteUser);
+
 //admin -> add new book
 router.get("/admin/books/add", middleware.isAdmin, adminController.getAddNewBook);
 

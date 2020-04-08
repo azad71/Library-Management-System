@@ -95,12 +95,12 @@
                       <td>Update Password</td>
                       <td><%=activities[i].entryTime.toDateString()%></td>
                       
-                  <% }  else if(activities[i].category =="Update/Upload Photo") { %>
+                  <% }  else if(activities[i].category =="Upload Photo") { %>
                        <td>
                          <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
-                          <%=activities[i].user_id.username || 'This user'%> </a> updated/uploaded profile
+                          <%=activities[i].user_id.username || 'This user'%> </a> uploaded profile photo
                       </td>
-                      <td>Update/Upload Profile</td>
+                      <td>Upload Photo</td>
                       <td><%=activities[i].entryTime.toDateString()%></td>
                       
                   <% }  else if(activities[i].category =="Comment") { %>

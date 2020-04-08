@@ -12,6 +12,9 @@ router.get("/user/:page", middleware.isLoggedIn, userController.getUserDashboard
 // user -> profile
 router.get("/user/:page/profile", middleware.isLoggedIn, userController.getUserProfile);
 
+//user -> upload image
+router.post("/user/1/image", middleware.isLoggedIn, userController.postUploadUserImage);
+
 //user -> update password
 router.put("/user/1/update-password", middleware.isLoggedIn, userController.putUpdatePassword);
 
@@ -42,5 +45,8 @@ router.post("/books/details/:book_id/:comment_id", middleware.isLoggedIn, userCo
 
 //user -> delete existing comment
 router.delete("/books/details/:book_id/:comment_id", middleware.isLoggedIn, userController.deleteComment);
+
+// user -> delete user account
+router.delete("/user/1/delete-profile", middleware.isLoggedIn, userController.deleteUserAccount);
 
 module.exports = router;

@@ -1,9 +1,15 @@
+// importing dependencies
+const fs = require('fs');
+
 // importing models
 const Book = require('../models/book');
 const User = require('../models/user');
 const Activity = require('../models/activity');
 const Issue = require('../models/issue');
 const Comment = require('../models/comment');
+
+// importing utilities
+const deleteImage = require('../utils/delete_image');
 
 // GLOBAL_VARIABLES
 const PER_PAGE = 10;
@@ -17,7 +23,7 @@ const PER_PAGE = 10;
 exports.getDashboard = async(req, res, next) => {
     var page = req.query.page || 1;
     try{
-        const users_count = await User.find().countDocuments();
+        const users_count = await User.find().countDocuments() - 1;
         const books_count = await Book.find().countDocuments();
         const activity_count = await Activity.find().countDocuments();
         const activities = await Activity
@@ -358,6 +364,29 @@ exports.postShowActivitiesByCategory = async (req, res, next) => {
         res.redirect('back');
     }
 };
+
+// admin -> delete a user
+exports.getDeleteUser = async (req, res, next) => {
+    try {
+        const user_id = req.params.user_id;
+        const user = await User.findById(user_id);
+        await user.remove();
+
+        let imagePath = `images/${user.image}`;
+        if(fs.existsSync(imagePath)) {
+            deleteImage(imagePath);
+        }
+
+        await Issue.deleteMany({"user_id.id": user_id});
+        await Comment.deleteMany({"author.id": user_id});
+        await Activity.deleteMany({"user_id.id": user_id});
+
+        res.redirect("/admin/users/1");
+    } catch(err) {
+        console.log(err);
+        res.redirect('back');
+    }
+}
 
 // admin -> add new book
 exports.getAddNewBook = (req, res, next) => {

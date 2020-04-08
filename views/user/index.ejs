@@ -48,7 +48,7 @@
     <div class="row">
       <div class="col-md-3">
         <div class="card">
-          <img src="/image/profile/<%=user.image || "profile.png"%>" class="card-img-top p-1" alt="...">
+          <img src="/images/<%=user.image||"profile.png" %>" class="card-img-top p-1" alt="...">
           <div class="card-body">
             <p>Name : <%=user.firstName%> <%=user.lastName%></p>
             <p>Email : <%=user.email%></p>
@@ -145,7 +145,7 @@
                                 <button class="btn btn-sm btn-success">Changed Successfully!</button>
                               </td>
                           </tr>
-                  <% } else if(activity.category == 'Update/Upload Photo') { %>
+                  <% } else if(activity.category == 'Upload Photo') { %>
                             <tr>
                               <td>You have recently <span class="table-text">updated your profile picture</span></td>
                               <td><%=activity.category%></td>
