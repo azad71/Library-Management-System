@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Basic library management system",
   "main": "app.js",
+  "keywords": [
+     "Javascript",
+    "NodeJS",
+    "expressjs",
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "nodemon app.js"
