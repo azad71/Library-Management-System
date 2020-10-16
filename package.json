@@ -4,9 +4,9 @@
   "description": "Basic library management system",
   "main": "app.js",
   "keywords": [
-     "Javascript",
+    "Javascript",
     "NodeJS",
-    "expressjs",
+    "expressjs"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",

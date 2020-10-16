@@ -11,7 +11,7 @@ const express = require("express"),
     localStrategy = require("passport-local"),
     fs = require("fs"),
     flash = require("connect-flash"),
-    resize = require("./resize"),
+    // resize = require("./resize"),
     User = require("./models/user"),
     Activity = require("./models/activity"),
     Issue = require("./models/issue"),
@@ -26,6 +26,8 @@ const express = require("express"),
  //Seed(1000);
 
  
+ if (process.env.NODE_ENV !== "production") require("dotenv").config();
+
 // app config
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
@@ -43,7 +45,7 @@ mongoose.set('useFindAndModify', false);
 //PASSPORT CONFIGURATION
 
 app.use(require("express-session") ({ //must be declared before passport session and initialize method
-    secret : "Wubba lubba dub dub",
+    secret : process.env.SESSION_SECRET,
     saveUninitialized : false,
     resave : false
 }));
@@ -96,14 +98,14 @@ app.use(adminRoutes);
 app.use(bookRoutes);
 app.use(authRoutes);
 
-function deleteImage(imagePath, next) {
-    fs.unlink(imagePath, (err) => {
-      if (err) {
-         console.log("Failed to delete image at delete profile");
-         return next(err);
-      }
-  });
-}
+// function deleteImage(imagePath, next) {
+//     fs.unlink(imagePath, (err) => {
+//       if (err) {
+//          console.log("Failed to delete image at delete profile");
+//          return next(err);
+//       }
+//   });
+// }
 
 app.listen(3000, () =>{
    console.log(`LMS server is running at: http://localhost:3000`); 

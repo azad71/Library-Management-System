@@ -1,6 +1,9 @@
 // importing libraries
 const passport = require('passport');
 
+
+// if(process.env.NODE_ENV !== 'production') require('dotenv').config()
+
 // importing models
 const User = require('../models/user');
 
@@ -23,7 +26,8 @@ exports.getAdminSignUp = (req, res, next) => {
 
 exports.postAdminSignUp = async(req, res, next) => {
     try {
-        if(req.body.adminCode == "Open Sesame") {
+        console.log(process.env.ADMIN_SECRET)
+        if(req.body.adminCode == process.env.ADMIN_SECRET) {
             const newAdmin = new User({
                 username : req.body.username,
                 email : req.body.email,
@@ -35,9 +39,12 @@ exports.postAdminSignUp = async(req, res, next) => {
                 req.flash("success", "Hello, " + user.username + " Welcome to Admin Dashboard");
                 res.redirect("/admin");
             })
+        } else {
+            req.flash('error', 'Secret code does not matching!');
+            return res.redirect('back');
         }
     } catch(err) {
-        console.log(err);
+        console.log(err.message);
         req.flash("error", "Given info matches someone registered as User. Please provide different info for registering as Admin");
         return res.render("signup");
     } 
