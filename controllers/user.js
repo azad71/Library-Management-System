@@ -143,7 +143,7 @@ exports.postUploadUserImage = async (req, res, next) => {
                 .resize(500, 500)
                 .toFile(filename);
             
-            fs.unlink(req.file.path, err => {
+            fs.unlink(req.file.path, (err) => {
                 if(err) {
                     console.log(err);
                 }
