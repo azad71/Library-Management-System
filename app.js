@@ -1,5 +1,3 @@
-const { options } = require("./routes/auth");
-
 const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
@@ -40,17 +38,20 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sanitizer());
 
 // db config
-const url = process.env.DB_URL || "mongodb://localhost/LMS1";
-mongoose.connect(url, {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useUnifiedTopology: true,
-});
+mongoose
+  .connect(process.env.DB_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+    useFindAndModify: false,
+  })
+  .then(() => console.log("MongoDB is connected"))
+  .catch((error) => console.log(error));
 
 //PASSPORT CONFIGURATION
 
 const store = new MongoStore({
-  uri: url,
+  uri: process.env.DB_URL,
   collection: "sessions",
 });
 
