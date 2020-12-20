@@ -50,10 +50,10 @@ mongoose
 
 //PASSPORT CONFIGURATION
 
-const store = new MongoStore({
-  uri: process.env.DB_URL,
-  collection: "sessions",
-});
+// const store = new MongoStore({
+//   uri: process.env.DB_URL,
+//   collection: "sessions",
+// });
 
 app.use(
   session({
@@ -61,7 +61,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    store,
+    // store,
   })
 );
 
