@@ -31,8 +31,6 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sanitizer());
 
-console.log("DB URL------------------------", process.env.DB_URL);
-
 // db config
 mongoose
   .connect(process.env.DB_URL, {
@@ -111,6 +109,8 @@ app.use(adminRoutes);
 app.use(bookRoutes);
 app.use(authRoutes);
 
-app.listen(3000, () => {
-  console.log(`LMS server is running at: http://localhost:3000`);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, () => {
+  console.log(`server is running`);
 });
