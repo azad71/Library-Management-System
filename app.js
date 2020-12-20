@@ -37,6 +37,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sanitizer());
 
+console.log("DB URL------------------------", process.env.DB_URL);
+
 // db config
 mongoose
   .connect(process.env.DB_URL, {
