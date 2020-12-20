@@ -57,7 +57,8 @@ exports.getUserLoginPage = (req, res, next) => {
   res.render("user/userLogin");
 };
 
-exports.getUserLogout = (req, res, next) => {
+exports.getUserLogout = async (req, res, next) => {
+  await req.session.destroy();
   req.logout();
   res.redirect("/");
 };

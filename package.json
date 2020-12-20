@@ -22,6 +22,7 @@
   "dependencies": {
     "body-parser": "^1.18.3",
     "connect-flash": "^0.1.1",
+    "connect-mongodb-session": "^2.4.1",
     "dotenv": "^8.2.0",
     "ejs": "^2.6.1",
     "express": "^4.16.4",

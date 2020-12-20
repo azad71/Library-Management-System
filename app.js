@@ -1,7 +1,10 @@
+const { options } = require("./routes/auth");
+
 const express = require("express"),
   app = express(),
   bodyParser = require("body-parser"),
   mongoose = require("mongoose"),
+  session = require("express-session"),
   passport = require("passport"),
   multer = require("multer"),
   uid = require("uid"),
@@ -9,6 +12,7 @@ const express = require("express"),
   sanitizer = require("express-sanitizer"),
   methodOverride = require("method-override"),
   localStrategy = require("passport-local"),
+  MongoStore = require("connect-mongodb-session")(session),
   // fs = require("fs"),
   flash = require("connect-flash"),
   // resize = require("./resize"),
@@ -37,20 +41,29 @@ app.use(sanitizer());
 
 // db config
 const url = process.env.DB_URL || "mongodb://localhost/LMS1";
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-
-mongoose.set("useFindAndModify", false);
+mongoose.connect(url, {
+  useNewUrlParser: true,
+  useFindAndModify: false,
+  useUnifiedTopology: true,
+});
 
 //PASSPORT CONFIGURATION
 
+const store = new MongoStore({
+  uri: url,
+  collection: "sessions",
+});
+
 app.use(
-  require("express-session")({
+  session({
     //must be declared before passport session and initialize method
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
+    store,
   })
 );
+
 app.use(flash());
 
 app.use(passport.initialize()); //must declared before passport.session()
@@ -100,15 +113,6 @@ app.use(userRoutes);
 app.use(adminRoutes);
 app.use(bookRoutes);
 app.use(authRoutes);
-
-// function deleteImage(imagePath, next) {
-//     fs.unlink(imagePath, (err) => {
-//       if (err) {
-//          console.log("Failed to delete image at delete profile");
-//          return next(err);
-//       }
-//   });
-// }
 
 app.listen(3000, () => {
   console.log(`LMS server is running at: http://localhost:3000`);
