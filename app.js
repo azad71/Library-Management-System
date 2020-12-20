@@ -10,19 +10,13 @@ const express = require("express"),
   sanitizer = require("express-sanitizer"),
   methodOverride = require("method-override"),
   localStrategy = require("passport-local"),
-  // MongoStore = require("connect-mongodb-session")(session),
-  // fs = require("fs"),
+  MongoStore = require("connect-mongodb-session")(session),
   flash = require("connect-flash"),
-  // resize = require("./resize"),
   User = require("./models/user"),
-  // Activity = require("./models/activity"),
-  // Issue = require("./models/issue"),
-  // Comment = require("./models/comment"),
   userRoutes = require("./routes/users"),
   adminRoutes = require("./routes/admin"),
   bookRoutes = require("./routes/books"),
   authRoutes = require("./routes/auth");
-// middleware = require("./middleware"),
 // Seed = require('./seed');
 
 // uncomment below line for first time to seed database;
@@ -52,10 +46,10 @@ mongoose
 
 //PASSPORT CONFIGURATION
 
-// const store = new MongoStore({
-//   uri: process.env.DB_URL,
-//   collection: "sessions",
-// });
+const store = new MongoStore({
+  uri: process.env.DB_URL,
+  collection: "sessions",
+});
 
 app.use(
   session({
@@ -63,7 +57,7 @@ app.use(
     secret: process.env.SESSION_SECRET,
     saveUninitialized: false,
     resave: false,
-    // store,
+    store,
   })
 );
 
