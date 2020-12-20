@@ -36,7 +36,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sanitizer());
 
 // db config
-const url = process.env.db_url || "mongodb://localhost/LMS1";
+const url = process.env.DB_URL || "mongodb://localhost/LMS1";
 mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
 
 mongoose.set("useFindAndModify", false);
