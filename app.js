@@ -17,10 +17,11 @@ const express = require("express"),
   adminRoutes = require("./routes/admin"),
   bookRoutes = require("./routes/books"),
   authRoutes = require("./routes/auth");
-// Seed = require('./seed');
+
+// const Seed = require('./seed');
 
 // uncomment below line for first time to seed database;
-//Seed(1000);
+// Seed(1000);
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 

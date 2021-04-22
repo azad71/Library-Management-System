@@ -43,19 +43,17 @@ exports.getUserDashboard = async(req, res, next) => {
             .skip((PER_PAGE * page) - PER_PAGE)
             .limit(PER_PAGE);
 
-        const activity_count = await Activity
-            .find({"user_id.id": req.user._id})
-            .countDocuments();
+        const activity_count = await Activity.find({"user_id.id": req.user._id}).countDocuments();
 
         res.render("user/index", {
-            user : user,
-            current : page,
-            pages: Math.ceil(activity_count / PER_PAGE),
-            activities : activities,
+					user : user,
+					current : page,
+					pages: Math.ceil(activity_count / PER_PAGE),
+					activities : activities,
         });
     } catch(err) {
-        console.log(err);
-        return res.redirect('back');
+			console.log(err);
+			return res.redirect('back');
     }
 }
 
