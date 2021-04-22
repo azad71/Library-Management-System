@@ -39,7 +39,7 @@ exports.getUserDashboard = async(req, res, next) => {
         }
         const activities = await Activity
             .find({"user_id.id": req.user._id})
-            .sort('-entryTime')
+            .sort({_id: -1})
             .skip((PER_PAGE * page) - PER_PAGE)
             .limit(PER_PAGE);
 

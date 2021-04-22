@@ -1,6 +1,5 @@
 const express = require("express"),
   app = express(),
-  bodyParser = require("body-parser"),
   mongoose = require("mongoose"),
   session = require("express-session"),
   passport = require("passport"),
@@ -29,7 +28,9 @@ if (process.env.NODE_ENV !== "production") require("dotenv").config();
 app.set("view engine", "ejs");
 app.use(methodOverride("_method"));
 app.use(express.static(__dirname + "/public"));
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({extended: true}));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(sanitizer());
 
 // db config
