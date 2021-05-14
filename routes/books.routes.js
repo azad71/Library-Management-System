@@ -1,9 +1,8 @@
 const express = require("express"),
-      router = express.Router();
-
+  router = express.Router();
 
 // Importing controller
-const bookController = require('../controllers/books');
+const bookController = require("../controllers/books.controllers");
 
 // Browse books
 router.get("/books/:filter/:value/:page", bookController.getBooks);
