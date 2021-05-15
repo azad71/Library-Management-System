@@ -42,8 +42,21 @@ const bookSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
+
+    // this field for partial text search
+    searchTitle: {
+      type: String,
+    },
   },
-  { timestamps }
+  { timestamps: true }
 );
+
+bookSchema.index({
+  title: "text",
+  ISBN: "text",
+  author: "text",
+  category: "text",
+  searchTitle: "text",
+});
 
 module.exports = mongoose.model("Book", bookSchema);

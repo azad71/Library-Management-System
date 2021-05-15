@@ -14,15 +14,15 @@ const session = require("./services/session");
 // MongoStore = require("connect-mongodb-session")(session),
 // User = require("./models/user");
 
-const config = require("./config/keys");
+const config = require("./config");
 const routes = require("./routes");
 
-// const Seed = require('./seed');
+const Seed = require("./seed");
 
 // uncomment below line for first time to seed database;
 // Seed(1000);
 
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
+// if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // app config
 app.set("view engine", "ejs");
@@ -100,7 +100,6 @@ app.use(
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {
-  console.log(req.session);
   res.locals.currentUser = req.session.user;
   res.locals.error = req.flash("error");
   res.locals.success = req.flash("success");

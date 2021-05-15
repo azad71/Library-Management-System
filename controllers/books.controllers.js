@@ -2,38 +2,76 @@ const Book = require("../models/book.model");
 const PER_PAGE = 16;
 
 exports.getBooks = async (req, res, next) => {
-  var page = req.params.page || 1;
-  const filter = req.params.filter;
-  const value = req.params.value;
-  let searchObj = {};
-
-  // constructing search object
-  if (filter != "all" && value != "all") {
-    // fetch books by search value and filter
-    searchObj[filter] = value;
-  }
+  let { q = "", page = 1, limit = 24 } = req.query;
 
   try {
+    let books, count;
     // Fetch books from database
-    const books = await Book.find(searchObj)
-      .skip(PER_PAGE * page - PER_PAGE)
-      .limit(PER_PAGE);
+    if (q !== "") {
+      books = await Book.find(
+        { $text: { $search: q } },
+        { score: { $meta: "textScore" } }
+      )
+        .skip(limit * page - limit)
+        .limit(+limit)
+        .sort({ score: { $meta: "textScore" } });
 
-    // Get the count of total available book of given filter
-    const count = await Book.find(searchObj).countDocuments();
+      count = await Book.find({ $text: { $search: q } }).countDocuments();
+    } else {
+      books = await Book.find()
+        .skip(limit * page - limit)
+        .limit(+limit);
+
+      count = await Book.find().countDocuments();
+    }
+
+    // const categories = await Book.find().select({ category: 1, _id: 0 });
+    // console.log(categories);
 
     res.render("books", {
       books: books,
       current: page,
-      pages: Math.ceil(count / PER_PAGE),
-      filter: filter,
-      value: value,
-      user: req.user,
+      pages: Math.ceil(count / limit),
+      user: req.session.user,
     });
   } catch (err) {
     console.log(err);
   }
 };
+
+// exports.getBooks = async (req, res, next) => {
+//   var page = req.params.page || 1;
+//   const filter = req.params.filter;
+//   const value = req.params.value;
+//   let searchObj = {};
+
+//   // constructing search object
+//   if (filter != "all" && value != "all") {
+//     // fetch books by search value and filter
+//     searchObj[filter] = value;
+//   }
+
+//   try {
+//     // Fetch books from database
+//     const books = await Book.find(searchObj)
+//       .skip(PER_PAGE * page - PER_PAGE)
+//       .limit(PER_PAGE);
+
+//     // Get the count of total available book of given filter
+//     const count = await Book.find(searchObj).countDocuments();
+
+//     res.render("books", {
+//       books: books,
+//       current: page,
+//       pages: Math.ceil(count / PER_PAGE),
+//       filter: filter,
+//       value: value,
+//       user: req.user,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
 
 exports.findBooks = async (req, res, next) => {
   var page = req.params.page || 1;
