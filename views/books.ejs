@@ -2,30 +2,55 @@
 
 <script>
 
+  window.onload = () => {
+  
+    var queryValue = "<%= q %>";
+    var limitValue = "<%= limit %>";
+    var searchNodeInit = document.getElementById('searchQuery');
+    
+    if(limitValue != "24") { // 24 is default pagination limit
+      document.getElementById('perPage').value = limitValue;
+    }
+
+    if(queryValue.length) {
+      searchNodeInit.value = queryValue;
+    } else {
+      searchNodeInit.setAttribute('placeholder', "Search by Book title, author, category and isbn")
+    }
+  }
+
+  function reset() {
+    window.location.href = "/books";
+  }
+
   function setPerPage() {
     var limit = document.getElementById('perPage').value;
     var query = window.location.search;
-
+   
     if(query.length) {
       if(query.includes("limit")) {
+       
         query = query.split("&");
         query.forEach((q, i) => q.includes("limit") ? query[i] = `limit=${limit}` : q);
         query = query.join();
         query.includes("?") ? window.location.href = `/books${query}` : window.location.href = `/books?${query}`
-      } 
+      } else {
+        query = `${query}&limit=${limit}`;
+        window.location.href = `/books${query}`;
+      }
     } else {
-      window.location.href = `/books?limit=${limit}`;
+      window.location.href = `/books?limit=${limit}`
     }
   }
 
   function search() {
-    var q = document.getElementById('searchQuery');
+    var searchNode = document.getElementById('searchQuery');
     
-    if(!q.value) {
+    if(!searchNode.value) {
       alert("Search field is empty");
       return;
     }
-    window.location.href = `/books?q=${q.value}`
+    window.location.href = `/books?q=${searchNode.value}`
   }
 </script>
 
@@ -101,7 +126,11 @@
     <div class="row">
       <div class="col-md-5">
         <div class="input-group">
-          <input id="searchQuery" type="text" class="form-control" placeholder="Search Books by title, category, author, isbn">
+          <input 
+            id="searchQuery" 
+            type="text" 
+            class="form-control" 
+          />
           <div class="input-group-append">
             <button onclick="search()" class="btn btn-primary" type="button">
               <i class="fa fa-search"></i>
@@ -110,15 +139,19 @@
         </div>
       </div>
       
+      <% if (q.length) { %>
+        <div class="col-md-2">
+          <button onclick="reset()" class="btn btn-primary">Reset</button>
+        </div>
+      <% } %>
+
+
       <div class="col-md-2 ml-auto">
         <div class="form-group">
           <select class="form-control" id="perPage" onchange="setPerPage()">
             <option selected disabled>Per page limit</option>
-            <option value="16">16</option>
-            <option value="32">32</option>
-            <option value="64">64</option>
-            <option value="128">128</option>
-            <option value="256">256</option>
+            <option value="48">48</option>
+            <option value="100">100</option>
           </select>
         </div>
       </div>

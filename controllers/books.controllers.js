@@ -9,12 +9,13 @@ exports.getBooks = async (req, res, next) => {
     // Fetch books from database
     if (q !== "") {
       books = await Book.find(
-        { $text: { $search: q } },
-        { score: { $meta: "textScore" } }
+        { $text: { $search: q } }
+        // { score: { $meta: "textScore" } }
       )
         .skip(limit * page - limit)
         .limit(+limit)
-        .sort({ score: { $meta: "textScore" } });
+        .sort({ createdAt: "-1" });
+      // .sort({ score: { $meta: "textScore" } });
 
       count = await Book.find({ $text: { $search: q } }).countDocuments();
     } else {
@@ -33,6 +34,8 @@ exports.getBooks = async (req, res, next) => {
       current: page,
       pages: Math.ceil(count / limit),
       user: req.session.user,
+      limit,
+      q,
     });
   } catch (err) {
     console.log(err);

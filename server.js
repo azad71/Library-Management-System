@@ -20,7 +20,7 @@ const routes = require("./routes");
 const Seed = require("./seed");
 
 // uncomment below line for first time to seed database;
-// Seed(1000);
+// Seed(60);
 
 // if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -113,5 +113,5 @@ app.use(routes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`server is running`);
+  console.log(`server is running at http://localhost:${PORT}`);
 });
