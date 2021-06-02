@@ -20,7 +20,7 @@ const routes = require("./routes");
 const Seed = require("./seed");
 
 // uncomment below line for first time to seed database;
-// Seed(60);
+// Seed(6000);
 
 // if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
@@ -83,20 +83,14 @@ const fileStorage = multer.diskStorage({
 });
 
 const filefilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
+  if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
     cb(null, true);
   } else {
     cb(null, false);
   }
 };
 
-app.use(
-  multer({ storage: fileStorage, fileFilter: filefilter }).single("image")
-);
+app.use(multer({ storage: fileStorage, fileFilter: filefilter }).single("image"));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {

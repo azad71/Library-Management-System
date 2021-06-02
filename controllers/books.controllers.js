@@ -8,14 +8,11 @@ exports.getBooks = async (req, res, next) => {
     let books, count;
     // Fetch books from database
     if (q !== "") {
-      books = await Book.find(
-        { $text: { $search: q } }
-        // { score: { $meta: "textScore" } }
-      )
+      books = await Book.find({ $text: { $search: q } }, { score: { $meta: "textScore" } })
         .skip(limit * page - limit)
         .limit(+limit)
-        .sort({ createdAt: "-1" });
-      // .sort({ score: { $meta: "textScore" } });
+        // .sort({ createdAt: "-1" });
+        .sort({ score: { $meta: "textScore" } });
 
       count = await Book.find({ $text: { $search: q } }).countDocuments();
     } else {
@@ -83,10 +80,7 @@ exports.findBooks = async (req, res, next) => {
 
   // show flash message if empty search field is sent to backend
   if (value == "") {
-    req.flash(
-      "error",
-      "Searc field is empty. Please fill the search field in order to get a result"
-    );
+    req.flash("error", "Searc field is empty. Please fill the search field in order to get a result");
     return res.redirect("back");
   }
 

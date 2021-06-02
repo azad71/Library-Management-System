@@ -1,20 +1,7 @@
 const Book = require("./models/book.model");
 const nGrams = require("./utils/nGrams");
 const faker = require("faker");
-const category = [
-  "Science",
-  "Biology",
-  "Physics",
-  "Chemistry",
-  "Novel",
-  "Travel",
-  "Cooking",
-  "Philosophy",
-  "Mathematics",
-  "Ethics",
-  "Technology",
-  "History",
-];
+const category = ["Science", "Biology", "Physics", "Chemistry", "Novel", "Travel", "Cooking", "Philosophy", "Mathematics", "Ethics", "Technology", "History"];
 
 const author = [];
 for (let i = 0; i < 12; i++) {
@@ -32,9 +19,7 @@ async function seed(limit) {
       let searchTitle = nGrams(title);
       const book = new Book({
         title,
-        ISBN: `${faker.random.alphaNumeric(4)}-${faker.random.alphaNumeric(
-          4
-        )}-${faker.random.alphaNumeric(4)}-${faker.random.alphaNumeric(4)}`,
+        ISBN: `${faker.random.alphaNumeric(4)}-${faker.random.alphaNumeric(4)}-${faker.random.alphaNumeric(4)}-${faker.random.alphaNumeric(4)}`,
         stock: 10,
         author: author[index2],
         description: faker.lorem.paragraphs(3),
