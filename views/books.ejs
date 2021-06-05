@@ -70,7 +70,7 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav">
           <li class="nav-item active  px-2">
-            <a class="nav-link" href="/books/all/all/1">Browse Books</a></a>
+            <a class="nav-link" href="/books">Browse Books</a></a>
           </li>
         </ul>
           
@@ -163,82 +163,122 @@
 
 <!--BOOKS-->
 <section id="browse_books" class="mt-5">
-  <div class="container">
-    
-    <div class="row">
-    <% for(var i = 0; i < books.length; i++) { %>
-    <div class="card col-md-3 text-center">
-          <div class="card-body">
-            <h5 class="card-title"> <%=books[i].title%> </h5>
-            <p class="text-muted">
-              <small class="text-muted">Author : <%=books[i].author%></small>
-            </p>
-            <p class="text-muted">
-              <small class="text-muted">Category : <%=books[i].category%></small>
-            </p>
-            <p class="text-muted">
-              <small class="text-muted">In stock : <%=books[i].stock%></small>
-            </p>
-           
-            
-            <% if(currentUser && books[i].stock > 0) { var match = false%>
-                <% user.bookIssueInfo.forEach(book_info => { %>
-                    <% if(book_info._id.equals(books[i]._id)) { %> 
-                       <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Issued!</a>
-                       <a href="/books/return-renew" class="btn btn-xs btn-success" role="button">Return/Renew</a>
-                    <% match = true; } %>
-             <% }) %>
-             
-             <% if(!match) {%>
-            <form action="/books/<%=books[i]._id%>/issue/<%=currentUser._id%>" method="POST" class="d-inline">
-               <input class="btn btn-xs btn-success" type="submit" value="Issue">
-            </form>
-            <% } %>
-          <% } %>
-            <a href="/books/details/<%=books[i]._id%>" class="btn btn-xs btn-primary">Details</a>
+  <div class="container-fluid">
+
+    <div class="row mx-1">
+      <div class="col-md-2">
+          <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="categoryDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Total Category: <%= categories.length %> 
+            </button>
+            <div class="dropdown-menu" aria-labelledby="categoryDropdown">
+              <% for( let i = 0; i < categories.length; i++ ) { %>
+                <a href="/books?q=<%= categories[i].category.toLowerCase() %> " class="dropdown-item">
+                  <%= categories[i].category %> (<%= categories[i].count %> )
+                </a>
+              <% } %>
+            </div>
           </div>
+          
+          <div style="margin-top: 220px;" class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="authorDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              Total Authors: <%= authors.length %> 
+            </button>
+            <div class="dropdown-menu" aria-labelledby="authorDropdown">
+              <% for( let i = 0; i < authors.length; i++ ) { %>
+                <a href="/books?q=<%= authors[i].authorName.toLowerCase() %> " class="dropdown-item">
+                  <%= authors[i].authorName %> (<%= authors[i].count %> )
+                </a>
+              <% } %>
+            </div>
+          </div>
+       
+      </div>
+      <div class="col-md-10">
+        <div class="row">
+          <% for(var i = 0; i < books.length; i++) { %>
+            <div class="card col-md-3 text-center mb-2">
+              <div class="card-body">
+                <h5 class="card-title"> <%=books[i].title%> </h5>
+                <p class="text-muted">
+                  <small class="text-muted">Author : <%=books[i].author%></small>
+                </p>
+                <p class="text-muted">
+                  <small class="text-muted">Category : <%=books[i].category%></small>
+                </p>
+                <p class="text-muted">
+                  <small class="text-muted">In stock : <%=books[i].stock%></small>
+                </p>
+                   
+                    
+                    <% if(currentUser && books[i].stock > 0) { var match = false%>
+                        <% user.bookIssueInfo.forEach(book_info => { %>
+                            <% if(book_info._id.equals(books[i]._id)) { %> 
+                               <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Issued!</a>
+                               <a href="/books/return-renew" class="btn btn-xs btn-success" role="button">Return/Renew</a>
+                            <% match = true; } %>
+                     <% }) %>
+                     
+                     <% if(!match) {%>
+                    <form action="/books/<%=books[i]._id%>/issue/<%=currentUser._id%>" method="POST" class="d-inline">
+                       <input class="btn btn-xs btn-success" type="submit" value="Issue">
+                    </form>
+                    <% } %>
+                  <% } %>
+                    <a href="/books/<%=books[i]._id%>" class="btn btn-xs btn-primary">Details</a>
+                  </div>
+            </div>
+            <% } %>
         </div>
-    <% } %>
+      </div>
+  
     </div>
   
   </div>
 </section>
 
-<% if (pages > 0) { %>
-  <nav class="ml-3 mb-2">
-    <ul class="pagination offset-md-3">
-      <% if (current == 1) { %>
-      <li class="page-item disabled"><a class="page-link">First</a></li>
-      <% } else { %>
-      <li class="page-item">
-        <a href="/books/?q<%= q %>&limit=<%=limit%>" class="page-link">First</a>
-      </li>
-      <% } %> <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <% if
-      (i !== 1) { %>
-      <li class="page-item disabled"><a class="page-link">...</a></li>
-      <% } %> <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %> <% if
-      (i == current) { %>
-      <li class="page-item active"><a class="page-link"><%= i %></a></li>
-      <% } else { %>
-      <li class="page-item">
-        <a class="page-link" href="/books?q=<%=q%>&limit=<%=limit%>&page=<%= i %>">
-          <%= i %>
-        </a>
-      </li>
-      <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
-      <li class="page-item disabled"><a class="page-link">...</a></li>
-      <% } %> <% } %> <% if (current == pages) { %>
-      <li class="page-item disabled"><a class="page-link">Last</a></li>
-      <% } else { %>
-      <li class="page-item">
-        <a href="/books?q=<%= q %>&limit=<%= limit %>&page=<%= pages %>" class="page-link">
-          Last
-        </a>
-      </li>
-      <% } %>
-    </ul>
-  </nav>
-  <% } %>
+<div class="container my-3">
+  <div class="row">
+    <div class="col-md-6 mx-auto">
+      <% if (pages > 0) { %>
+        <nav class="ml-3 mb-2">
+          <ul class="pagination offset-md-3">
+            <% if (current == 1) { %>
+            <li class="page-item disabled"><a class="page-link">First</a></li>
+            <% } else { %>
+            <li class="page-item">
+              <a href="/books/?q<%= q %>&limit=<%=limit%>" class="page-link">First</a>
+            </li>
+            <% } %> <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %> <% if
+            (i !== 1) { %>
+            <li class="page-item disabled"><a class="page-link">...</a></li>
+            <% } %> <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %> <% if
+            (i == current) { %>
+            <li class="page-item active"><a class="page-link"><%= i %></a></li>
+            <% } else { %>
+            <li class="page-item">
+              <a class="page-link" href="/books?q=<%=q%>&limit=<%=limit%>&page=<%= i %>">
+                <%= i %>
+              </a>
+            </li>
+            <% } %> <% if (i == Number(current) + 4 && i < pages) { %>
+            <li class="page-item disabled"><a class="page-link">...</a></li>
+            <% } %> <% } %> <% if (current == pages) { %>
+            <li class="page-item disabled"><a class="page-link">Last</a></li>
+            <% } else { %>
+            <li class="page-item">
+              <a href="/books?q=<%= q %>&limit=<%= limit %>&page=<%= pages %>" class="page-link">
+                Last
+              </a>
+            </li>
+            <% } %>
+          </ul>
+        </nav>
+        <% } %>
+      
+    </div>
+  </div>
+</div>
 
 
 <% include partials/footer %>
