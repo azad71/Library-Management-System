@@ -37,7 +37,8 @@
     "request": "^2.88.2",
     "sharp": "^0.28.2",
     "uid": "^1.0.0",
-    "uuid": "^3.4.0"
+    "uuid": "^3.4.0",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "faker": "^4.1.0",

@@ -3,17 +3,14 @@ const passport = require("passport");
 const bcrypt = require("bcryptjs");
 
 // import config
-const config = require("../config/keys");
+const config = require("../config");
+
+const AdminSignupValidator = require("../validations/adminSignup.validator");
 
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // importing models
 const User = require("../models/user.model");
-const user = require("../models/user.model");
-
-exports.getLandingPage = (req, res) => {
-  res.render("landing");
-};
 
 exports.getAdminLoginPage = (req, res) => {
   res.render("admin/adminLogin");
@@ -25,14 +22,22 @@ exports.getAdminLogout = (req, res, next) => {
 };
 
 exports.getAdminSignUp = (req, res, next) => {
-  res.render("signup");
+  res.render("signup", { errors: {} });
 };
 
 exports.postAdminSignUp = async (req, res, next) => {
   try {
-    if (req.body.adminCode === config.ADMIN_SECRET) {
-      let { username, email, password } = req.body;
+    let { adminCode = "" } = req.body;
+    if (adminCode === config.ADMIN_SECRET) {
+      let { username, email, password, confirmPassword } = req.body;
 
+      let adminValidator = new AdminSignupValidator(username, email, password, confirmPassword);
+
+      let { isValid, errors } = adminValidator.validate();
+
+      if (!isValid) {
+        return res.render("signup", { errors });
+      }
       const isExists = await User.find({
         $or: [{ email: username }, { username }],
       });
@@ -63,6 +68,7 @@ exports.postAdminSignUp = async (req, res, next) => {
     }
   } catch (err) {
     req.flash("error", "Something went wrong!");
+    console.log(err);
     return res.render("signup");
   }
 };
@@ -119,8 +125,7 @@ exports.postUserLogin = async (req, res, next) => {
 
 exports.postUserSignUp = async (req, res, next) => {
   try {
-    let { firstName, lastName, username, email, gender, address, password } =
-      req.body;
+    let { firstName, lastName, username, email, gender, address, password } = req.body;
 
     let isExists = await User.find({
       $or: [{ email: username }, { username }],
@@ -133,15 +138,7 @@ exports.postUserSignUp = async (req, res, next) => {
 
     password = await bcrypt.hash(password, 12);
 
-    let newUser = new User({
-      firstName,
-      lastName,
-      username,
-      email,
-      gender,
-      address,
-      password,
-    });
+    let newUser = new User({ firstName, lastName, username, email, gender, address, password });
 
     newUser = await newUser.save();
 
