@@ -4,12 +4,10 @@ const activitySchema = new mongoose.Schema(
   {
     activityType: {
       type: String,
-      required: [true, "Activity type is required"],
     },
 
     description: {
       type: String,
-      required: [true, "Activity Description is required"],
     },
 
     user: {

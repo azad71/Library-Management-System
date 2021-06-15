@@ -13,6 +13,7 @@ exports.getBooks = async (req, res, next) => {
         .limit(+limit)
         // .sort({ createdAt: "-1" });
         .sort({ score: { $meta: "textScore" } });
+      console.log("inside first block------", books);
 
       count = await Book.find({ $text: { $search: q } }).countDocuments();
     } else {
@@ -20,6 +21,7 @@ exports.getBooks = async (req, res, next) => {
         .skip(limit * page - limit)
         .limit(+limit);
 
+      console.log("inside second block---------", books);
       count = await Book.find().countDocuments();
     }
 

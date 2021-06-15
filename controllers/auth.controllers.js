@@ -1,16 +1,13 @@
-// importing libraries
-const passport = require("passport");
 const bcrypt = require("bcryptjs");
 
 // import config
 const config = require("../config");
 
-const AdminSignupValidator = require("../validations/adminSignup.validator");
-
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // importing models
 const User = require("../models/user.model");
+const Admin = require("../models/activity.model");
 
 exports.getAdminLoginPage = (req, res) => {
   res.render("admin/adminLogin");
@@ -22,7 +19,7 @@ exports.getAdminLogout = (req, res, next) => {
 };
 
 exports.getAdminSignUp = (req, res, next) => {
-  res.render("signup", { errors: {} });
+  res.render("signup");
 };
 
 exports.postAdminSignUp = async (req, res, next) => {
@@ -31,14 +28,7 @@ exports.postAdminSignUp = async (req, res, next) => {
     if (adminCode === config.ADMIN_SECRET) {
       let { username, email, password, confirmPassword } = req.body;
 
-      let adminValidator = new AdminSignupValidator(username, email, password, confirmPassword);
-
-      let { isValid, errors } = adminValidator.validate();
-
-      if (!isValid) {
-        return res.render("signup", { errors });
-      }
-      const isExists = await User.find({
+      const isExists = await Admin.findOne({
         $or: [{ email: username }, { username }],
       });
 
@@ -49,7 +39,7 @@ exports.postAdminSignUp = async (req, res, next) => {
 
       password = await bcrypt.hash(password, 12);
 
-      let newAdmin = new User({ username, email, password, isAdmin: true });
+      let newAdmin = new Admin({ username, email, password, isAdmin: true });
 
       newAdmin = await newAdmin.save();
 
@@ -61,7 +51,7 @@ exports.postAdminSignUp = async (req, res, next) => {
       };
 
       req.flash("success", `Hello ${username}, Welcome to Admin Dashboard`);
-      return res.redirect("/admin");
+      return res.redirect("/admin/dashboard");
     } else {
       req.flash("error", "Unauthorized access!");
       return res.redirect("back");
@@ -69,7 +59,7 @@ exports.postAdminSignUp = async (req, res, next) => {
   } catch (err) {
     req.flash("error", "Something went wrong!");
     console.log(err);
-    return res.render("signup");
+    return res.redirect("back");
   }
 };
 
