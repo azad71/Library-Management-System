@@ -1,4 +1,4 @@
-const { isEmpty, isEmail, isAlphanumeric } = require("validator").default;
+const { isEmpty, isEmail, isAlphanumeric, escape } = require("validator").default;
 
 class Validator {
   _errors = {};
@@ -18,7 +18,9 @@ class Validator {
   }
 
   normalizeInput(value) {
-    return !this._isEmpty(value) ? value : "";
+    let val = value;
+    val = !this._isEmpty(value) ? value : "";
+    return escape(val);
   }
 
   validateRequired(value, label) {

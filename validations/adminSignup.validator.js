@@ -1,13 +1,15 @@
 const Validator = require("./baseValidator");
+const config = require("../config");
 
 class AdminSignupValidator extends Validator {
-  constructor(username, email, password, confirmPassword) {
+  constructor(username, email, password, confirmPassword, adminCode) {
     super();
 
     this.username = username;
     this.email = email;
     this.password = password;
     this.confirmPassword = confirmPassword;
+    this.adminCode = adminCode;
   }
 
   _validateAdminUsername() {
@@ -43,6 +45,8 @@ class AdminSignupValidator extends Validator {
     this._validateAdminUsername();
     this._validateAdminEmail();
     this._validateAdminPassword();
+    this.validateEqual(this.password, this.confirmPassword, "password");
+    this.validateEqual(this.adminCode, config.ADMIN_SECRET, "adminCode");
 
     let errors = this._errors;
 

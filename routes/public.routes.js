@@ -5,12 +5,5 @@
  */
 
 const router = require("express").Router();
-const publicControllers = require("../controllers/public.controllers");
-
-/**
- * @description get landing page
- * @route /
- */
-router.get("/", publicControllers.getLandingPage);
 
 module.exports = router;
