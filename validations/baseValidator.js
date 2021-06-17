@@ -1,4 +1,4 @@
-const { isEmpty, isEmail, isAlphanumeric, escape } = require("validator").default;
+const { isEmpty, isEmail, isAlphanumeric, isAlpha, escape } = require("validator").default;
 
 class Validator {
   _errors = {};
@@ -20,7 +20,8 @@ class Validator {
   normalizeInput(value) {
     let val = value;
     val = !this._isEmpty(value) ? value : "";
-    return escape(val);
+    // val = escape(val.trim());
+    return val;
   }
 
   validateRequired(value, label) {
@@ -42,8 +43,14 @@ class Validator {
   }
 
   validateAlphanumeric(value, label) {
-    if (!isAlphanumeric(value)) {
+    if (!isAlphanumeric(value, "en-US", { ignore: " " })) {
       this._errors[label] = "Only alphanumeric value is allowed";
+    }
+  }
+
+  validateAlpha(value, label) {
+    if (!isAlpha(value)) {
+      this._errors[label] = `Only a-z and A-Z characters are allowed for ${label}`;
     }
   }
 
@@ -53,21 +60,79 @@ class Validator {
     }
   }
 
-  validateEmail(value) {
+  _isEmail(value) {
     value = this.normalizeInput(value);
     if (!isEmail(value)) {
       this._errors["email"] = "Invalid email format";
     }
   }
 
-  // validateSecretCode(value, secretCode) {
-  //   if (value !== secretCode) {
-  //     this._errors["secretCode"] = "Secret does not match";
-  //   }
-  // }
+  validateUsername(value, min = 3, max = 30) {
+    let username = value;
+    username = this.normalizeInput(username);
+    this.validateAlphanumeric(username, "username");
+    this.validateMinLength(username, "username", min);
+    this.validateMaxLength(username, "username", max);
+    this.validateRequired(username, "username");
+  }
+
+  validatePassword(value, min = 6, max = 100) {
+    let password = value;
+    password = this.normalizeInput(password);
+
+    this.validateMinLength(password, "password", min);
+    this.validateMaxLength(password, "password", max);
+    this.validateRequired(password, "password");
+  }
+
+  validateNewPassword(password, confirmPassword, min = 6, max = 100) {
+    password = this.normalizeInput(password);
+    confirmPassword = this.normalizeInput(confirmPassword);
+
+    this.validateEqual(password, confirmPassword, "password");
+    this.validateMinLength(password, "password", min);
+    this.validateMaxLength(password, "password", max);
+    this.validateRequired(password, "password");
+  }
+
+  validateEmail(value) {
+    let email = value;
+    email = this.normalizeInput(email);
+    this._isEmail(email);
+    this.validateRequired(email, "email");
+  }
+
+  validateIsIn(value, valueArray, label) {
+    if (!Array.isArray(valueArray)) {
+      this._errors[label] = `${label} choices is not an array`;
+      return;
+    }
+
+    value = this.normalizeInput(value);
+
+    if (!valueArray.includes(value)) {
+      this._errors[label] = `Invalid ${label} value`;
+    }
+  }
+
+  sanitize(values) {
+    if (!this._checkOpts(values)) {
+      return false;
+    }
+
+    let data = {};
+    Object.keys(values).forEach((key) => (data[key] = escape(this.normalizeInput(values[key]))));
+
+    return data;
+  }
 
   getErrors() {
-    return this._errors;
+    let errors = this._errors;
+
+    return {
+      isValid: this._isEmpty(errors),
+      errors,
+    };
   }
 }
 

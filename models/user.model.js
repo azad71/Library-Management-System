@@ -4,38 +4,30 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema(
   {
-    firstName: {
+    firstname: {
       type: String,
-      required: [true, "First name can't be empty"],
-      min: [3, "First name must have at least 3 characters"],
       trim: true,
     },
 
-    lastName: {
+    lastname: {
       type: String,
-      required: [true, "Last name can't be empty"],
-      min: [3, "Last name must have at least 3 characters"],
       trim: true,
     },
 
     username: {
       type: String,
-      required: [true, "username can't be empty"],
-      min: [5, "username must have at least 5 characters"],
       trim: true,
       unique: [true, "username is already exists"],
     },
 
     email: {
       type: String,
-      required: true,
       trim: true,
       unique: [true, "email already exists"],
     },
 
     password: {
       type: String,
-      min: [6, "Password should be at least 6 characters"],
     },
 
     bookIssueInfo: [
@@ -47,7 +39,6 @@ const userSchema = new mongoose.Schema(
 
     gender: {
       type: String,
-      enum: ["male", "female", "others"],
     },
 
     address: {

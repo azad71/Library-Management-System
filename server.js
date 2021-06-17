@@ -15,8 +15,6 @@ const Seed = require("./seed");
 
 // app config
 app.use("/media", express.static(__dirname + "/public"));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
 app.use(formidable({ multiples: true }));
 app.use(morgan("dev"));
 
@@ -34,7 +32,7 @@ mongoose
 //Routes
 app.use(routes);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`server is running at http://localhost:${PORT}`);

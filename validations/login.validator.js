@@ -1,4 +1,5 @@
 const Validator = require("./baseValidator");
+const { isAlphanumeric, isEmail } = require("validator").default;
 
 class AdminLoginValidator extends Validator {
   constructor(username, password) {
@@ -11,28 +12,19 @@ class AdminLoginValidator extends Validator {
   _validateUsername() {
     let username = this.username;
     username = this.normalizeInput(username);
-    this.validateRequired(username, "username");
-  }
 
-  _validateUserPassword() {
-    let password = this.password;
-    password = this.normalizeInput(password);
-
-    this.validateMinLength(password, "password", 6);
-    this.validateMaxLength(password, "password", 100);
-    this.validateRequired(password, "password");
+    if (isAlphanumeric(username, "en-US", { ignore: " " }) || isEmail(username)) {
+      this.validateRequired(username, "username");
+    } else {
+      this._errors["username"] = "Invalid username format";
+    }
   }
 
   validate() {
     this._validateUsername();
-    this._validateUserPassword();
+    this.validatePassword(this.password);
 
-    let errors = this._errors;
-
-    return {
-      isValid: this._isEmpty(errors),
-      errors,
-    };
+    return this.getErrors();
   }
 }
 

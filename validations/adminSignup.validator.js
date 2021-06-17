@@ -12,48 +12,21 @@ class AdminSignupValidator extends Validator {
     this.adminCode = adminCode;
   }
 
-  _validateAdminUsername() {
-    let username = this.username;
-    username = this.normalizeInput(username);
-    this.validateAlphanumeric(username, "username");
-    this.validateMinLength(username, "username", 3);
-    this.validateMaxLength(username, "username", 10);
-    this.validateRequired(username, "username");
-  }
+  _validateAdminCode() {
+    let adminCode = this.adminCode;
+    adminCode = this.normalizeInput(adminCode);
 
-  _validateAdminEmail() {
-    let email = this.email;
-    email = this.normalizeInput(email);
-    this.validateEmail(email);
-    this.validateRequired(email, "email");
-  }
-
-  _validateAdminPassword() {
-    let password = this.password;
-    let confirmPassword = this.confirmPassword;
-
-    password = this.normalizeInput(password);
-    confirmPassword = this.normalizeInput(confirmPassword);
-
-    this.validateEqual(password, confirmPassword, "password");
-    this.validateMinLength(password, "password", 6);
-    this.validateMaxLength(password, "password", 100);
-    this.validateRequired(password, "password");
+    this.validateAlpha(adminCode, "adminCode");
+    this.validateRequired(adminCode, "adminCode");
   }
 
   validate() {
-    this._validateAdminUsername();
-    this._validateAdminEmail();
-    this._validateAdminPassword();
-    this.validateEqual(this.password, this.confirmPassword, "password");
-    this.validateEqual(this.adminCode, config.ADMIN_SECRET, "adminCode");
+    this.validateUsername(this.username);
+    this.validateEmail(this.email);
+    this.validateNewPassword(this.password, this.confirmPassword);
+    this._validateAdminCode();
 
-    let errors = this._errors;
-
-    return {
-      isValid: this._isEmpty(errors),
-      errors,
-    };
+    return this.getErrors();
   }
 }
 

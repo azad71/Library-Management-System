@@ -1,6 +1,5 @@
 const express = require("express"),
-  router = express.Router(),
-  passport = require("passport");
+  router = express.Router();
 
 // Import index controller
 const authController = require("../controllers/auth.controllers");
@@ -12,17 +11,8 @@ router.post("/admin/signup", authController.postAdminSignUp);
 
 router.post("/admin/login", authController.postAdminLogin);
 
-// //user login handler
-// router.get("/auth/user-login", authController.getUserLoginPage);
+router.post("/user/signup", authController.postUserSignUp);
 
-// router.post("/auth/user-login", authController.postUserLogin);
-
-// //user -> user logout handler
-// router.get("/auth/user-logout", authController.getUserLogout);
-
-// //user sign up handler
-// router.get("/auth/user-signUp", authController.getUserSignUp);
-
-// router.post("/auth/user-signup", authController.postUserSignUp);
+router.post("/user/login", authController.postUserLogin);
 
 module.exports = router;

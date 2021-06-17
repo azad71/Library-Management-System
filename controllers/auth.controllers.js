@@ -13,6 +13,7 @@ const Admin = require("../models/admin.model");
 // validation
 const AdminSignupValidator = require("../validations/adminSignup.validator");
 const LoginValidator = require("../validations/login.validator");
+const UserSignupValidator = require("../validations/userSignup.validator");
 
 exports.postAdminSignUp = async (req, res) => {
   try {
@@ -101,9 +102,9 @@ exports.postAdminLogin = async (req, res) => {
   }
 };
 
-exports.postUserLogin = async (req, res, next) => {
+exports.postUserLogin = async (req, res) => {
   try {
-    const { username, password } = req.body;
+    const { username, password } = req.fields;
 
     const userValidator = new LoginValidator(username, password);
     const { isValid, errors } = userValidator.validate();
@@ -151,35 +152,48 @@ exports.postUserLogin = async (req, res, next) => {
   }
 };
 
-// exports.postUserSignUp = async (req, res, next) => {
-//   try {
-//     let { firstName, lastName, username, email, gender, address, password } = req.body;
+exports.postUserSignUp = async (req, res, next) => {
+  try {
+    let { firstname, lastname, username, email, gender, address, password, confirmPassword } = req.fields;
 
-//     let isExists = await User.find({
-//       $or: [{ email: username }, { username }],
-//     });
+    const userValidator = new UserSignupValidator(firstname, lastname, username, email, password, confirmPassword);
 
-//     if (isExists) {
-//       req.flash("warning", "User with this credential already exists");
-//       return res.redirect("back");
-//     }
+    const { isValid, errors } = userValidator.validate();
 
-//     password = await bcrypt.hash(password, 12);
+    if (!isValid)
+      return res.status(400).json({
+        status: false,
+        errors,
+      });
 
-//     let newUser = new User({ firstName, lastName, username, email, gender, address, password });
+    let data = userValidator.sanitize({ firstname, lastname, username, email, gender, address });
 
-//     newUser = await newUser.save();
+    let isExists = await User.findOne({
+      $or: [{ email: data.username }, { username: data.username }],
+    });
 
-//     req.session.isAuthenticated = true;
-//     delete user.password;
-//     req.session.user = {
-//       ...user,
-//       isAdmin: false,
-//     };
+    if (isExists)
+      return res.status(409).json({
+        status: false,
+        errors: "User with this credential already exists",
+      });
 
-//     return res.redirect("/");
-//   } catch (err) {
-//     console.log(err);
-//     return res.render("user/userSignup");
-//   }
-// };
+    password = await bcrypt.hash(password, 12);
+    data["password"] = password;
+
+    let newUser = new User(data);
+
+    newUser = await newUser.save();
+
+    return res.json({
+      status: true,
+      message: "User signed up successfully, Please login to continue",
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      status: false,
+      errors: "Something went wrong",
+    });
+  }
+};
