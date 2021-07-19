@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 function Copyright() {
   const classes = useStyles();
   return (
-    <Box className={classes.footer} mt={8}>
+    <Box className={classes.footer} mt={12}>
       <Typography variant="h6">
         Developed by:{" "}
         <Link className={classes.profile} href="https://github.com/azad71">

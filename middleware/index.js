@@ -3,7 +3,7 @@ const multer = require("multer");
 const middleware = {};
 
 middleware.isLoggedIn = function(req, res, next) {
-    if(req.isAuthenticated()) {
+    if(req.session.isAuthenticated) {
         return next();
     }
     req.flash("error", "You need to be logged in first");
@@ -11,7 +11,7 @@ middleware.isLoggedIn = function(req, res, next) {
 };
 
 middleware.isAdmin = function(req, res, next) {
-    if(req.isAuthenticated() && req.user.isAdmin) {
+    if(req.session.isAuthenticated && req.session.user.isAdmin) {
         return next();
     }
     req.flash("error", "Sorry, this route is allowed for admin only");

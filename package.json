@@ -1,16 +1,16 @@
 {
   "name": "library_management_system",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "Basic library management system",
-  "main": "app.js",
+  "main": "server.js",
   "keywords": [
     "Javascript",
     "NodeJS",
     "expressjs"
   ],
   "engines": {
-    "node": "10.16.0",
-    "npm": "6.9.0"
+    "node": "14.15.4",
+    "npm": "7.13.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -21,25 +21,17 @@
   "author": "Azad Mamun",
   "license": "ISC",
   "dependencies": {
-    "connect-flash": "^0.1.1",
-    "connect-mongodb-session": "^2.4.1",
-    "dotenv": "^8.2.0",
-    "ejs": "^2.6.1",
+    "bcryptjs": "^2.4.3",
     "express": "^4.16.4",
-    "express-sanitizer": "^1.0.5",
-    "express-session": "^1.17.1",
-    "method-override": "^3.0.0",
-    "mongoose": "^5.11.8",
-    "multer": "^1.4.1",
-    "passport": "^0.4.0",
-    "passport-local": "^1.0.0",
-    "passport-local-mongoose": "^5.0.1",
-    "sharp": "^0.28.1",
-    "uid": "^1.0.0",
-    "uuid": "^3.4.0"
+    "express-formidable": "^1.2.0",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.12.9",
+    "morgan": "^1.10.0",
+    "sharp": "^0.28.2",
+    "validator": "^13.6.0"
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "nodemon": "^1.19.4"
+    "prettier": "^2.3.0"
   }
 }
