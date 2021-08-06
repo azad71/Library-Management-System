@@ -24,7 +24,7 @@ function Copyright() {
     <Box className={classes.footer} mt={12}>
       <Typography variant="h6">
         Developed by:{" "}
-        <Link className={classes.profile} href="https://github.com/azad71">
+        <Link className={classes.profile} href="https://github.com/azad71" target="_blank">
           &copy;Azad Mamun
         </Link>
       </Typography>

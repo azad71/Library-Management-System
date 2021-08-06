@@ -1,6 +1,8 @@
 # This repo is under construction. You may find some parts not working as expected.
 
-### Checkout "dev" branch to see which part I'm working on right now
+```
+This branch is for converting old html, css template into modern MERN stack web app. After completion, this branch will be the master branch
+```
 
 ### Following feature will be added in this repo
 

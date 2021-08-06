@@ -1,6 +1,20 @@
 import * as yup from "yup";
 
-const adminSignupValidationSchema = yup.object().shape({
+const userSignupValidationSchema = yup.object().shape({
+  firstName: yup
+    .string()
+    .label("First Name")
+    .required()
+    .min(3, "First name must have at least 3 characters")
+    .max(20, "First name can have maximum 20 characters"),
+
+  lastName: yup
+    .string()
+    .label("Last Name")
+    .required()
+    .min(3, "Last name must have at least 3 characters")
+    .max(20, "Last name can have maximum 20 characters"),
+
   username: yup
     .string()
     .required()
@@ -9,6 +23,8 @@ const adminSignupValidationSchema = yup.object().shape({
     .max(20, "username can have maximum 20 characters"),
 
   email: yup.string().required().label("Email").email("Please provide a valid email"),
+
+  address: yup.string().label("Address").required(),
 
   password: yup.string().required().label("Password").min(6, "Password must have at least 6 characters"),
 
@@ -22,4 +38,4 @@ const adminSignupValidationSchema = yup.object().shape({
   secretCode: yup.string().required("admin secret is required").label("secretCode"),
 });
 
-export default adminSignupValidationSchema;
+export default userSignupValidationSchema;

@@ -11,9 +11,9 @@ import LockOpenOutlined from "@material-ui/icons/LockOpenOutlined";
 import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
-import adminSignupValidationSchema from "../../../validations/auth/adminSignup.validator";
+import loginValidationSchema from "../../../validations/auth/login.validator";
 
-import useStyles from "./adminSignup.styles";
+import useStyles from "../admin/adminSignup.styles";
 
 const inputProps = {
   variant: "outlined",
@@ -23,14 +23,12 @@ const inputProps = {
   autoFocus: true,
 };
 
-export default function AdminSignup() {
+export default function AdminLogin() {
   const classes = useStyles();
 
   const [values, setValues] = useState({
     username: "",
-    email: "",
     password: "",
-    adminSecret: "",
   });
 
   const handleSubmit = (values, actions) => {
@@ -45,13 +43,13 @@ export default function AdminSignup() {
           <LockOpenOutlined />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Admin Signup
+          User Login
         </Typography>
 
         <Formik
           initialValues={{ ...values }}
           onSubmit={(values, actions) => handleSubmit(values, actions)}
-          validationSchema={adminSignupValidationSchema}
+          validationSchema={loginValidationSchema}
           validateOnBlur={false}
         >
           {({
@@ -73,6 +71,7 @@ export default function AdminSignup() {
                   id="username"
                   label="Username"
                   name="username"
+                  placeholder="Provide email or username"
                   autoComplete="username"
                   onChange={(e) => {
                     handleChange(e);
@@ -80,21 +79,6 @@ export default function AdminSignup() {
                   }}
                 />
                 <p className={classes.errorText}>{touched.username && errors.username}</p>
-              </div>
-
-              <div className={classes.input}>
-                <TextField
-                  {...inputProps}
-                  id="email"
-                  label="Email"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(e) => {
-                    handleChange(e);
-                    setFieldTouched("email");
-                  }}
-                />
-                <p className={classes.errorText}>{touched.email && errors.email}</p>
               </div>
 
               <div className={classes.input}>
@@ -114,51 +98,18 @@ export default function AdminSignup() {
                 <p className={classes.errorText}>{touched.password && errors.password}</p>
               </div>
 
-              <div className={classes.input}>
-                <TextField
-                  {...inputProps}
-                  name="confirmPassword"
-                  label="Confirm Password"
-                  type="password"
-                  id="confirmPassword"
-                  autoComplete="confirmPassword"
-                  onChange={(e) => {
-                    handleChange(e);
-                    setFieldTouched("confirmPassword");
-                  }}
-                />
-
-                <p className={classes.errorText}>{touched.confirmPassword && errors.confirmPassword}</p>
-              </div>
-
-              <div className={classes.input}>
-                <TextField
-                  {...inputProps}
-                  id="secretCode"
-                  label="Admin Secret Code"
-                  name="secretCode"
-                  type="password"
-                  autoComplete="secretCode"
-                  onChange={(e) => {
-                    handleChange(e);
-                    setFieldTouched("secretCode");
-                  }}
-                />
-                <p className={classes.errorText}>{touched.secretCode && errors.secretCode}</p>
-              </div>
-
               <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
                 Signup
               </Button>
-              <Grid container>
+              <Grid justifyContent="flex-end" container>
                 <Grid item xs>
                   <Link className={classes.link} to="/">
                     Home
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link className={classes.link} to="/auth/admin/login">
-                    {"Already have an account? Login"}
+                  <Link className={classes.link} to="/auth/user/signup">
+                    {"Haven't signed up yet? Signup"}
                   </Link>
                 </Grid>
               </Grid>
