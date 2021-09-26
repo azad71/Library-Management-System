@@ -14,8 +14,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LandingPage() {
+function LandingPage({match}) {
   const classes = useStyles();
+  console.log(match)
   return (
     <>
       <Typography className={classes.header} variant="h2">
@@ -23,8 +24,8 @@ function LandingPage() {
       </Typography>
       <Container maxWidth="xs">
         <Grid direction="column" container spacing={3}>
-          {LandingButtonData.map((data) => (
-            <HrefButton path={data.path} text={data.text} />
+          {LandingButtonData.map((data, idx) => (
+            <HrefButton key={idx} path={data.path} text={data.text} />
           ))}
         </Grid>
       </Container>

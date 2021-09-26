@@ -8,10 +8,6 @@
     "NodeJS",
     "expressjs"
   ],
-  "engines": {
-    "node": "14.15.4",
-    "npm": "7.13.0"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
@@ -32,6 +28,6 @@
   },
   "devDependencies": {
     "faker": "^4.1.0",
-    "prettier": "^2.3.0"
+    "prettier": "^2.4.1"
   }
 }
