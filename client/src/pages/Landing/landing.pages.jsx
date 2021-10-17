@@ -1,3 +1,4 @@
+// import Container from "@material-ui/core/Container";
 import Container from "@material-ui/core/Container";
 import Grid from "@material-ui/core/Grid";
 import makeStyles from "@material-ui/core/styles/makeStyles";
@@ -14,9 +15,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function LandingPage({match}) {
+function LandingPage({ match }) {
   const classes = useStyles();
-  console.log(match)
+  console.log(match);
   return (
     <>
       <Typography className={classes.header} variant="h2">

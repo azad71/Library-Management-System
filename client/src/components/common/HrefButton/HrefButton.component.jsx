@@ -9,6 +9,10 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
     padding: "10px 0",
   },
+
+  links: {
+    textDecoration: "none",
+  },
 }));
 
 function HrefButton({ path, text, variant = "contained", color = "primary" }) {
@@ -16,7 +20,7 @@ function HrefButton({ path, text, variant = "contained", color = "primary" }) {
 
   return (
     <Grid item>
-      <Link to={path}>
+      <Link className={classes.links} to={path}>
         <Button className={classes.buttons} variant={variant} color={color}>
           {text}
         </Button>

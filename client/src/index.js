@@ -4,11 +4,7 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
-import {
-  createTheme,
-  responsiveFontSizes,
-  ThemeProvider,
-} from "@material-ui/core";
+import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material";
 
 let theme = createTheme();
 theme = responsiveFontSizes(theme);

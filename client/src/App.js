@@ -9,7 +9,7 @@ import UserLoginPage from "./pages/auth/user/userLogin.page";
 import BooksPage from "./pages/books/books.pages";
 
 // COMPONENTS
-import Copyright from "./components/common/Copyright/copyright.component";
+// import Copyright from "./components/common/Copyright/copyright.component";
 
 function App() {
   return (
@@ -22,7 +22,7 @@ function App() {
         <Route exact path="/auth/user/login" component={UserLoginPage} />
         <Route exact path="/books" component={BooksPage} />
       </Switch>
-      <Copyright />
+      {/* <Copyright /> */}
     </div>
   );
 }
