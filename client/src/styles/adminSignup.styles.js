@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +35,10 @@ const useStyles = makeStyles((theme) => ({
 
   link: {
     textDecoration: "none",
+  },
+
+  bottomContainer: {
+    marginTop: "",
   },
 }));
 

@@ -9,7 +9,6 @@
     "expressjs"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node app.js",
     "dev": "SET NODE_ENV=dev && nodemon app.js",
     "client": "cd client && npm start"
