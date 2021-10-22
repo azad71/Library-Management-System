@@ -35,7 +35,7 @@ const userSignupValidationSchema = yup.object().shape({
     .min(6, "confirm password must have at least 6 characters")
     .oneOf([yup.ref("password"), null], "Confirm password doesn't match with password"),
 
-  secretCode: yup.string().required("admin secret is required").label("secretCode"),
+  gender: yup.string().label("gender").required().oneOf(["male", "female", "other"]),
 });
 
 export default userSignupValidationSchema;

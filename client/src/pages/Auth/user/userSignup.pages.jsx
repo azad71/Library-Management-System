@@ -2,23 +2,23 @@ import { Formik } from "formik";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
-import Avatar from "@material-ui/core/Avatar";
-import Button from "@material-ui/core/Button";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import TextField from "@material-ui/core/TextField";
-import Grid from "@material-ui/core/Grid";
-import LockOpenOutlined from "@material-ui/icons/LockOpenOutlined";
-import Typography from "@material-ui/core/Typography";
-import Container from "@material-ui/core/Container";
-import FormControl from "@material-ui/core/FormControl";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import FormLabel from "@material-ui/core/FormLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import CssBaseline from "@mui/material/CssBaseline";
+import TextField from "@mui/material/TextField";
+import Grid from "@mui/material/Grid";
+import LockOpenOutlined from "@mui/icons-material/LockOpenOutlined";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
 
 import userSignupValidationSchema from "../../../validations/auth/userSignup.validator";
 
-import useStyles from "../admin/adminSignup.styles";
+import useStyles from "../../../styles/auth.styles";
 
 const inputProps = {
   variant: "outlined",
@@ -42,19 +42,14 @@ export default function UserSignup() {
     confirmPassword: "",
   });
 
-  const [gender, setGender] = useState("");
-
-  const handleSubmit = (values, actions) => {
-    console.log(values);
-  };
-
-  const handleChangeGender = (e) => {
-    setGender(e.target.value);
+  const handleUserSignup = (values, actions) => {
+    alert(JSON.stringify(values));
+    actions.resetForm({});
+    actions.setSubmitting(false);
   };
 
   return (
     <Container component="main" maxWidth="sm">
-      <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
           <LockOpenOutlined />
@@ -65,164 +60,156 @@ export default function UserSignup() {
 
         <Formik
           initialValues={{ ...values }}
-          onSubmit={(values, actions) => handleSubmit(values, actions)}
+          onSubmit={(values, actions) => handleUserSignup(values, actions)}
           validationSchema={userSignupValidationSchema}
           validateOnBlur={false}
         >
-          {({
-            handleChange,
-            values,
-            handleSubmit,
-            errors,
-            isValid,
-            isSubmitting,
-            touched,
-            handleBlur,
-            setFieldTouched,
-            handleReset,
-          }) => (
-            <form className={classes.form} noValidate>
+          {({ handleChange, values, handleSubmit, errors, isSubmitting, touched, setFieldTouched }) => (
+            <form className={classes.form} onSubmit={handleSubmit}>
               <Grid container spacing={2}>
                 <Grid item xs={12} sm={6}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      id="firstName"
-                      label="First Name"
-                      name="firstName"
-                      autoComplete="firstName"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("firstName");
-                      }}
-                    />
-                    <p className={classes.errorText}>{touched.firstName && errors.firstName}</p>
-                  </div>
+                  <TextField
+                    {...inputProps}
+                    id="firstName"
+                    label="First Name"
+                    name="firstName"
+                    autoComplete="firstName"
+                    value={values.firstName}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("firstName");
+                    }}
+                  />
+                  <p className={classes.errorText}>{touched.firstName && errors.firstName}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      id="lastName"
-                      label="last Name"
-                      name="lastName"
-                      autoComplete="lastName"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("lastName");
-                      }}
-                    />
-                    <p className={classes.errorText}>{touched.lastName && errors.lastName}</p>
-                  </div>
+                  <TextField
+                    {...inputProps}
+                    id="lastName"
+                    label="last Name"
+                    name="lastName"
+                    autoComplete="lastName"
+                    value={values.lastName}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("lastName");
+                    }}
+                  />
+                  <p className={classes.errorText}>{touched.lastName && errors.lastName}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      id="username"
-                      label="Username"
-                      name="username"
-                      autoComplete="username"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("username");
-                      }}
-                    />
-                    <p className={classes.errorText}>{touched.username && errors.username}</p>
-                  </div>
+                  <TextField
+                    {...inputProps}
+                    id="username"
+                    label="Username"
+                    name="username"
+                    autoComplete="username"
+                    value={values.username}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("username");
+                    }}
+                  />
+                  <p className={classes.errorText}>{touched.username && errors.username}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      id="email"
-                      label="Email"
-                      name="email"
-                      autoComplete="email"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("email");
-                      }}
-                    />
-                    <p className={classes.errorText}>{touched.email && errors.email}</p>
-                  </div>
+                  <TextField
+                    {...inputProps}
+                    id="email"
+                    label="Email"
+                    name="email"
+                    autoComplete="email"
+                    value={values.email}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("email");
+                    }}
+                  />
+                  <p className={classes.errorText}>{touched.email && errors.email}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      name="password"
-                      label="Password"
-                      type="password"
-                      id="password"
-                      autoComplete="password"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("password");
-                      }}
-                    />
+                  <TextField
+                    {...inputProps}
+                    name="password"
+                    label="Password"
+                    type="password"
+                    id="password"
+                    autoComplete="password"
+                    value={values.password}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("password");
+                    }}
+                  />
 
-                    <p className={classes.errorText}>{touched.password && errors.password}</p>
-                  </div>
+                  <p className={classes.errorText}>{touched.password && errors.password}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={6}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      name="confirmPassword"
-                      label="Confirm Password"
-                      type="password"
-                      id="confirmPassword"
-                      autoComplete="confirmPassword"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("confirmPassword");
-                      }}
-                    />
+                  <TextField
+                    {...inputProps}
+                    name="confirmPassword"
+                    label="Confirm Password"
+                    type="password"
+                    id="confirmPassword"
+                    autoComplete="confirmPassword"
+                    value={values.confirmPassword}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("confirmPassword");
+                    }}
+                  />
 
-                    <p className={classes.errorText}>{touched.confirmPassword && errors.confirmPassword}</p>
-                  </div>
+                  <p className={classes.errorText}>{touched.confirmPassword && errors.confirmPassword}</p>
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                  <div className={classes.input}>
-                    <TextField
-                      {...inputProps}
-                      id="address"
-                      label="Address"
-                      name="address"
-                      autoComplete="address"
-                      onChange={(e) => {
-                        handleChange(e);
-                        setFieldTouched("address");
-                      }}
-                    />
-                    <p className={classes.errorText}>{touched.address && errors.address}</p>
-                  </div>
+                  <TextField
+                    {...inputProps}
+                    id="address"
+                    label="Address"
+                    name="address"
+                    autoComplete="address"
+                    value={values.address}
+                    onChange={(e) => {
+                      handleChange(e);
+                      setFieldTouched("address");
+                    }}
+                  />
+                  <p className={classes.errorText}>{touched.address && errors.address}</p>
                 </Grid>
+
                 <Grid item xs={12} sm={12}>
                   <FormControl component="fieldset">
                     <FormLabel component="legend">Gender</FormLabel>
-                    <RadioGroup row aria-label="gender" name="gender" value={gender} onChange={handleChangeGender}>
+                    <RadioGroup
+                      row
+                      aria-label="gender"
+                      name="gender"
+                      value={values.gender}
+                      onChange={(e) => {
+                        handleChange(e);
+                        setFieldTouched("gender");
+                      }}
+                    >
                       <FormControlLabel
-                        checked={gender === "female"}
+                        checked={values.gender === "female"}
                         value="female"
                         control={<Radio color="primary" />}
                         label="Female"
                       />
                       <FormControlLabel
-                        checked={gender === "male"}
+                        checked={values.gender === "male"}
                         value="male"
                         control={<Radio color="primary" />}
                         label="Male"
                       />
                       <FormControlLabel
-                        checked={gender === "other"}
+                        checked={values.gender === "other"}
                         value="other"
                         control={<Radio color="primary" />}
                         label="Other"
@@ -231,11 +218,14 @@ export default function UserSignup() {
                   </FormControl>
                   <p className={classes.errorText}>{touched.gender && errors.gender}</p>
                 </Grid>
+
+                <Grid item xs={12} sm={12}>
+                  <Button type="submit" fullWidth variant="contained" color="primary" sx={{ mt: 1, mb: 2 }}>
+                    {isSubmitting ? "Signup..." : "Signup"}
+                  </Button>
+                </Grid>
               </Grid>
 
-              <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
-                Signup
-              </Button>
               <Grid container>
                 <Grid item xs>
                   <Link className={classes.link} to="/">

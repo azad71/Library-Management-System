@@ -16,9 +16,9 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
   },
 
-  input: {
-    marginBottom: "25px",
-  },
+  // input: {
+  //   marginBottom: "18px",
+  // },
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
     color: "rgba(255, 0, 0, 0.759)",
     fontSize: " 12px",
     marginTop: "-10px",
-    padding: "15px 0",
+    padding: "10px 0",
     position: "absolute",
     fontWeight: "500",
     letterSpacing: "1px",
@@ -38,7 +38,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   bottomContainer: {
-    marginTop: "",
+    marginTop: "10px 0",
   },
 }));
 
