@@ -6,6 +6,16 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { createTheme, responsiveFontSizes, ThemeProvider } from "@mui/material";
 
+// let theme = createTheme({
+//   overrides: {
+//     MuiList: {
+//       root: {
+//         width: "fit-content",
+//       },
+//     },
+//   },
+// });
+
 let theme = createTheme();
 theme = responsiveFontSizes(theme);
 
