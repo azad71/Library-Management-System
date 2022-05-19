@@ -6,8 +6,8 @@ if (process.env.NODE_ENV !== "production") require("dotenv").config();
 // importing models
 const User = require("../models/user");
 
-exports.getLandingPage = (req, res, next) => {
-  res.render("landing");
+exports.getLandingPage = async (_req, res) => {
+  return res.render("landing.html");
 };
 
 exports.getAdminLoginPage = (req, res, next) => {
@@ -34,10 +34,7 @@ exports.postAdminSignUp = async (req, res, next) => {
 
       const user = await User.register(newAdmin, req.body.password);
       await passport.authenticate("local")(req, res, () => {
-        req.flash(
-          "success",
-          "Hello, " + user.username + " Welcome to Admin Dashboard"
-        );
+        req.flash("success", "Hello, " + user.username + " Welcome to Admin Dashboard");
         res.redirect("/admin");
       });
     } else {
