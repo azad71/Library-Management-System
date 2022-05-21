@@ -1,6 +1,7 @@
 const express = require("express"),
   app = express(),
   mongoose = require("mongoose"),
+  ejs = require("ejs"),
   session = require("express-session"),
   passport = require("passport"),
   multer = require("multer"),
@@ -11,6 +12,7 @@ const express = require("express"),
   localStrategy = require("passport-local"),
   MongoStore = require("connect-mongodb-session")(session),
   flash = require("connect-flash"),
+  crypto = require("crypto"),
   User = require("./models/user"),
   userRoutes = require("./routes/users"),
   adminRoutes = require("./routes/admin"),
@@ -25,12 +27,16 @@ const express = require("express"),
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // app config
-app.set("view engine", "ejs");
+app.engine(".html", ejs.renderFile);
+app.set("view engine", "html");
+app.set("views", path.join(__dirname, "views"));
+
 app.use(methodOverride("_method"));
+
 app.use(express.static(__dirname + "/public"));
+
 app.use(express.json());
-app.use(express.urlencoded({extended: true}));
-// app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(sanitizer());
 
 // db config
@@ -76,25 +82,19 @@ const fileStorage = multer.diskStorage({
     cb(null, "images");
   },
   filename: (req, file, cb) => {
-    cb(null, `${uid()}-${file.originalname}`);
+    cb(null, `${crypto.randomBytes(12).toString("hex")}-${file.originalname}`);
   },
 });
 
 const filefilter = (req, file, cb) => {
-  if (
-    file.mimetype === "image/png" ||
-    file.mimetype === "image/jpg" ||
-    file.mimetype === "image/jpeg"
-  ) {
+  if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
     cb(null, true);
   } else {
     cb(null, false);
   }
 };
 
-app.use(
-  multer({ storage: fileStorage, fileFilter: filefilter }).single("image")
-);
+app.use(multer({ storage: fileStorage, fileFilter: filefilter }).single("image"));
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {
@@ -114,5 +114,5 @@ app.use(authRoutes);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
-  console.log(`server is running`);
+  console.log(`server is running at http://localhost:${PORT}`);
 });
