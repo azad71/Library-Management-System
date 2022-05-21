@@ -1,173 +1,182 @@
-<% include partials/header %>
-
-<!--NAVIGATION BAR-->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0 sticky-top">
-   <div class="container">
-     <% if(!currentUser) { %>
-      <a class="navbar-brand" href="/">Home</a>
-      <% } else if(!currentUser.isAdmin) { %>
-      <a class="navbar-brand" href="/user/1">Home</a>
-      <% } else if(currentUser.isAdmin) { %>
-      <a class="navbar-brand" href="/admin">Home</a>
-      <% } %>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-    
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav">
-          <li class="nav-item active  px-2">
-            <a class="nav-link" href="/books/all/all/1">Browse Books</a></a>
-          </li>
-        </ul>
-          
-           <% if(currentUser) { %>
-          <ul class="navbar-nav ml-auto">
-            
-             <%if(currentUser.violationFlag) { %>
-              <li class="nav-item align-self-center mr-2">
-                <i class="fa fa-flag text-danger"></i>
-              </li>
+<%- include ('./partials/header.html') %>
+</head>
+<body>
+  <!--NAVIGATION BAR-->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-0 sticky-top">
+    <div class="container">
+      <% if(!currentUser) { %>
+        <a class="navbar-brand" href="/">Home</a>
+        <% } else if(!currentUser.isAdmin) { %>
+          <a class="navbar-brand" href="/user/1">Home</a>
+          <% } else if(currentUser.isAdmin) { %>
+            <a class="navbar-brand" href="/admin">Home</a>
             <% } %>
-            
-            <li class="nav-item dropdown mr-3">
-              <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                <i class="fa fa-user"></i> Welcome <%=user.username%>
-              </a>
-              <div class="dropdown-menu">
-                <%if(!currentUser.isAdmin) { %>
-                  <a href="/user/1/profile" class="dropdown-item">
-                    <i class="fa fa-user-circle"></i> Profile
-                  </a>
-                  <a href="/auth/user-logout" class="dropdown-item">
-                  <i class="fa fa-user-times"></i> Logout
-                </a>
-              <% } else { %>
-                   <a href="/admin/profile" class="dropdown-item">
-                    <i class="fa fa-user-circle"></i> Profile
-                  </a>
-                  <a href="/auth/user-logout" class="dropdown-item">
-                    <i class="fa fa-user-times"></i> Logout
-                  </a>
-              <% } %>
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                  <li class="nav-item active  px-2">
+                    <a class="nav-link" href="/books/all/all/1">Browse Books</a></a>
+                  </li>
+                </ul>
+
+                <% if(currentUser) { %>
+                  <ul class="navbar-nav ml-auto">
+
+                    <%if(currentUser.violationFlag) { %>
+                      <li class="nav-item align-self-center mr-2">
+                        <i class="fa fa-flag text-danger"></i>
+                      </li>
+                      <% } %>
+
+                        <li class="nav-item dropdown mr-3">
+                          <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
+                            <i class="fa fa-user"></i> Welcome <%=user.username%>
+                          </a>
+                          <div class="dropdown-menu">
+                            <%if(!currentUser.isAdmin) { %>
+                              <a href="/user/1/profile" class="dropdown-item">
+                                <i class="fa fa-user-circle"></i> Profile
+                              </a>
+                              <a href="/auth/user-logout" class="dropdown-item">
+                                <i class="fa fa-user-times"></i> Logout
+                              </a>
+                              <% } else { %>
+                                <a href="/admin/profile" class="dropdown-item">
+                                  <i class="fa fa-user-circle"></i> Profile
+                                </a>
+                                <a href="/auth/user-logout" class="dropdown-item">
+                                  <i class="fa fa-user-times"></i> Logout
+                                </a>
+                                <% } %>
+                          </div>
+                        </li>
+
+                        <li class="nav-item">
+                          <a href="/user/1/notification" class="nav-link">
+                            <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
+                          </a>
+                        </li>
+                  </ul>
+                  <% } else { %>
+                    <a href="/signUp" class="btn btn-primary btn-sm ml-auto">Sign up</a>
+                    <% } %>
               </div>
-            </li>
-            
-            <li class="nav-item">
-                <a href="/user/1/notification" class="nav-link">
-                    <i class="fa fa-bell"></i><span class="badge badge-danger badge-pill">2</span>
-                </a>
-            </li>
-          </ul>
-          <% } else { %>
-          <a href="/signUp" class="btn btn-primary btn-sm ml-auto">Sign up</a>
-          <% } %>
-      </div>
-  </div>
-</nav>
+    </div>
+  </nav>
 
-<!--SEARCH BAR-->
-<section id="search_bar" class="my-3 py-4 bg-light">
-  <div class="container">
-   <form action="/books/all/all/1" method="POST">
-    <div class="row">
-        <div class="col-md-5 p-1">
-          <select name="filter" class="form-control">
-            <option selected disabled>Select Filter...</option>
-            <option  name="title">Title</option>
-            <option  name="author">Author</option>
-            <option  name="category">Category</option>
-            <option  name="ISBN">ISBN</option>
-          </select>
-        </div>
-        
-         <div class="col-md-5 p-1">
-          <input name="searchName"  type="text" class="form-control" placeholder="Search Books">
-        </div>
-        
-         <div class="col-md-2 p-1">
-          <input type="submit" class="btn btn-outline-primary btn-block" value="Search">
-        </div>
-      </div>
-    </form>
-  </div>
-</section>
+  <!--SEARCH BAR-->
+  <section id="search_bar" class="my-3 py-4 bg-light">
+    <div class="container">
+      <form action="/books/all/all/1" method="POST">
+        <div class="row">
+          <div class="col-md-5 p-1">
+            <select name="filter" class="form-control">
+              <option selected disabled>Select Filter...</option>
+              <option name="title">Title</option>
+              <option name="author">Author</option>
+              <option name="category">Category</option>
+              <option name="ISBN">ISBN</option>
+            </select>
+          </div>
 
-<% include partials/alerts %>
+          <div class="col-md-5 p-1">
+            <input name="searchName" type="text" class="form-control" placeholder="Search Books">
+          </div>
 
-<!--BOOKS-->
-<section id="browse_books" class="mt-5">
-  <div class="container">
-    
-    <div class="row">
-    <% for(var i = 0; i < books.length; i++) { %>
-    <div class="card col-md-3 text-center">
-          <div class="card-body">
-            <h5 class="card-title"> <%=books[i].title%> </h5>
-            <p class="text-muted">
-              <small class="text-muted">Author : <%=books[i].author%></small>
-            </p>
-            <p class="text-muted">
-              <small class="text-muted">Category : <%=books[i].category%></small>
-            </p>
-            <p class="text-muted">
-              <small class="text-muted">In stock : <%=books[i].stock%></small>
-            </p>
-           
-            
-            <% if(currentUser && books[i].stock > 0) { var match = false%>
-                <% user.bookIssueInfo.forEach(book_info => { %>
-                    <% if(book_info._id.equals(books[i]._id)) { %> 
-                       <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Issued!</a>
-                       <a href="/books/return-renew" class="btn btn-xs btn-success" role="button">Return/Renew</a>
-                    <% match = true; } %>
-             <% }) %>
-             
-             <% if(!match) {%>
-            <form action="/books/<%=books[i]._id%>/issue/<%=currentUser._id%>" method="POST" class="d-inline">
-               <input class="btn btn-xs btn-success" type="submit" value="Issue">
-            </form>
-            <% } %>
-            <% } %>
-            <a href="/books/details/<%=books[i]._id%>" class="btn btn-xs btn-primary">Details</a>
+          <div class="col-md-2 p-1">
+            <input type="submit" class="btn btn-outline-primary btn-block" value="Search">
           </div>
         </div>
-    <% } %>
+      </form>
     </div>
-    <% if (pages > 0) { %>
-      <nav class="ml-3 mb-2">
-        <ul class="pagination offset-md-3">
-          
-          <% if (current == 1) { %>
-            <li class="page-item disabled"><a class="page-link">First</a></li>
-          <% } else { %>
-            <li class="page-item"><a href="/books/<%=filter%>/<%=value%>/1" class="page-link">First</a></li>
-          <% } %>
-          
-          <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-                  <% if (i !== 1) { %>
-                      <li class="page-item disabled"><a class="page-link">...</a></li>
-                  <% } %>
-                  <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-                      <% if (i == current) { %>
-                          <li class="page-item active"><a class="page-link"><%= i %></a></li>
-                      <% } else { %>
-                          <li class="page-item"><a class="page-link" href="/books/<%=filter%>/<%=value%>/<%= i %>"><%= i %></a></li>
-                      <% } %>
-                      <% if (i == Number(current) + 4 && i < pages) { %>
-                          <li class="page-item disabled"><a class="page-link">...</a></li>
-                      <% } %>
-                  <% } %>
-                  <% if (current == pages) { %>
-                      <li class="page-item disabled"><a class="page-link">Last</a></li>
-                  <% } else { %>
-                      <li class="page-item"><a href="/books/<%=filter%>/<%=value%>/<%= pages %>" class="page-link">Last</a></li>
-                  <% } %>
-        </ul>
-      </nav>
-   <% } %>
-  </div>
-</section>
+  </section>
 
+  <%- include ('./partials/alerts.html') %> 
+    <!--BOOKS-->
+    <section id="browse_books" class="mt-5">
+      <div class="container">
+
+        <div class="row">
+          <% for(var i=0; i < books.length; i++) { %>
+            <div class="card col-md-3 text-center">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <%=books[i].title%>
+                </h5>
+                <p class="text-muted">
+                  <small class="text-muted">Author : <%=books[i].author%></small>
+                </p>
+                <p class="text-muted">
+                  <small class="text-muted">Category : <%=books[i].category%></small>
+                </p>
+                <p class="text-muted">
+                  <small class="text-muted">In stock : <%=books[i].stock%></small>
+                </p>
+
+
+                <% if(currentUser && books[i].stock> 0) { var match = false%>
+                  <% user.bookIssueInfo.forEach(book_info=> { %>
+                    <% if(book_info._id.equals(books[i]._id)) { %>
+                      <a href="#" class="btn btn-xs btn-warning disabled" role="button" aria-disabled="true">Issued!</a>
+                      <a href="/books/return-renew" class="btn btn-xs btn-success" role="button">Return/Renew</a>
+                      <% match=true; } %>
+                        <% }) %>
+
+                          <% if(!match) {%>
+                            <form action="/books/<%=books[i]._id%>/issue/<%=currentUser._id%>" method="POST"
+                              class="d-inline">
+                              <input class="btn btn-xs btn-success" type="submit" value="Issue">
+                            </form>
+                            <% } %>
+                              <% } %>
+                                <a href="/books/details/<%=books[i]._id%>" class="btn btn-xs btn-primary">Details</a>
+              </div>
+            </div>
+            <% } %>
+        </div>
+        <% if (pages> 0) { %>
+          <nav class="ml-3 mb-2">
+            <ul class="pagination offset-md-3">
+
+              <% if (current==1) { %>
+                <li class="page-item disabled"><a class="page-link">First</a></li>
+                <% } else { %>
+                  <li class="page-item"><a href="/books/<%=filter%>/<%=value%>/1" class="page-link">First</a></li>
+                  <% } %>
+
+                    <% var i=(Number(current)> 5 ? Number(current) - 4 : 1) %>
+                      <% if (i !==1) { %>
+                        <li class="page-item disabled"><a class="page-link">...</a></li>
+                        <% } %>
+                          <% for (; i <=(Number(current) + 4) && i <=pages; i++) { %>
+                            <% if (i==current) { %>
+                              <li class="page-item active"><a class="page-link">
+                                  <%= i %>
+                                </a></li>
+                              <% } else { %>
+                                <li class="page-item"><a class="page-link"
+                                    href="/books/<%=filter%>/<%=value%>/<%= i %>">
+                                    <%= i %>
+                                  </a></li>
+                                <% } %>
+                                  <% if (i==Number(current) + 4 && i < pages) { %>
+                                    <li class="page-item disabled"><a class="page-link">...</a></li>
+                                    <% } %>
+                                      <% } %>
+                                        <% if (current==pages) { %>
+                                          <li class="page-item disabled"><a class="page-link">Last</a></li>
+                                          <% } else { %>
+                                            <li class="page-item"><a href="/books/<%=filter%>/<%=value%>/<%= pages %>"
+                                                class="page-link">Last</a></li>
+                                            <% } %>
+            </ul>
+          </nav>
+          <% } %>
+      </div>
+    </section>
 
 <% include ('./partials/footer.html') %>
