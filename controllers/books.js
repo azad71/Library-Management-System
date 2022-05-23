@@ -46,7 +46,7 @@ exports.findBooks = async(req, res, next) => {
 
    // show flash message if empty search field is sent to backend
    if(value == "") {
-       req.flash("error", "Searc field is empty. Please fill the search field in order to get a result");
+       req.flash("error", "Search field is empty. Please fill the search field in order to get a result");
        return res.redirect('back');
    }
 
