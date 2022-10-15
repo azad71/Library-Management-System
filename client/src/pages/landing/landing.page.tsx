@@ -1,6 +1,7 @@
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container";
 import { Fragment } from "react";
+import { Link } from "react-router-dom";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -17,9 +18,13 @@ function LandingPage() {
         </Typography>
 
         <Box className={classes.buttonWrapper}>
-          <Button sx={{ ...buttonStyles }} variant="contained">
-            Sign in
-          </Button>
+
+          <Link to="/login" className={classes.linkStyles}>
+            <Button sx={{ ...buttonStyles }} variant="contained">
+              Login
+            </Button>
+          </Link>
+          
           <Button sx={{ ...buttonStyles }} variant="contained">
             Sign up
           </Button>
