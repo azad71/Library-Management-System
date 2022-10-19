@@ -1,10 +1,15 @@
-import {useState} from "react";
+import { useState } from "react";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import { loginUserType } from "../../constants/shared.constants";
+import useStyles from "./login.styles";
+import Button from "@mui/material/Button";
+import {Link} from 'react-router-dom';
+
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,14 +47,52 @@ function a11yProps(index: string) {
 function LoginPage() {
   const [value, setValue] = useState(0);
 
+  const classes = useStyles();
+
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     console.log(newValue);
     setValue(newValue);
   };
 
+  const UserLoginForm = () => (
+    <form>
+      <Box className={classes.userLoginFieldContainer}>
+        <TextField
+          fullWidth
+          defaultValue=""
+          label="Email"
+          required
+          id="user-email"
+          type="email"
+        />
+      </Box>
+
+      <Box className={classes.userLoginFieldContainer}>
+        <TextField
+          fullWidth
+          label="Password"
+          required
+          id="user-password"
+          type="password"
+          defaultValue=""
+        />
+      </Box>
+
+      <Box>
+        <Button fullWidth variant="contained">
+          Login
+        </Button>
+      </Box>
+
+      <Typography marginY={1.5} textAlign={"right"} fontSize={12}>
+        Don't have any account? <Link to={"/signup"}>Signup here</Link>
+      </Typography>
+    </form>
+  );
+
   return (
-    <Container>
-      <Box sx={{ width: "100%" }}>
+    <Container maxWidth="sm">
+      <Box>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -61,12 +104,11 @@ function LoginPage() {
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>
-          User Login
+          <UserLoginForm />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Admin Login
         </TabPanel>
-       
       </Box>
     </Container>
   );

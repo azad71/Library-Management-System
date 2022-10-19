@@ -5,6 +5,9 @@ const useStyles = makeStyles(() => ({
     margin: "40px 0",
   },
 
+  userLoginFieldContainer: {
+    margin: "50px 0",
+  },
   
 }));
 
