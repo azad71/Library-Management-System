@@ -1,80 +1,96 @@
-import { useState } from "react";
-import Tabs from "@mui/material/Tabs";
-import Tab from "@mui/material/Tab";
+import { useState, useEffect, ChangeEvent } from "react";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import { loginUserType } from "../../constants/shared.constants";
+import { loginUserType, PageTitles } from "../../constants/shared.constants";
 import useStyles from "./login.styles";
 import Button from "@mui/material/Button";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import { useForm } from 'react-hook-form'
 
-
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-function a11yProps(index: string) {
-  return {
-    id: `${index}`,
-    "aria-controls": `tabpanel-${index}`,
-  };
-}
 
 function LoginPage() {
-  const [value, setValue] = useState(0);
-
+  const [userType, setUserType] = useState(loginUserType.USER);
   const classes = useStyles();
 
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    console.log(newValue);
-    setValue(newValue);
-  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({
+    defaultValues: {
+      email: "",
+      password: "",
+      userType: loginUserType.USER
+    }
+  });
 
-  const UserLoginForm = () => (
-    <form>
-      <Box className={classes.userLoginFieldContainer}>
+
+  useEffect(() => {
+    if (userType === loginUserType.USER) {
+      document.title = PageTitles.USER_LOGIN;
+    } else if (userType === loginUserType.ADMIN) {
+      document.title = PageTitles.ADMIN_LOGIN;
+    }
+  }, [userType]);
+
+
+  const handleUserTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    setUserType(e.target.value);
+  } 
+
+
+  return (
+    <Container maxWidth="sm">
+      <Link to={"/"}>
+        <ArrowBackIcon />
+      </Link>
+
+      <Typography align="center" variant="h4" marginY={1}>
+        Login
+      </Typography>
+
+      <form onSubmit={handleSubmit((data) => console.log(data))}>
+        <Box>
+          <FormControl>
+            <RadioGroup 
+              row
+              aria-labelledby="user-selection-radio-button-group"
+              name="row-radio-buttons-group"
+              onChange={handleUserTypeChange}
+            >
+            <FormControlLabel checked={userType === loginUserType.USER} value={loginUserType.USER} control={<Radio />} label={loginUserType.USER} />
+            <FormControlLabel checked={userType === loginUserType.ADMIN} value={loginUserType.ADMIN} control={<Radio />} label={loginUserType.ADMIN} />
+
+            </RadioGroup>
+          </FormControl>
+        </Box>
+      <Box className={classes.loginFieldContainer}>
         <TextField
           fullWidth
-          defaultValue=""
           label="Email"
           required
           id="user-email"
           type="email"
+          {...register("email")}
         />
       </Box>
 
-      <Box className={classes.userLoginFieldContainer}>
+      <Box className={classes.loginFieldContainer}>
         <TextField
           fullWidth
           label="Password"
           required
           id="user-password"
           type="password"
-          defaultValue=""
+          {...register("password")}
         />
       </Box>
 
@@ -88,28 +104,7 @@ function LoginPage() {
         Don't have any account? <Link to={"/signup"}>Signup here</Link>
       </Typography>
     </form>
-  );
 
-  return (
-    <Container maxWidth="sm">
-      <Box>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-          >
-            <Tab label="User" {...a11yProps(loginUserType.USER)} />
-            <Tab label="Admin" {...a11yProps(loginUserType.ADMIN)} />
-          </Tabs>
-        </Box>
-        <TabPanel value={value} index={0}>
-          <UserLoginForm />
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Admin Login
-        </TabPanel>
-      </Box>
     </Container>
   );
 }
