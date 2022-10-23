@@ -94,6 +94,7 @@ const onSubmit = (data: IUserLoginFormData) => {
             id="user-email"
             type="email"
             {...register("email")}
+            helperText={errors && errors.email}
           />
         </Box>
 
