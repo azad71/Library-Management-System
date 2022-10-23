@@ -10,10 +10,12 @@ import { Link } from "react-router-dom";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import { useForm } from 'react-hook-form'
-
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import { useForm } from "react-hook-form";
+import { IUserLoginFormData } from "../../types/userLogin";
+import {yupResolver} from '@hookform/resolvers/yup';
+import { userLoginSchema } from "../../validations/userLogin.validation";
 
 function LoginPage() {
   const [userType, setUserType] = useState(loginUserType.USER);
@@ -22,15 +24,16 @@ function LoginPage() {
   const {
     register,
     handleSubmit,
-    formState: { errors }
-  } = useForm({
+    formState: { errors },
+    reset
+  } = useForm<IUserLoginFormData>({
     defaultValues: {
       email: "",
       password: "",
-      userType: loginUserType.USER
-    }
+      userType: loginUserType.USER,
+    },
+    resolver: yupResolver(userLoginSchema)
   });
-
 
   useEffect(() => {
     if (userType === loginUserType.USER) {
@@ -40,12 +43,14 @@ function LoginPage() {
     }
   }, [userType]);
 
-
   const handleUserTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setUserType(e.target.value);
-  } 
+  };
 
+const onSubmit = (data: IUserLoginFormData) => {
+  console.log(data);
+}
 
   return (
     <Container maxWidth="sm">
@@ -57,54 +62,62 @@ function LoginPage() {
         Login
       </Typography>
 
-      <form onSubmit={handleSubmit((data) => console.log(data))}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Box>
           <FormControl>
-            <RadioGroup 
+            <RadioGroup
               row
               aria-labelledby="user-selection-radio-button-group"
               name="row-radio-buttons-group"
               onChange={handleUserTypeChange}
             >
-            <FormControlLabel checked={userType === loginUserType.USER} value={loginUserType.USER} control={<Radio />} label={loginUserType.USER} />
-            <FormControlLabel checked={userType === loginUserType.ADMIN} value={loginUserType.ADMIN} control={<Radio />} label={loginUserType.ADMIN} />
-
+              <FormControlLabel
+                checked={userType === loginUserType.USER}
+                value={loginUserType.USER}
+                control={<Radio />}
+                label={loginUserType.USER}
+              />
+              <FormControlLabel
+                checked={userType === loginUserType.ADMIN}
+                value={loginUserType.ADMIN}
+                control={<Radio />}
+                label={loginUserType.ADMIN}
+              />
             </RadioGroup>
           </FormControl>
         </Box>
-      <Box className={classes.loginFieldContainer}>
-        <TextField
-          fullWidth
-          label="Email"
-          required
-          id="user-email"
-          type="email"
-          {...register("email")}
-        />
-      </Box>
+        <Box className={classes.loginFieldContainer}>
+          <TextField
+            fullWidth
+            label="Email"
+            required
+            id="user-email"
+            type="email"
+            {...register("email")}
+          />
+        </Box>
 
-      <Box className={classes.loginFieldContainer}>
-        <TextField
-          fullWidth
-          label="Password"
-          required
-          id="user-password"
-          type="password"
-          {...register("password")}
-        />
-      </Box>
+        <Box className={classes.loginFieldContainer}>
+          <TextField
+            fullWidth
+            label="Password"
+            required
+            id="user-password"
+            type="password"
+            {...register("password")}
+          />
+        </Box>
 
-      <Box>
-        <Button fullWidth variant="contained">
-          Login
-        </Button>
-      </Box>
+        <Box>
+          <Button fullWidth variant="contained">
+            Login
+          </Button>
+        </Box>
 
-      <Typography marginY={1.5} textAlign={"right"} fontSize={12}>
-        Don't have any account? <Link to={"/signup"}>Signup here</Link>
-      </Typography>
-    </form>
-
+        <Typography marginY={1.5} textAlign={"right"} fontSize={12}>
+          Don't have any account? <Link to={"/signup"}>Signup here</Link>
+        </Typography>
+      </form>
     </Container>
   );
 }
