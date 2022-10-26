@@ -14,7 +14,7 @@ import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import { useForm } from "react-hook-form";
 import { IUserLoginFormData } from "../../types/userLogin";
-import {yupResolver} from '@hookform/resolvers/yup';
+import { yupResolver } from "@hookform/resolvers/yup";
 import { userLoginSchema } from "../../validations/userLogin.validation";
 
 function LoginPage() {
@@ -25,14 +25,14 @@ function LoginPage() {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<IUserLoginFormData>({
     defaultValues: {
       email: "",
       password: "",
       userType: loginUserType.USER,
     },
-    resolver: yupResolver(userLoginSchema)
+    resolver: yupResolver(userLoginSchema),
   });
 
   useEffect(() => {
@@ -48,9 +48,14 @@ function LoginPage() {
     setUserType(e.target.value);
   };
 
-const onSubmit = (data: IUserLoginFormData) => {
-  console.log(data);
-}
+  const onSubmit = (data: IUserLoginFormData) => {
+    data.userType = userType;
+
+    console.log(data);
+
+    reset();
+    setUserType(loginUserType.USER)
+  };
 
   return (
     <Container maxWidth="sm">
@@ -90,11 +95,12 @@ const onSubmit = (data: IUserLoginFormData) => {
           <TextField
             fullWidth
             label="Email"
-            required
-            id="user-email"
             type="email"
-            {...register("email")}
-            helperText={errors && errors.email}
+            inputProps={{
+              ...register("email"),
+            }}
+            error={!!errors.email}
+            helperText={errors.email?.message}
           />
         </Box>
 
@@ -102,15 +108,17 @@ const onSubmit = (data: IUserLoginFormData) => {
           <TextField
             fullWidth
             label="Password"
-            required
-            id="user-password"
             type="password"
-            {...register("password")}
+            inputProps={{
+              ...register('password')
+            }}
+            error={!!errors.password}
+            helperText={errors.password?.message}
           />
         </Box>
 
         <Box>
-          <Button fullWidth variant="contained">
+          <Button type="submit" fullWidth variant="contained">
             Login
           </Button>
         </Box>
