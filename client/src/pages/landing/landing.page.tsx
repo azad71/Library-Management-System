@@ -18,16 +18,17 @@ function LandingPage() {
         </Typography>
 
         <Box className={classes.buttonWrapper}>
-
           <Link to="/login" className={classes.linkStyles}>
             <Button sx={{ ...buttonStyles }} variant="contained">
               Login
             </Button>
           </Link>
-          
-          <Button sx={{ ...buttonStyles }} variant="contained">
-            Sign up
-          </Button>
+
+          <Link to="/signup" className={classes.linkStyles}>
+            <Button sx={{ ...buttonStyles }} variant="contained">
+              Signup
+            </Button>
+          </Link>
           <Button sx={{ ...buttonStyles }} variant="contained">
             Browse books
           </Button>

@@ -1,6 +1,6 @@
 import * as Yup from "yup";
 
-export const userLoginSchema = Yup.object().shape({
+export const loginSchema = Yup.object().shape({
   email: Yup.string().required("Email is required").email(),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")

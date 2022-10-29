@@ -1,9 +1,10 @@
 import { Routes, Route } from "react-router-dom";
-
-import LandingPage from "./pages/landing/landing.page";
-import Footer from "./components/footer/footer.component";
 import { Fragment } from "react";
+
+import Footer from "./components/footer/footer.component";
 import LoginPage from "./pages/login/login.page";
+import LandingPage from "./pages/landing/landing.page";
+import SignupPage from "./pages/signup/signup.page";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
       </Routes>
 
       <Footer />
