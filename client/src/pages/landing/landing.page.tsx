@@ -29,9 +29,12 @@ function LandingPage() {
               Signup
             </Button>
           </Link>
-          <Button sx={{ ...buttonStyles }} variant="contained">
-            Browse books
-          </Button>
+
+          <Link to="/books" className={classes.linkStyles}>
+            <Button sx={{ ...buttonStyles }} variant="contained">
+              Browse books
+            </Button>
+          </Link>
         </Box>
       </Container>
     </Fragment>
