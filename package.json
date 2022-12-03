@@ -9,7 +9,7 @@
     "expressjs"
   ],
   "engines": {
-    "node": "14.21.1",
+    "node": "18",
     "npm": "8.x"
   },
   "scripts": {
