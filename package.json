@@ -1,5 +1,5 @@
 {
-  "name": "library_management_system",
+  "name": "booklibrary_management_system",
   "version": "1.0.0",
   "description": "Basic library management system",
   "main": "app.js",
