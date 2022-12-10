@@ -5,15 +5,14 @@ const useStyles = makeStyles(() => ({
     margin: "40px 0",
   },
 
-  signupFieldContainer: {
-    margin: "25px 0",
+  loginFieldContainer: {
+    margin: "50px 0",
   },
 
   backButton: {
     textDecoration: "none",
-    color: "black"
-  }
+    color: "black",
+  },
 }));
-
 
 export default useStyles;

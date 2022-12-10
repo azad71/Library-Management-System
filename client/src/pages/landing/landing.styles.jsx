@@ -14,9 +14,9 @@ const useStyles = makeStyles(() => ({
   },
 
   linkStyles: {
-    textDecoration: 'none',
-    color: "white"
-  }
+    textDecoration: "none",
+    color: "white",
+  },
 }));
 
 export const buttonStyles = {

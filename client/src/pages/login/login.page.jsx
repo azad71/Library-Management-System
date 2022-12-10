@@ -1,29 +1,28 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
-import { useNavigate } from "react-router-dom";
-
-import Container from "@mui/material/Container";
-import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
+import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import { UserType, PageTitles } from "../../constants/shared.constants";
+import useStyles from "./login.styles";
+import Button from "@mui/material/Button";
+import { Link, useNavigate } from "react-router-dom";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
-import TextField from "@mui/material/TextField";
-import Button from "@mui/material/Button";
+import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import { loginSchema } from "../../validations/login.validation";
+import { useDispatch } from "react-redux";
+import { login } from "../../state/auth/auth.actions";
 
-import useStyles from "./signup.styles";
-
-import { UserType, PageTitles } from "../../constants/shared.constants";
-import { ISignupFormData } from "../../types/signup";
-import { signupSchema } from "../../validations/signup.validation";
-
-function SignupPage() {
+function LoginPage() {
   const [userType, setUserType] = useState(UserType.USER);
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const navigate = useNavigate();
 
   const {
@@ -31,35 +30,32 @@ function SignupPage() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<ISignupFormData>({
+  } = useForm({
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
       userType: UserType.USER,
     },
-    resolver: yupResolver(signupSchema),
+    resolver: yupResolver(loginSchema),
   });
 
   useEffect(() => {
     if (userType === UserType.USER) {
-      document.title = PageTitles.USER_SIGNUP;
+      document.title = PageTitles.USER_LOGIN;
     } else if (userType === UserType.ADMIN) {
-      document.title = PageTitles.ADMIN_SIGNUP;
+      document.title = PageTitles.ADMIN_LOGIN;
     }
   }, [userType]);
 
-  const handleUserTypeChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleUserTypeChange = (e) => {
     e.preventDefault();
     setUserType(e.target.value);
   };
 
-  const onSubmit = (data: ISignupFormData) => {
+  const onSubmit = (data) => {
     data.userType = userType;
 
-    console.log(data);
-
+    dispatch(login(data));
     reset();
     setUserType(UserType.USER);
 
@@ -73,12 +69,12 @@ function SignupPage() {
 
   return (
     <Container maxWidth="sm">
-      <Link to="/">
+      <Link to={"/"}>
         <ArrowBackIcon />
       </Link>
 
       <Typography align="center" variant="h4" marginY={1}>
-        Signup
+        Login
       </Typography>
 
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -105,20 +101,7 @@ function SignupPage() {
             </RadioGroup>
           </FormControl>
         </Box>
-        <Box className={classes.signupFieldContainer}>
-          <TextField
-            fullWidth
-            label="Name"
-            type="text"
-            inputProps={{
-              ...register("name"),
-            }}
-            error={!!errors.name}
-            helperText={errors.name?.message}
-          />
-        </Box>
-
-        <Box className={classes.signupFieldContainer}>
+        <Box className={classes.loginFieldContainer}>
           <TextField
             fullWidth
             label="Email"
@@ -131,20 +114,7 @@ function SignupPage() {
           />
         </Box>
 
-        <Box className={classes.signupFieldContainer}>
-          <TextField
-            fullWidth
-            label="Address"
-            type="text"
-            inputProps={{
-              ...register("address"),
-            }}
-            error={!!errors.address}
-            helperText={errors.address?.message}
-          />
-        </Box>
-
-        <Box className={classes.signupFieldContainer}>
+        <Box className={classes.loginFieldContainer}>
           <TextField
             fullWidth
             label="Password"
@@ -157,31 +127,18 @@ function SignupPage() {
           />
         </Box>
 
-        <Box className={classes.signupFieldContainer}>
-          <TextField
-            fullWidth
-            label="Confirm Password"
-            type="password"
-            inputProps={{
-              ...register("confirmPassword"),
-            }}
-            error={!!errors.confirmPassword}
-            helperText={errors.confirmPassword?.message}
-          />
-        </Box>
-
         <Box>
           <Button type="submit" fullWidth variant="contained">
-            Signup
+            Login
           </Button>
         </Box>
 
         <Typography marginY={1.5} textAlign={"right"} fontSize={12}>
-          Already have an account? <Link to={"/login"}>Login </Link>
+          Don't have any account? <Link to={"/signup"}>Signup here</Link>
         </Typography>
       </form>
     </Container>
   );
 }
 
-export default SignupPage;
+export default LoginPage;
