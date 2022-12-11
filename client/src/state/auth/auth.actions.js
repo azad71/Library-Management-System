@@ -1,10 +1,11 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { authTypes } from "./auth.types";
 
 const backendURL = "https://localhost:5000";
 
 export const login = createAsyncThunk(
-  `${backendURL}/user/login`,
+  authTypes.LOGIN,
   async ({ email, password, userType }, { rejectWithValue }) => {
     try {
       // const config = {
@@ -26,7 +27,8 @@ export const login = createAsyncThunk(
       const data = {
         userToken:
           "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9obiBEb2UiLCJlbWFpbCI6ImpvaG5AdGVzdC5jb20iLCJpYXQiOjE1MTYyMzkwMjJ9.ZWE7vXkPyWp4NFqo1QYqZHlrXNotERUN3iK-c0ailyw",
-        name: "John Doe",
+        firstName: "John",
+        lastName: "Doe",
         email: "john@test.com",
         userType: "USER",
       };
@@ -44,7 +46,7 @@ export const login = createAsyncThunk(
 );
 
 export const registerUser = createAsyncThunk(
-  `${backendURL}/user/register`,
+  authTypes.SIGNUP,
   async ({ firstName, email, password }, { rejectWithValue }) => {
     try {
       const config = {

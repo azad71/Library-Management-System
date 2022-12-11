@@ -1,13 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { login } from "./auth.actions";
 
-const userToken = localStorage.getItem("userToken") ?? null;
-
 export const initialState = {
   isAuth: false,
   isLoading: false,
   userInfo: null,
-  userToken,
   error: null,
 };
 
@@ -17,9 +14,7 @@ export const authSlice = createSlice({
   reducers: {
     logout: (state) => {
       state.isAuth = false;
-      state.currentUser = undefined;
       state.userInfo = null;
-      state.userToken = null;
       state.error = null;
       localStorage.removeItem("userToken");
     },
@@ -31,8 +26,8 @@ export const authSlice = createSlice({
     },
     [login.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
+      state.isAuth = true;
       state.userInfo = payload;
-      state.userToken = payload.userToken;
     },
     [login.rejected]: (state, { payload }) => {
       state.isLoading = false;
