@@ -1,8 +1,8 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+// import axios from "axios";
 import { authTypes } from "./auth.types";
 
-const backendURL = "https://localhost:5000";
+// const backendURL = "https://localhost:5000";
 
 export const login = createAsyncThunk(
   authTypes.LOGIN,
@@ -45,56 +45,56 @@ export const login = createAsyncThunk(
   }
 );
 
-export const registerUser = createAsyncThunk(
-  authTypes.SIGNUP,
-  async ({ firstName, email, password }, { rejectWithValue }) => {
-    try {
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      };
+// export const registerUser = createAsyncThunk(
+//   authTypes.SIGNUP,
+//   async ({ firstName, email, password }, { rejectWithValue }) => {
+//     try {
+//       const config = {
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       };
 
-      await axios.post(
-        `${backendURL}/api/user/register`,
-        { firstName, email, password },
-        config
-      );
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
-      } else {
-        return rejectWithValue(error.message);
-      }
-    }
-  }
-);
+//       await axios.post(
+//         `${backendURL}/api/user/register`,
+//         { firstName, email, password },
+//         config
+//       );
+//     } catch (error) {
+//       if (error.response && error.response.data.message) {
+//         return rejectWithValue(error.response.data.message);
+//       } else {
+//         return rejectWithValue(error.message);
+//       }
+//     }
+//   }
+// );
 
-export const getUserDetails = createAsyncThunk(
-  `${backendURL}/user/getUserDetails`,
-  async (arg, { getState, rejectWithValue }) => {
-    try {
-      // get user data from store
-      const { user } = getState();
+// export const getUserDetails = createAsyncThunk(
+//   `${backendURL}/user/getUserDetails`,
+//   async (arg, { getState, rejectWithValue }) => {
+//     try {
+//       // get user data from store
+//       const { user } = getState();
 
-      // configure authorization header with user's token
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.userToken}`,
-        },
-      };
+//       // configure authorization header with user's token
+//       const config = {
+//         headers: {
+//           Authorization: `Bearer ${user.userToken}`,
+//         },
+//       };
 
-      const { data } = await axios.get(
-        `${backendURL}/api/user/profile`,
-        config
-      );
-      return data;
-    } catch (error) {
-      if (error.response && error.response.data.message) {
-        return rejectWithValue(error.response.data.message);
-      } else {
-        return rejectWithValue(error.message);
-      }
-    }
-  }
-);
+//       const { data } = await axios.get(
+//         `${backendURL}/api/user/profile`,
+//         config
+//       );
+//       return data;
+//     } catch (error) {
+//       if (error.response && error.response.data.message) {
+//         return rejectWithValue(error.response.data.message);
+//       } else {
+//         return rejectWithValue(error.message);
+//       }
+//     }
+//   }
+// );

@@ -6,7 +6,7 @@ import { getFullName } from "../../utils/getFullName.util";
 import { navbarButtonStyles } from "./navbar.styles";
 import Button from "@mui/material/Button";
 
-export const getDrawerSideBarLinks = (isAuth, userInfo) =>
+export const getDrawerSideBarLinks = (isAuth, userInfo, handleLogout) =>
   isAuth ? (
     <Fragment>
       <ListItem disablePadding>
@@ -21,7 +21,7 @@ export const getDrawerSideBarLinks = (isAuth, userInfo) =>
       </ListItem>
       <ListItem disablePadding>
         <ListItemButton sx={{ textAlign: "center" }}>
-          <ListItemText secondary={`Logout`} />
+          <ListItemText onClick={handleLogout} secondary={`Logout`} />
         </ListItemButton>
       </ListItem>
     </Fragment>
@@ -40,13 +40,15 @@ export const getDrawerSideBarLinks = (isAuth, userInfo) =>
     </Fragment>
   );
 
-export const getNavbarSidebarLinks = (isAuth, userInfo) =>
+export const getNavbarSidebarLinks = (isAuth, userInfo, handleLogout) =>
   isAuth ? (
     <Fragment>
       <Button sx={{ ...navbarButtonStyles }}>
         Logged in as {getFullName(userInfo?.firstName, userInfo?.lastName)}
       </Button>
-      <Button sx={{ ...navbarButtonStyles }}>Logout</Button>
+      <Button onClick={handleLogout} sx={{ ...navbarButtonStyles }}>
+        Logout
+      </Button>
     </Fragment>
   ) : (
     <Fragment>

@@ -11,13 +11,22 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import { getDrawerSideBarLinks, getNavbarSidebarLinks } from "./navbar.helper";
-
-const drawerWidth = 240;
+import { useNavigate } from "react-router-dom";
+import { logout } from "../../state/auth/auth.slice";
+import { useDispatch } from "react-redux";
+import { homeButton, navbarDrawerContainer } from "./navbar.styles";
 
 export default function DrawerAppBar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isAuth, userInfo } = useSelector((state) => state.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate("/login");
+  };
 
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
@@ -29,7 +38,7 @@ export default function DrawerAppBar(props) {
         Home
       </Typography>
       <Divider />
-      <List>{getDrawerSideBarLinks(isAuth, userInfo)}</List>
+      <List>{getDrawerSideBarLinks(isAuth, userInfo, handleLogout)}</List>
     </Box>
   );
 
@@ -49,15 +58,11 @@ export default function DrawerAppBar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography
-            variant="h6"
-            component="div"
-            sx={{ flexGrow: 1, display: { xs: "block", sm: "block" } }}
-          >
+          <Typography variant="h6" component="div" sx={{ ...homeButton }}>
             Home
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {getNavbarSidebarLinks(isAuth, userInfo)}
+            {getNavbarSidebarLinks(isAuth, userInfo, handleLogout)}
           </Box>
         </Toolbar>
       </AppBar>
@@ -68,15 +73,9 @@ export default function DrawerAppBar(props) {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true,
           }}
-          sx={{
-            display: { xs: "block", sm: "none" },
-            "& .MuiDrawer-paper": {
-              boxSizing: "border-box",
-              width: drawerWidth,
-            },
-          }}
+          sx={{ ...navbarDrawerContainer }}
         >
           {drawer}
         </Drawer>
