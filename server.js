@@ -1,25 +1,24 @@
-const express = require("express"),
-  app = express(),
-  mongoose = require("mongoose"),
-  ejs = require("ejs"),
-  session = require("express-session"),
-  passport = require("passport"),
-  multer = require("multer"),
-  uid = require("uid"),
-  path = require("path"),
-  sanitizer = require("express-sanitizer"),
-  methodOverride = require("method-override"),
-  localStrategy = require("passport-local"),
-  MongoStore = require("connect-mongodb-session")(session),
-  flash = require("connect-flash"),
-  crypto = require("crypto"),
-  User = require("./models/user"),
-  userRoutes = require("./routes/users"),
-  adminRoutes = require("./routes/admin"),
-  bookRoutes = require("./routes/books"),
-  authRoutes = require("./routes/auth");
+const express = require("express");
+const app = express();
+const mongoose = require("mongoose");
+const ejs = require("ejs");
+const session = require("express-session");
+const passport = require("passport");
+const multer = require("multer");
+const path = require("path");
+const sanitizer = require("express-sanitizer");
+const methodOverride = require("method-override");
+const localStrategy = require("passport-local");
+const MongoStore = require("connect-mongodb-session")(session);
+const flash = require("connect-flash");
+const crypto = require("crypto");
+const User = require("./models/user");
+const userRoutes = require("./routes/users");
+const adminRoutes = require("./routes/admin");
+const bookRoutes = require("./routes/books");
+const authRoutes = require("./routes/auth");
 
-// const Seed = require('./seed');
+// const Seed = require("./seed");
 
 // uncomment below line for first time to seed database;
 // Seed(1000);
@@ -87,14 +86,20 @@ const fileStorage = multer.diskStorage({
 });
 
 const filefilter = (req, file, cb) => {
-  if (file.mimetype === "image/png" || file.mimetype === "image/jpg" || file.mimetype === "image/jpeg") {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
     cb(null, true);
   } else {
     cb(null, false);
   }
 };
 
-app.use(multer({ storage: fileStorage, fileFilter: filefilter }).single("image"));
+app.use(
+  multer({ storage: fileStorage, fileFilter: filefilter }).single("image")
+);
 app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use((req, res, next) => {

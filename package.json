@@ -2,21 +2,18 @@
   "name": "library_management_system",
   "version": "1.0.0",
   "description": "Basic library management system",
-  "main": "app.js",
+  "main": "server.js",
   "keywords": [
     "Javascript",
     "NodeJS",
     "expressjs"
   ],
-  "engines": {
-    "node": "16.x",
-    "npm": "8.x"
-  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "dev:linux": "export NODE_ENV=dev && nodemon app.js",
-    "dev:windows": "SET NODE_ENV=dev && nodemon app.js"
+    "start": "node server.js",
+    "dev:start": "nodemon server.js",
+    "dev:linux": "export NODE_ENV=dev && nodemon server.js",
+    "dev:windows": "SET NODE_ENV=dev && nodemon server.js"
   },
   "author": "Azad Mamun",
   "license": "ISC",
