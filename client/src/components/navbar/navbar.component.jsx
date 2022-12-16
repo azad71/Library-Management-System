@@ -5,7 +5,6 @@ import Divider from "@mui/material/Divider";
 import Drawer from "@mui/material/Drawer";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
-
 import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -16,7 +15,7 @@ import { logout } from "../../state/auth/auth.slice";
 import { useDispatch } from "react-redux";
 import { homeButton, navbarDrawerContainer } from "./navbar.styles";
 
-export default function DrawerAppBar(props) {
+export default function Navbar(props) {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
   const { isAuth, userInfo } = useSelector((state) => state.auth);
@@ -47,6 +46,7 @@ export default function DrawerAppBar(props) {
 
   return (
     <Box sx={{ display: "flex" }}>
+      {/* <CssBaseline /> */}
       <AppBar component="nav">
         <Toolbar>
           <IconButton
