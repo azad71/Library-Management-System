@@ -34,7 +34,10 @@ exports.postAdminSignUp = async (req, res, next) => {
 
       const user = await User.register(newAdmin, req.body.password);
       await passport.authenticate("local")(req, res, () => {
-        req.flash("success", "Hello, " + user.username + " Welcome to Admin Dashboard");
+        req.flash(
+          "success",
+          "Hello, " + user.username + " Welcome to Admin Dashboard"
+        );
         res.redirect("/admin");
       });
     } else {

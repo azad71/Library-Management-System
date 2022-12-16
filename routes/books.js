@@ -1,9 +1,8 @@
-const express = require("express"),
-      router = express.Router();
-
+const express = require("express");
+const router = express.Router();
 
 // Importing controller
-const bookController = require('../controllers/books');
+const bookController = require("../controllers/books");
 
 // Browse books
 router.get("/books/:filter/:value/:page", bookController.getBooks);
