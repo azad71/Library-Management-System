@@ -12,8 +12,8 @@ function LandingPage() {
   return (
     <Fragment>
       <CssBaseline />
-      <Container className={classes.container}>
-        <Typography textAlign="center" variant="h3">
+      <Container>
+        <Typography marginY={3} textAlign="center" variant="h3">
           Welcome to Library Management System
         </Typography>
 

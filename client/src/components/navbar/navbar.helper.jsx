@@ -40,7 +40,12 @@ export const getDrawerSideBarLinks = (isAuth, userInfo, handleLogout) =>
     </Fragment>
   );
 
-export const getNavbarSidebarLinks = (isAuth, userInfo, handleLogout) =>
+export const getNavbarSidebarLinks = (
+  isAuth,
+  userInfo,
+  handleLogout,
+  handleAuthNavigation
+) =>
   isAuth ? (
     <Fragment>
       <Button sx={{ ...navbarButtonStyles }}>
@@ -52,7 +57,17 @@ export const getNavbarSidebarLinks = (isAuth, userInfo, handleLogout) =>
     </Fragment>
   ) : (
     <Fragment>
-      <Button sx={{ ...navbarButtonStyles }}>Signup</Button>
-      <Button sx={{ ...navbarButtonStyles }}>Login</Button>
+      <Button
+        onClick={() => handleAuthNavigation("/signup")}
+        sx={{ ...navbarButtonStyles }}
+      >
+        Signup
+      </Button>
+      <Button
+        onClick={() => handleAuthNavigation("/login")}
+        sx={{ ...navbarButtonStyles }}
+      >
+        Login
+      </Button>
     </Fragment>
   );

@@ -14,6 +14,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../state/auth/auth.slice";
 import { useDispatch } from "react-redux";
 import { homeButton, navbarDrawerContainer } from "./navbar.styles";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export default function Navbar(props) {
   const { window } = props;
@@ -44,9 +45,11 @@ export default function Navbar(props) {
   const container =
     window !== undefined ? () => window().document.body : undefined;
 
+  const handleAuthNavigation = (path) => navigate(path);
+
   return (
     <Box sx={{ display: "flex" }}>
-      {/* <CssBaseline /> */}
+      <CssBaseline />
       <AppBar component="nav">
         <Toolbar>
           <IconButton
@@ -62,7 +65,12 @@ export default function Navbar(props) {
             Home
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
-            {getNavbarSidebarLinks(isAuth, userInfo, handleLogout)}
+            {getNavbarSidebarLinks(
+              isAuth,
+              userInfo,
+              handleLogout,
+              handleAuthNavigation
+            )}
           </Box>
         </Toolbar>
       </AppBar>

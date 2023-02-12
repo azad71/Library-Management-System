@@ -17,6 +17,7 @@ export default function BooksPage() {
   const bookStatus = useSelector((state) => state.books.status);
   const booksList = useSelector(selectAllBooks);
   const error = useSelector((state) => state.books.error);
+  const isAuth = useSelector((state) => state.auth.isAuth);
 
   useEffect(() => {
     if (bookStatus === "init") {
@@ -29,16 +30,14 @@ export default function BooksPage() {
   if (bookStatus === "loading") {
     content = <Spinner text="Loading" />;
   } else if (bookStatus === "success") {
-    content = booksList.map((book, idx) => (
-      <Grid key={idx} item xs={12} sm={4} md={4}>
-        <BookCard data={book} />
+    content = booksList.map((book) => (
+      <Grid key={book.id} item xs={12} sm={4} md={4}>
+        <BookCard data={book} isAuth={isAuth} />
       </Grid>
     ));
   } else if (bookStatus === "failed") {
     content = <div>{error}</div>;
   }
-
-  console.log(booksList);
 
   return (
     <Fragment>
@@ -54,24 +53,6 @@ export default function BooksPage() {
         />
         <Grid sx={{ my: 5 }} container columnSpacing={3} rowSpacing={3}>
           {content}
-          {/* <Grid item xs={12} sm={4} md={4}>
-            <BookCard />
-          </Grid>
-          <Grid item xs={12} sm={4} md={4}>
-            <BookCard />
-          </Grid>
-          <Grid item xs={12} sm={4} md={4}>
-            <BookCard />
-          </Grid>
-          <Grid item xs={12} sm={4} md={4}>
-            <BookCard />
-          </Grid>
-          <Grid item xs={12} sm={4} md={4}>
-            <BookCard />
-          </Grid>{" "}
-          <Grid item xs={12} sm={4} md={4}>
-            <BookCard />
-          </Grid> */}
         </Grid>
       </Container>
     </Fragment>

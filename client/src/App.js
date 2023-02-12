@@ -7,7 +7,7 @@ import LandingPage from "./pages/landing/landing.page";
 import SignupPage from "./pages/signup/signup.page";
 import BooksPage from "./pages/books/books.pages";
 
-import ProtectedRoute from "./hoc/protectedRoute/protectedRoute.hoc";
+// import ProtectedRoute from "./hoc/protectedRoute/protectedRoute.hoc";
 
 function App() {
   return (
@@ -16,9 +16,10 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        <Route element={<ProtectedRoute />}>
+        <Route path="/books" element={<BooksPage />} />
+        {/* <Route element={<ProtectedRoute />}>
           <Route path="/books" element={<BooksPage />} />
-        </Route>
+        </Route> */}
       </Routes>
 
       <Footer />
