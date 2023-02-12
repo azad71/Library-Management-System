@@ -8,19 +8,17 @@ import bookImage from "../../assets/books.jpeg";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import CommentIcon from "@mui/icons-material/Comment";
 
-export default function BookCard() {
+export default function BookCard({ data }) {
   const count = 0;
   return (
     <Card sx={{ maxWidth: 345 }}>
       <CardMedia component="img" height="140" image={bookImage} alt="books" />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
-          Lizard
+          {data.title}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aspernatur
-          recusandae dolores reprehenderit ut quasi rerum voluptatum, quae
-          voluptate ipsam natus...
+          {data.description.slice(0, 120)}...
         </Typography>
       </CardContent>
       <CardActions>

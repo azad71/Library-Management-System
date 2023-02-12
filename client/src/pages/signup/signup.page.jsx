@@ -57,8 +57,6 @@ function SignupPage() {
   const onSubmit = (data) => {
     data.userType = userType;
 
-    console.log(data);
-
     reset();
     setUserType(UserType.USER);
 
