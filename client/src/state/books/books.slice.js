@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchBookList } from "./books.service";
+import { fetchBookList, fetchBookById } from "./books.service";
 
 export const initialState = {
   booksList: [],
@@ -32,5 +32,8 @@ export const bookSlice = createSlice({
 export const { getBooks } = bookSlice.actions;
 
 export const selectAllBooks = (state) => state.books.booksList;
+
+export const selectBookById = (state, bookId) =>
+  state.books.booksList.find((book) => book.id === Number(bookId));
 
 export default bookSlice.reducer;

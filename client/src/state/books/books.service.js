@@ -8,3 +8,14 @@ export const fetchBookList = createAsyncThunk(
     return booksData;
   }
 );
+
+// export const fetchBookById = createAsyncThunk(
+//   bookTypes.FETCH_BOOK_BY_ID,
+//   async (bookId) => {
+//     return booksData.find((book) => book.id === Number(bookId));
+//   }
+// );
+
+// should be an api call
+export const fetchBookById = (bookId) =>
+  booksData.find((book) => book.id === Number(bookId));
