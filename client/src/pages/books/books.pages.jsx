@@ -17,7 +17,6 @@ export default function BooksPage() {
   const bookStatus = useSelector((state) => state.books.status);
   const booksList = useSelector(selectAllBooks);
   const error = useSelector((state) => state.books.error);
-  const isAuth = useSelector((state) => state.auth.isAuth);
 
   useEffect(() => {
     if (bookStatus === "init") {
@@ -31,8 +30,8 @@ export default function BooksPage() {
     content = <Spinner text="Loading" />;
   } else if (bookStatus === "success") {
     content = booksList.map((book) => (
-      <Grid key={book.id} item xs={12} sm={4} md={4}>
-        <BookCard data={book} isAuth={isAuth} />
+      <Grid key={book.id} item xs={12} sm={6} md={4}>
+        <BookCard data={book} />
       </Grid>
     ));
   } else if (bookStatus === "failed") {

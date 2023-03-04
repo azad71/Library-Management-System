@@ -2,14 +2,12 @@ export const booksData = [
   {
     title: "quae debitis in",
     ISBN: "beb2cf77-7371-40ec-8173-8ebc41d2f36c",
-    stock: 10,
+    stock: 0,
     author: "Margarete Jerde",
     description:
       "Qui quod esse. Voluptatem repellat dolor. Sint fuga libero quia velit voluptatem rerum. Aut occaecati vitae voluptatem labore quidem veniam eligendi repellendus. Omnis quo repellat eum qui.\n \rEst et ut ut ratione. Quia perspiciatis officia aut nulla ut nihil dolore. Maiores molestias ab consectetur corrupti quasi. Est adipisci vel omnis eligendi nobis aut. Facilis reiciendis sit in rerum consequatur nisi delectus voluptas rerum.",
     category: "Cooking",
     id: 1,
-    likeCount: 85,
-    commentCount: 22,
   },
   {
     title: "quia sit a",
@@ -20,8 +18,6 @@ export const booksData = [
       "Repudiandae assumenda iste. Inventore ad quis magni soluta et. Perspiciatis ut fugit. Facere ut alias occaecati modi impedit quidem. Non omnis minus magnam. Iure facilis dolor.\n \rAut omnis alias maiores. Unde nihil veniam qui ipsam ad. Unde quia voluptatum ad ea et vero pariatur eius autem. Necessitatibus sit ad quibusdam et voluptatum ut. Eaque eveniet eligendi iste.",
     category: "Ethics",
     id: 2,
-    likeCount: 58,
-    commentCount: 16,
   },
   {
     title: "ut voluptas illo",
@@ -32,8 +28,6 @@ export const booksData = [
       "Pariatur et cumque officia et nihil facilis voluptas ut modi. Aut repudiandae non voluptatem tenetur veritatis cum. Beatae sit voluptatem quibusdam. Sunt occaecati voluptas explicabo autem sit qui sapiente et culpa. Est voluptatem itaque labore quidem sed optio hic rerum. Eius eveniet est quas eaque dignissimos praesentium magnam.\n \rEveniet dolor officiis dolorem ut nesciunt alias delectus. Rerum perferendis commodi culpa porro aut. Esse aut nesciunt et molestiae consequatur blanditiis asperiores.",
     category: "Science",
     id: 3,
-    likeCount: 49,
-    commentCount: 27,
   },
   {
     title: "rerum praesentium rerum",
@@ -44,8 +38,6 @@ export const booksData = [
       "Delectus inventore laudantium quasi et. Qui aut nulla non. Velit debitis odit sunt similique molestias consequatur et magnam qui.\n \rDeleniti perferendis est fuga temporibus sit minus. Nesciunt cupiditate hic adipisci omnis. Quas magni dignissimos illum laboriosam excepturi maxime voluptas eos.",
     category: "Cooking",
     id: 4,
-    likeCount: 1,
-    commentCount: 44,
   },
   {
     title: "sunt ipsa ad",
@@ -56,8 +48,6 @@ export const booksData = [
       "Ducimus aut dolorem. Et earum ipsum nostrum. Fuga qui repellendus corporis dicta laudantium. Aliquam adipisci et ut beatae excepturi consequatur rerum iste. Distinctio explicabo quam dolor.\n \rQui omnis voluptas est architecto perspiciatis mollitia. Nesciunt aspernatur cumque laboriosam. Eveniet quo facere. Modi temporibus perspiciatis consectetur.",
     category: "Technology",
     id: 5,
-    likeCount: 55,
-    commentCount: 27,
   },
   {
     title: "dolorem quia iure",
@@ -68,8 +58,6 @@ export const booksData = [
       "Non perspiciatis veritatis reiciendis quia. Velit et nulla in qui illum sit. Iste dicta dignissimos rerum amet et. Ex ipsam qui quia tenetur quia iure autem cumque sunt.\n \rQuam dicta quas tempora omnis saepe dolor placeat eaque cum. Repellat sint rerum. Omnis doloribus id nihil. Voluptatem voluptas asperiores dolores similique et vero minima nam repudiandae. Assumenda est delectus laborum veritatis rerum voluptas odio. Quo molestiae ex.",
     category: "Philosophy",
     id: 6,
-    likeCount: 16,
-    commentCount: 12,
   },
   {
     title: "odit provident iusto",
@@ -80,20 +68,16 @@ export const booksData = [
       "Consequatur soluta voluptas. Saepe at at ut in. Et aut fugit reprehenderit ea officia id est voluptates enim. Autem esse odio aut a. Et est sunt est. Omnis at expedita quibusdam sit provident vel.\n \rHic magni quia qui saepe error similique explicabo laborum. Qui ut aperiam ducimus in adipisci enim quis repudiandae officiis. Illo ex libero. Dolores consequatur ipsam corrupti recusandae vel id tenetur et vero. Et est amet ut perspiciatis sequi.",
     category: "Philosophy",
     id: 7,
-    likeCount: 66,
-    commentCount: 40,
   },
   {
     title: "iusto tenetur eaque",
     ISBN: "6e85da71-89d6-49db-8c6d-2ae18b5e8f8d",
-    stock: 10,
+    stock: 6,
     author: "Godfrey Fay",
     description:
       "Magni dolor qui saepe. Quasi qui accusantium id culpa quo qui animi. Fugit sunt mollitia. Sunt laborum sit unde rerum velit officia.\n \rIn veniam tempora est tempore. Inventore nihil dolor aperiam aliquid nesciunt laborum. Incidunt nisi omnis. Autem quibusdam dolorem laborum accusantium. Sequi qui ut qui. Voluptas qui culpa.",
     category: "Cooking",
     id: 8,
-    likeCount: 71,
-    commentCount: 26,
   },
   {
     title: "et ut ex",
@@ -104,8 +88,6 @@ export const booksData = [
       "Odit ex itaque assumenda porro. Quis ea tenetur rem eligendi molestias quia amet. Saepe corrupti cumque molestias culpa mollitia aut eligendi ducimus optio. Aliquam amet optio tempore sint nobis nemo amet est. Exercitationem fugiat ipsa.\n \rQui laboriosam est aut illum error ducimus consequuntur minima. Aliquid nesciunt officia magnam sed rerum mollitia. Est eius aut.",
     category: "Science",
     id: 9,
-    likeCount: 3,
-    commentCount: 35,
   },
   {
     title: "enim expedita vero",
@@ -116,8 +98,6 @@ export const booksData = [
       "Totam et magnam alias ut et voluptatem voluptatem tempora. Qui numquam facilis similique aut unde sequi. Repellendus dolorem sit quae.\n \rVoluptas molestiae cupiditate velit ex et qui saepe ut. Nostrum sit id sint et. Suscipit minima magnam quaerat dolorem perspiciatis qui aspernatur.",
     category: "Travel",
     id: 10,
-    likeCount: 24,
-    commentCount: 13,
   },
   {
     title: "tenetur porro iste",
@@ -128,8 +108,6 @@ export const booksData = [
       "Modi et ipsum voluptatem eligendi. Et esse rerum esse dolorem aspernatur quasi rerum perspiciatis ut. Expedita sit omnis sed et vero consequatur et accusamus. Sed id sit vel porro.\n \rNesciunt facere quia exercitationem consequatur quasi. Veritatis porro id modi quod qui aut quasi explicabo rerum. Animi neque eligendi atque quisquam ut laudantium ut et at.",
     category: "Ethics",
     id: 11,
-    likeCount: 98,
-    commentCount: 22,
   },
   {
     title: "velit non maiores",
@@ -140,8 +118,6 @@ export const booksData = [
       "Quis enim neque ea dolor rem aut voluptatem quia aliquid. Qui sint sunt a perferendis voluptas voluptatum suscipit. Sunt sunt accusamus consectetur ipsa itaque ipsa aut. Totam impedit corrupti culpa ut dolores qui quo est. Similique aperiam consequatur reiciendis alias officia illum placeat dolor sequi. Ipsum maxime perspiciatis nemo officiis enim et.\n \rTempore error cupiditate quasi. Maxime et mollitia ipsam dolorem iste rerum cumque illum beatae. Et error in consectetur.",
     category: "Novel",
     id: 12,
-    likeCount: 71,
-    commentCount: 35,
   },
   {
     title: "cupiditate vero omnis",
@@ -152,8 +128,6 @@ export const booksData = [
       "Laborum qui quae quibusdam nemo cum cupiditate sunt sunt ut. Qui aliquid qui dolorem autem quidem assumenda nihil. Non dolores omnis saepe. Tempore asperiores impedit saepe. Amet quam nostrum dicta adipisci. Possimus consectetur quasi.\n \rVoluptas veniam sapiente nostrum excepturi pariatur inventore aut totam itaque. Laudantium error accusamus. Minus qui quae consequatur quaerat sequi natus ab quaerat molestiae.",
     category: "Cooking",
     id: 13,
-    likeCount: 79,
-    commentCount: 33,
   },
   {
     title: "voluptas facere dolores",
@@ -164,8 +138,6 @@ export const booksData = [
       "Autem quia saepe voluptatem est et velit aut voluptatem voluptatum. Expedita earum possimus et iusto veniam et. Amet aliquam itaque quis aut. Et totam nostrum vel ratione dolor amet.\n \rAccusamus sapiente eius repellat. Ipsa hic corrupti rerum quae magnam consequatur id. Nihil molestiae ullam et dolor et porro animi provident. Quae sit id aut in modi est. Et sapiente laboriosam maiores amet quidem quidem.",
     category: "Philosophy",
     id: 14,
-    likeCount: 79,
-    commentCount: 41,
   },
   {
     title: "unde et odit",
@@ -176,8 +148,6 @@ export const booksData = [
       "Saepe eum quis dolorem impedit. A et qui in sunt est exercitationem sunt. Qui consequatur dolor adipisci vitae eum ad voluptas iste ducimus.\n \rQuo quaerat porro itaque deleniti. Soluta voluptas ratione sequi non. Doloribus vitae autem necessitatibus. Sunt asperiores voluptas. Non voluptatibus quaerat omnis rerum voluptas id tenetur quasi.",
     category: "Technology",
     id: 15,
-    likeCount: 22,
-    commentCount: 42,
   },
   {
     title: "commodi blanditiis rerum",
@@ -188,8 +158,6 @@ export const booksData = [
       "Vel reprehenderit qui soluta cum cumque non et. Quis enim illo qui consequatur corporis et laborum. Numquam recusandae est pariatur aut ab ad sapiente quia.\n \rQuisquam quisquam iure deserunt saepe. Est similique harum ullam aspernatur. Odio voluptas laborum animi officiis quam consectetur et odit. Error vel et. Pariatur saepe aut nesciunt atque et et.",
     category: "Novel",
     id: 16,
-    likeCount: 66,
-    commentCount: 2,
   },
   {
     title: "sit iste autem",
@@ -200,8 +168,6 @@ export const booksData = [
       "Sunt rerum facilis quidem corporis in placeat enim. Veritatis et amet aperiam quibusdam omnis consectetur iure consequatur est. In ipsum rerum odit et occaecati dolores quam. Quo ea ipsum quis et aspernatur consequatur illum laboriosam. Laudantium qui et ullam qui non et sapiente rerum. Adipisci perspiciatis sint consequatur necessitatibus quasi voluptatem ab et voluptatem.\n \rQui facere iste cumque ut consequatur omnis sunt minima at. Exercitationem asperiores rerum non. Qui aut consequatur quia fugiat quae eaque.",
     category: "Biology",
     id: 17,
-    likeCount: 4,
-    commentCount: 48,
   },
   {
     title: "odit aperiam quisquam",
@@ -212,8 +178,6 @@ export const booksData = [
       "Repellat ut tempora. Repudiandae ut rerum earum. Ullam sint architecto suscipit corporis voluptas est. Mollitia doloribus porro dolore corrupti ut nesciunt maiores. Explicabo sunt suscipit fuga ut.\n \rEaque qui impedit officia ipsum. Veritatis sed odio. Non dignissimos provident explicabo non quisquam dolore.",
     category: "Cooking",
     id: 18,
-    likeCount: 31,
-    commentCount: 22,
   },
   {
     title: "magni voluptatem laboriosam",
@@ -224,8 +188,6 @@ export const booksData = [
       "Consequatur qui commodi atque error. Ipsam eos molestias autem. Ut aut commodi repellendus eveniet vitae harum modi. Impedit praesentium commodi repudiandae consequuntur molestiae et qui aspernatur aut. Odio deleniti reiciendis et.\n \rSaepe laudantium eum cumque sequi. Voluptas nam ipsam eligendi quos eius repellendus voluptatem. Laudantium rerum ullam. Voluptas ut nihil delectus totam. Recusandae dolor et nemo. Sequi repellendus rerum recusandae dolor expedita sequi.",
     category: "Travel",
     id: 19,
-    likeCount: 54,
-    commentCount: 32,
   },
   {
     title: "explicabo autem error",
@@ -236,8 +198,6 @@ export const booksData = [
       "Quo est esse est. Amet nemo consequuntur in molestiae ex et a esse numquam. Voluptatibus voluptatem omnis impedit laborum non consectetur placeat. Dolor commodi molestias iste ut praesentium consequatur numquam.\n \rDolor optio qui nesciunt. Consequuntur sunt eius dicta magni nihil culpa qui optio. Veritatis nihil ipsa aperiam incidunt asperiores fugit. Ut ducimus aut nihil odit ipsam est non. Vel suscipit et aperiam quibusdam qui. Repellendus aliquam laborum qui aut voluptatem et dolor voluptatum illum.",
     category: "Mathematics",
     id: 20,
-    likeCount: 73,
-    commentCount: 41,
   },
   {
     title: "recusandae praesentium consequatur",
@@ -248,8 +208,6 @@ export const booksData = [
       "Et aliquid sint velit laudantium ut. Similique illum commodi in omnis non vero non voluptatem laudantium. At nobis porro et illum voluptatem quo aut. Qui accusamus excepturi velit dolorem sit velit unde omnis quaerat. Sint nam consectetur eligendi eligendi accusantium impedit.\n \rDolorem et est excepturi ea. Magni dolores et. Et a et iusto non recusandae hic et. Molestiae dolores natus totam quod aut laborum aut inventore. Nobis qui iure repudiandae voluptas pariatur quia quo veniam. Aperiam necessitatibus quo.",
     category: "Philosophy",
     id: 21,
-    likeCount: 44,
-    commentCount: 4,
   },
   {
     title: "qui repudiandae sint",
@@ -260,8 +218,6 @@ export const booksData = [
       "Ratione quos veniam. Voluptates ea ipsum omnis. Reprehenderit eum qui officiis iste.\n \rQui consectetur fuga. Temporibus dolore blanditiis. Sit magni natus porro inventore temporibus iure voluptate. Eligendi et est omnis voluptatibus voluptate dolor ut quia. Id nobis quisquam totam. Et corporis quos nobis provident esse aut enim.",
     category: "Technology",
     id: 22,
-    likeCount: 46,
-    commentCount: 24,
   },
   {
     title: "qui autem debitis",
@@ -272,8 +228,6 @@ export const booksData = [
       "A incidunt veritatis. Recusandae qui expedita tempora voluptatem quia nisi dolor. Ut voluptatum rerum provident veniam. Soluta aut quasi maxime ea.\n \rDignissimos alias aut at. Rerum nihil earum ducimus ratione. Illum debitis dicta. Magnam deleniti soluta nisi mollitia minima molestias sed consectetur. Natus deleniti dolores aliquid quia voluptate magnam aut ipsam sit.",
     category: "Cooking",
     id: 23,
-    likeCount: 81,
-    commentCount: 17,
   },
   {
     title: "veritatis ipsum culpa",
@@ -284,8 +238,6 @@ export const booksData = [
       "Facilis et aliquid. Et assumenda et quo sed. Magnam ipsa consequatur.\n \rOdio optio nisi laborum. Nam adipisci ducimus rerum rerum aut possimus. Omnis labore neque dolor ipsam velit quia. Illo omnis et nobis consequuntur facilis.",
     category: "Physics",
     id: 24,
-    likeCount: 99,
-    commentCount: 17,
   },
   {
     title: "illum voluptas atque",
@@ -296,8 +248,6 @@ export const booksData = [
       "Porro et velit aut quas sunt eos repudiandae. Corrupti eos ea. Quam suscipit incidunt.\n \rRepudiandae suscipit at eos consequatur autem est labore voluptatem. Itaque quibusdam reprehenderit est a et exercitationem tempore rerum sed. Cupiditate perferendis tenetur magnam. Soluta reiciendis praesentium dolores delectus voluptas maiores quod sit magni. Sed omnis possimus eius aut. Doloremque velit dicta expedita est perferendis similique voluptatum cupiditate.",
     category: "Physics",
     id: 25,
-    likeCount: 12,
-    commentCount: 46,
   },
   {
     title: "dolorem corrupti voluptatem",
@@ -308,8 +258,6 @@ export const booksData = [
       "Corrupti harum neque eius ut eum asperiores omnis est. Pariatur enim tempore. Distinctio repellendus et sit accusamus aspernatur explicabo.\n \rAutem voluptatem aut et ipsa voluptate eveniet est est. Et dolorem aut. Ratione qui ut ut suscipit cum quibusdam. Repudiandae aut quia corporis. Ipsum consequatur cupiditate nihil laudantium tempore consequatur quos reprehenderit nobis. Qui velit facilis maxime quaerat.",
     category: "Chemistry",
     id: 26,
-    likeCount: 63,
-    commentCount: 32,
   },
   {
     title: "error optio pariatur",
@@ -320,8 +268,6 @@ export const booksData = [
       "Eius possimus eum ad quia libero nulla consectetur aut. Perspiciatis velit quo fugit. Ea at suscipit labore ratione temporibus ab ipsa molestiae unde. Qui ullam rem quibusdam et. Fugiat iure alias praesentium omnis dolorem. Ipsum exercitationem voluptatem.\n \rVoluptatem harum consequuntur quae blanditiis vero iusto consequatur qui. Excepturi qui aliquid ipsam debitis. Esse fugiat quasi reprehenderit. Nostrum corrupti quis laborum ut ut ea nostrum minus voluptates. Sit sequi animi earum libero. Facilis nulla eius adipisci vel neque qui sint maiores in.",
     category: "Travel",
     id: 27,
-    likeCount: 88,
-    commentCount: 28,
   },
   {
     title: "excepturi et exercitationem",
@@ -332,8 +278,6 @@ export const booksData = [
       "Suscipit aspernatur debitis ad et et. Ut error magnam aliquam libero vero minima animi. Et quia rerum est. Illo sunt ullam iure molestiae soluta exercitationem et et.\n \rNulla ut ipsa facere. Quae incidunt occaecati sit tempora quae dignissimos cupiditate optio. Et et alias.",
     category: "Biology",
     id: 28,
-    likeCount: 97,
-    commentCount: 42,
   },
   {
     title: "dolores ea sint",
@@ -344,8 +288,6 @@ export const booksData = [
       "Nihil est sunt ut et consectetur est. Sapiente impedit voluptas. Tenetur culpa ipsa vitae molestias iusto itaque rerum recusandae.\n \rQuidem velit repellat ut. Autem quia commodi. Reprehenderit hic molestiae itaque aut maxime qui aspernatur soluta culpa. Illum similique exercitationem magnam dolores quo provident totam.",
     category: "Cooking",
     id: 29,
-    likeCount: 99,
-    commentCount: 17,
   },
   {
     title: "vitae reiciendis ut",
@@ -356,8 +298,6 @@ export const booksData = [
       "Nihil rerum necessitatibus ipsam fugit iure blanditiis dignissimos aspernatur. Cupiditate omnis non temporibus modi reiciendis nesciunt. Id qui fuga provident deserunt molestias illo. Fugiat reiciendis iste iste et et. Repudiandae nemo harum deleniti cum ut eveniet.\n \rItaque aut non sit ipsum iure. Quo accusantium vitae quae. Eum sunt nihil accusantium est possimus est impedit incidunt. Et exercitationem aut id provident quo quam ea velit ex.",
     category: "Physics",
     id: 30,
-    likeCount: 88,
-    commentCount: 31,
   },
   {
     title: "natus tempore voluptatum",
@@ -368,8 +308,6 @@ export const booksData = [
       "Reiciendis expedita voluptatem rerum sequi placeat aut consequatur. Reprehenderit atque perspiciatis ipsam. Doloremque minus porro ad. A consequatur iusto rerum. Nam pariatur omnis et quia rerum repudiandae consectetur beatae. Praesentium tempore molestias repudiandae.\n \rQuidem maxime similique ex quibusdam cupiditate. Placeat magni aspernatur rerum pariatur laudantium. Quia et culpa perspiciatis distinctio rerum earum similique.",
     category: "Novel",
     id: 31,
-    likeCount: 64,
-    commentCount: 9,
   },
   {
     title: "quaerat accusantium ratione",
@@ -380,8 +318,6 @@ export const booksData = [
       "Pariatur nostrum fugit nesciunt placeat perspiciatis ut. Qui quo aspernatur sunt consectetur. Libero quia impedit sint.\n \rQuia temporibus doloribus omnis nulla inventore ab. Deserunt suscipit dignissimos eaque recusandae. Nesciunt deserunt debitis et in totam nesciunt. Natus vitae et.",
     category: "Biology",
     id: 32,
-    likeCount: 79,
-    commentCount: 36,
   },
   {
     title: "voluptatem est corrupti",
@@ -392,8 +328,6 @@ export const booksData = [
       "Quibusdam nisi nam. Nobis voluptas et libero. Ea deserunt officiis laboriosam rerum repudiandae molestiae quasi ut. Culpa dolor delectus laudantium fugit minima impedit quo labore. Labore vel quidem voluptatem.\n \rMaxime perspiciatis dolor libero ut ut et. Facilis soluta quia voluptas eius facere vel quaerat. Adipisci rem non eos ut quo non inventore eos cumque.",
     category: "Ethics",
     id: 33,
-    likeCount: 72,
-    commentCount: 39,
   },
   {
     title: "eaque excepturi aliquam",
@@ -404,8 +338,6 @@ export const booksData = [
       "Doloribus ad fugiat. Fugit aut vel qui quam fuga corrupti consectetur ab est. Saepe doloribus vero similique similique. Numquam voluptatem ad et officia perferendis maiores quidem libero. Ut voluptatem autem vel iusto. Dolores cupiditate eaque eos quos eius dolore voluptas sunt dolore.\n \rPorro ducimus aperiam quas recusandae et explicabo dolor quidem. Sunt tenetur assumenda sit qui aut. Consequatur est odio voluptatem ex.",
     category: "Novel",
     id: 34,
-    likeCount: 46,
-    commentCount: 3,
   },
   {
     title: "cupiditate eum odio",
@@ -416,8 +348,6 @@ export const booksData = [
       "Sint aut dolorem. Aliquid aut nobis. Explicabo tenetur qui vitae et ea qui itaque excepturi.\n \rMinus veritatis eos amet et. Doloremque ut itaque id omnis et est. Explicabo enim qui ut libero quas. Voluptas quis deleniti.",
     category: "Chemistry",
     id: 35,
-    likeCount: 72,
-    commentCount: 35,
   },
   {
     title: "quia officia cupiditate",
@@ -428,8 +358,6 @@ export const booksData = [
       "Necessitatibus blanditiis harum veniam quibusdam aliquam dolorem laboriosam sit laboriosam. Culpa ea explicabo atque autem voluptatibus sint tenetur explicabo. Nemo officiis doloremque ut distinctio praesentium asperiores cum.\n \rQuo ex architecto quisquam. Dolores magni accusantium. Quos corrupti enim quasi. Ut delectus voluptatem enim. Et quis non ut. Suscipit officia laboriosam iusto dolores ut dolor mollitia maiores provident.",
     category: "Ethics",
     id: 36,
-    likeCount: 24,
-    commentCount: 7,
   },
   {
     title: "doloremque iusto saepe",
@@ -440,8 +368,6 @@ export const booksData = [
       "Aut saepe sapiente ipsam ad laboriosam facilis et. Ab et sed quia enim cupiditate totam maiores illum. Quis numquam cumque eligendi aperiam. Sit laborum qui consequatur et ea et corporis incidunt id. Eos et aut dignissimos minus rerum consequatur inventore est vel.\n \rDeserunt consequatur accusamus laboriosam ducimus neque officia. Quos aut animi eum. Ut quia voluptate quod molestiae. Ut libero sequi vitae quos commodi et aut eos.",
     category: "Cooking",
     id: 37,
-    likeCount: 56,
-    commentCount: 45,
   },
   {
     title: "sapiente vitae voluptatibus",
@@ -452,8 +378,6 @@ export const booksData = [
       "Dicta perferendis incidunt itaque ut. Qui velit commodi sunt voluptatum ut rerum doloribus. Itaque veniam recusandae voluptatibus doloremque ea. Ut aspernatur nostrum non necessitatibus est distinctio aliquid. Voluptas et provident debitis minus pariatur quos similique deleniti nobis.\n \rDistinctio vel sit consectetur adipisci reiciendis itaque velit ut aliquid. Praesentium voluptatem est eligendi similique quibusdam aspernatur consequatur quos. Reprehenderit quam dicta in laborum ut. Excepturi incidunt consequatur asperiores omnis consequatur eius et.",
     category: "Mathematics",
     id: 38,
-    likeCount: 59,
-    commentCount: 45,
   },
   {
     title: "laboriosam non animi",
@@ -464,8 +388,6 @@ export const booksData = [
       "Possimus aliquam aut quidem architecto magni. Et aut neque qui soluta aut libero et eum. Recusandae voluptas quidem hic occaecati dicta maiores adipisci nisi laudantium. Porro molestiae tempora illum non. Ipsa quae consequatur quo sapiente totam quisquam quidem.\n \rSit consectetur facilis consectetur et voluptates molestiae. Tempore et sint similique qui magnam quia. Ipsum iure et harum et et. Illo commodi iusto perferendis fuga. Ut omnis tempora.",
     category: "Chemistry",
     id: 39,
-    likeCount: 59,
-    commentCount: 8,
   },
   {
     title: "autem ad sed",
@@ -476,8 +398,6 @@ export const booksData = [
       "Enim aperiam commodi dolorum hic labore recusandae ex dolore iste. Aut ratione temporibus vero. Qui id repellendus quisquam nisi facilis et incidunt. Reprehenderit suscipit voluptatibus adipisci et blanditiis et. Ducimus eum sunt quibusdam quis qui. Aut aut incidunt.\n \rFuga modi ullam blanditiis ab occaecati soluta est qui. Et at similique eaque soluta ut sint qui. Occaecati sit numquam eos quidem quis distinctio earum. Numquam deleniti ut perferendis alias soluta omnis. Qui vel consectetur nulla aut inventore.",
     category: "Technology",
     id: 40,
-    likeCount: 11,
-    commentCount: 9,
   },
   {
     title: "aut aut possimus",
@@ -488,8 +408,6 @@ export const booksData = [
       "Eveniet et dolor aut deleniti. Facilis deleniti laborum doloremque consequuntur voluptatibus eveniet alias. Sapiente voluptas accusantium eaque sed in vel et. Cumque molestiae enim quidem tempore quaerat.\n \rSed et qui. Sunt illo ut itaque. Nihil nostrum velit nobis impedit et. Eius suscipit quas est eligendi eveniet eos maiores et quis.",
     category: "Biology",
     id: 41,
-    likeCount: 39,
-    commentCount: 12,
   },
   {
     title: "suscipit temporibus rerum",
@@ -500,8 +418,6 @@ export const booksData = [
       "Eum accusantium ut eos itaque dolorem beatae ut magni non. Eum quis at assumenda sequi voluptatem aut. Facilis ut non harum. Amet aliquid et. Ut aperiam accusamus sit.\n \rLaboriosam rem repudiandae dolor ut. Eaque esse recusandae sunt eligendi sed modi sed dolore. Aut accusamus voluptatem eum necessitatibus. Maxime fuga rem aut sequi.",
     category: "Physics",
     id: 42,
-    likeCount: 13,
-    commentCount: 20,
   },
   {
     title: "quis maiores magnam",
@@ -512,8 +428,6 @@ export const booksData = [
       "Qui ipsam atque et et non reprehenderit enim delectus saepe. Eum sed et error. Quam nam autem ab omnis nisi nemo illo deleniti.\n \rNecessitatibus rem dolores nemo quo ratione recusandae. Consequuntur numquam est voluptatum autem aliquam non aut repudiandae aut. Sunt maxime consectetur. Omnis quos reiciendis illum eos debitis molestiae. Modi dolorum inventore. Dolores culpa nesciunt et quae eos non.",
     category: "Technology",
     id: 43,
-    likeCount: 23,
-    commentCount: 7,
   },
   {
     title: "a iste ut",
@@ -524,8 +438,6 @@ export const booksData = [
       "Temporibus tempore provident distinctio. Harum cum nihil facilis molestiae. Non est aspernatur amet molestiae ut. Et est quia ut omnis ipsum.\n \rIure quidem eius. Corrupti qui molestiae ut excepturi. Delectus ea accusantium nostrum culpa non assumenda nihil.",
     category: "Cooking",
     id: 44,
-    likeCount: 26,
-    commentCount: 19,
   },
   {
     title: "at aspernatur culpa",
@@ -536,8 +448,6 @@ export const booksData = [
       "Sed qui deserunt dolores iste ipsam qui. Sit aut quasi aut et eum est autem aspernatur. Aut sed omnis corporis. Aspernatur quo quos quas repellendus rerum amet et ex. Asperiores tenetur quia molestias provident.\n \rVoluptas incidunt totam quidem. Est fuga provident ut officiis vero non quia. Quis numquam blanditiis tempora at recusandae. Qui dolor mollitia aut maxime voluptates perspiciatis molestiae sint. Sunt voluptatem pariatur est.",
     category: "Technology",
     id: 45,
-    likeCount: 95,
-    commentCount: 49,
   },
   {
     title: "delectus molestiae eos",
@@ -548,8 +458,6 @@ export const booksData = [
       "Dolorem ut commodi laborum doloremque voluptate a veniam id. Sunt reprehenderit aut. Est ea commodi quibusdam deserunt recusandae est accusantium. Nihil facere ipsum.\n \rVoluptatem voluptatum qui temporibus magnam totam. Odit ad quae minima nisi voluptate. Iste eum modi eos est ab. Atque eaque libero et error iusto. Nesciunt dolore ut earum.",
     category: "Novel",
     id: 46,
-    likeCount: 41,
-    commentCount: 21,
   },
   {
     title: "placeat dignissimos asperiores",
@@ -560,8 +468,6 @@ export const booksData = [
       "Fugit sit veritatis. Aspernatur modi expedita commodi quod accusamus vero incidunt. Quia porro ut dolor.\n \rEt eos aut ullam ex fugit sunt. Architecto et autem dolorum. Pariatur porro quibusdam doloremque aut sint et repellat. Dolorum blanditiis tenetur veniam consequatur sunt eum. Doloremque vitae ut consectetur consectetur amet quidem vel qui. Est officia unde est quidem debitis occaecati.",
     category: "Biology",
     id: 47,
-    likeCount: 6,
-    commentCount: 49,
   },
   {
     title: "est omnis quas",
@@ -572,8 +478,6 @@ export const booksData = [
       "Magnam dolore consequatur voluptatibus rem quia. Officia est quod qui et cupiditate ut. Ipsam sed id explicabo in. Tenetur sed autem molestiae dolorum omnis.\n \rVoluptatem ea et possimus ipsum occaecati dicta aspernatur esse. Voluptatem facilis iste voluptatem asperiores inventore doloremque necessitatibus. Et explicabo nihil quam. Eius amet eaque eveniet tempora aperiam.",
     category: "Mathematics",
     id: 48,
-    likeCount: 52,
-    commentCount: 40,
   },
   {
     title: "et similique fugit",
@@ -584,8 +488,6 @@ export const booksData = [
       "Necessitatibus maxime commodi quidem. Et fugit voluptatum sapiente quis natus accusantium est occaecati ut. Ex cumque qui ducimus voluptas deserunt quis est repellendus voluptatem. Voluptatem aut fugiat et quas natus. Omnis perspiciatis alias sint corrupti et possimus quibusdam voluptatum.\n \rPlaceat amet modi et repellendus culpa autem quam. Illo fuga in. Placeat dolor et aut maxime qui. Architecto qui ut deserunt qui saepe ut deleniti consequuntur facilis. Inventore ut perferendis dignissimos optio quis et magni.",
     category: "Chemistry",
     id: 49,
-    likeCount: 55,
-    commentCount: 25,
   },
   {
     title: "fugiat odit qui",
@@ -596,8 +498,6 @@ export const booksData = [
       "Voluptatem modi sint a cupiditate voluptatem dolores non. Nulla omnis optio. Quae voluptatum maxime animi. Numquam consequatur ipsa fugiat laborum cum. Nihil voluptatem cupiditate sit provident sunt dignissimos corporis. Repellat nihil accusamus dolore non.\n \rHic consequatur sit itaque doloremque quia fugit aspernatur. Vel sed eum labore autem vel nobis non. Ut laborum quisquam aliquam. Est sunt nobis.",
     category: "Chemistry",
     id: 50,
-    likeCount: 78,
-    commentCount: 31,
   },
   {
     title: "tempore consequuntur voluptates",
@@ -608,8 +508,6 @@ export const booksData = [
       "Autem deleniti similique quam. Optio assumenda et in id qui magni sint earum. Culpa rem cupiditate nisi laudantium. Sint perferendis quasi vel laborum. Esse labore et molestiae enim velit consequatur numquam maxime. Incidunt nihil libero tempora aut quibusdam.\n \rFacilis error vero quos. Adipisci non quia nostrum accusamus et consequatur. Iusto doloribus pariatur et culpa sed est doloribus.",
     category: "Science",
     id: 51,
-    likeCount: 48,
-    commentCount: 42,
   },
   {
     title: "hic facere voluptates",
@@ -620,8 +518,6 @@ export const booksData = [
       "Modi vitae perferendis a adipisci necessitatibus mollitia unde quibusdam quo. Animi rerum et et animi quisquam odio iure. Est autem earum animi minus a voluptatibus quia. Cupiditate ratione non quia dolor exercitationem numquam temporibus ut. Quibusdam velit occaecati asperiores repellendus ea.\n \rNam velit et fuga est est quam natus. Tenetur veritatis ducimus. Id ex blanditiis optio facere sequi illum. Atque odit itaque consequatur optio aut velit perferendis. Sit saepe sit autem voluptatem vero reprehenderit assumenda.",
     category: "Ethics",
     id: 52,
-    likeCount: 18,
-    commentCount: 21,
   },
   {
     title: "eum maxime non",
@@ -632,8 +528,6 @@ export const booksData = [
       "Ut excepturi veniam non id. Omnis aut aut eveniet necessitatibus cupiditate dolorum illum similique autem. Consequatur exercitationem eos est. Libero vel aut rem repudiandae voluptatum non aut ut. Repudiandae aut soluta nemo eaque quia debitis. Saepe omnis magni ab ex odit earum eum non ab.\n \rReiciendis modi et exercitationem. Eveniet exercitationem culpa provident velit quas dolore doloremque voluptatem. Eligendi quia sequi eaque eligendi quia facilis tenetur ut consequuntur. Assumenda eos ut consequatur minus nihil. Et doloremque quam repellat dolor aut eos. Omnis dolor minima ducimus.",
     category: "Physics",
     id: 53,
-    likeCount: 9,
-    commentCount: 5,
   },
   {
     title: "labore in nemo",
@@ -644,8 +538,6 @@ export const booksData = [
       "Non soluta harum dolores consequatur illo voluptas labore. Tempora facilis voluptatum. Delectus voluptas ipsa aut assumenda sed est ut.\n \rUt maiores ea et commodi vitae velit placeat. Voluptatem voluptatem qui. Accusantium consequatur aut quia. Voluptate saepe pariatur odit laudantium dolore.",
     category: "Physics",
     id: 54,
-    likeCount: 38,
-    commentCount: 46,
   },
   {
     title: "saepe dicta ex",
@@ -656,8 +548,6 @@ export const booksData = [
       "Optio est iure itaque similique dicta ad. Dolore rerum veniam omnis accusantium nihil. Fugiat beatae dolore doloremque quia consequatur. Error ut itaque. Ducimus doloribus deleniti qui recusandae quae eos. Rem ex voluptatem sed in ut commodi debitis molestias.\n \rSit a eveniet non. Est voluptatum sit fugiat est provident earum ipsum sunt. Ut nihil esse eum omnis.",
     category: "Mathematics",
     id: 55,
-    likeCount: 86,
-    commentCount: 40,
   },
   {
     title: "consequatur aspernatur a",
@@ -668,8 +558,6 @@ export const booksData = [
       "Sit aut quod pariatur. Omnis deleniti facilis deserunt quasi fugit voluptatum sint. Suscipit rem dolor cupiditate sed temporibus soluta et nostrum delectus. Consequatur fugiat illo sed. Ullam vel sed id voluptas qui voluptas quas. Reiciendis et praesentium est enim quos tenetur.\n \rMolestias nisi dignissimos consequuntur qui. Suscipit dolore et dolor architecto et. Autem ut omnis necessitatibus officia laboriosam aliquid. Voluptates et ex tempore tenetur.",
     category: "Novel",
     id: 56,
-    likeCount: 43,
-    commentCount: 25,
   },
   {
     title: "delectus non voluptate",
@@ -680,8 +568,6 @@ export const booksData = [
       "Dolorum enim delectus quia atque eveniet et. Quidem sequi ut ducimus. Harum nihil distinctio ea accusamus aut libero provident enim aut. Eligendi sed aut est voluptas illo magnam. Voluptates at minima placeat voluptates nisi. Quia culpa et omnis dolores veniam dolor.\n \rUt omnis animi nihil dignissimos commodi est pariatur iste. In dolorem cupiditate. Libero distinctio minus est quia illo quam sit corrupti. Vitae facilis laborum deleniti reiciendis error facilis.",
     category: "Chemistry",
     id: 57,
-    likeCount: 9,
-    commentCount: 35,
   },
   {
     title: "eaque aspernatur officiis",
@@ -692,8 +578,6 @@ export const booksData = [
       "Et quia sapiente nam sit rem amet doloribus. Omnis minus expedita optio et laudantium dolores. Aperiam vel dicta.\n \rEst repellendus maxime culpa. Mollitia et quod consequuntur fuga vero. Facere minima quia doloremque aperiam minus tenetur eum et. Dolor voluptatem aperiam earum.",
     category: "Cooking",
     id: 58,
-    likeCount: 94,
-    commentCount: 9,
   },
   {
     title: "rerum est dolorem",
@@ -704,8 +588,6 @@ export const booksData = [
       "Enim perspiciatis voluptas quis consequatur recusandae maxime quo. Vero doloribus et eaque provident optio. Maxime voluptatem tempora sit doloribus vero aut excepturi. Nemo ratione aut aperiam ipsum deleniti ab eum sit perspiciatis. Quam veniam aut corporis ut ea assumenda quam iusto.\n \rCum recusandae eos sed nihil aut ut qui tempore. Officia voluptas itaque ut est dolorem iste. Quis ut itaque et voluptatem dolores ut eligendi sit reprehenderit. Autem dignissimos sit et tempore nobis.",
     category: "Technology",
     id: 59,
-    likeCount: 71,
-    commentCount: 40,
   },
   {
     title: "commodi possimus et",
@@ -716,8 +598,6 @@ export const booksData = [
       "Qui quia tenetur sunt iste vel. Nemo quos fuga porro itaque inventore voluptas id nemo expedita. Beatae dolorum repellendus sed vel vitae eveniet qui qui. Quibusdam modi laborum aut harum. Quasi illo quasi iusto repellat temporibus rerum cum illum. Sed qui consequuntur.\n \rDeserunt laborum aut earum autem quia veritatis. Expedita quidem nihil iure ratione rem. Ipsum vel ut hic vel aut non qui facere.",
     category: "Ethics",
     id: 60,
-    likeCount: 29,
-    commentCount: 2,
   },
   {
     title: "exercitationem consequuntur eius",
@@ -728,8 +608,6 @@ export const booksData = [
       "Amet sit optio reprehenderit. Neque consequatur odit molestiae voluptates sed numquam accusamus debitis. Perspiciatis rerum minus dolores nostrum repellat qui voluptatem earum. Qui consequatur enim quam et provident fuga.\n \rDolore tempore at atque cupiditate voluptates. Quod consequatur placeat inventore rem sed. Vel magni eum et eligendi.",
     category: "Travel",
     id: 61,
-    likeCount: 78,
-    commentCount: 27,
   },
   {
     title: "voluptates cupiditate dolor",
@@ -740,8 +618,6 @@ export const booksData = [
       "Et et suscipit dolor alias et quia dolorum. Minima necessitatibus officiis corporis repudiandae qui quo. Odit cumque nemo. Est et deserunt optio. Sit provident voluptatum qui omnis autem sapiente suscipit pariatur.\n \rRecusandae dicta culpa in. Sapiente reiciendis dolore aut optio adipisci commodi. Vel at aliquid eum ipsum aspernatur voluptatem ducimus. Dolores modi nihil fuga repudiandae ipsa voluptas at blanditiis ut. Aut architecto qui quo velit.",
     category: "Science",
     id: 62,
-    likeCount: 93,
-    commentCount: 26,
   },
   {
     title: "tenetur omnis accusamus",
@@ -752,8 +628,6 @@ export const booksData = [
       "Laboriosam voluptates expedita tempora qui consequatur. Animi repudiandae aut quis repudiandae corrupti et expedita officiis itaque. Voluptas necessitatibus excepturi ad ipsa autem occaecati. Quam sint omnis. Quae consectetur quidem sit ducimus ab.\n \rNon praesentium vel culpa consectetur non necessitatibus. Nemo libero voluptatem. Accusantium doloribus odio veniam fuga aliquam magni. Expedita accusantium voluptatem incidunt placeat praesentium quis placeat nihil. Adipisci necessitatibus architecto.",
     category: "Cooking",
     id: 63,
-    likeCount: 97,
-    commentCount: 5,
   },
   {
     title: "facilis fuga id",
@@ -764,8 +638,6 @@ export const booksData = [
       "Ipsa molestiae tenetur sunt ea non. Ut dolorem laboriosam soluta sit. Neque est exercitationem id quod. Dolores voluptatibus consequatur rerum dolorum.\n \rQuis maiores itaque placeat voluptatum minima et rerum quidem. Incidunt consequatur quia sint nulla rerum. Reprehenderit ipsum fugit quidem expedita omnis. Dolore expedita sunt.",
     category: "Cooking",
     id: 64,
-    likeCount: 80,
-    commentCount: 7,
   },
   {
     title: "aut labore ipsum",
@@ -776,8 +648,6 @@ export const booksData = [
       "Voluptatum quaerat aut. Voluptatem veniam ut laudantium accusamus deserunt vel excepturi eum. Est minima dolore excepturi nobis est enim rerum ut sunt. Quasi enim provident ut nulla totam. Dicta et cupiditate omnis velit.\n \rId excepturi laboriosam ea. Architecto et ipsa qui cumque non. Rerum aut in ipsam eius qui tempore. Corporis excepturi mollitia numquam ducimus.",
     category: "Mathematics",
     id: 65,
-    likeCount: 2,
-    commentCount: 29,
   },
   {
     title: "consectetur temporibus sed",
@@ -788,8 +658,6 @@ export const booksData = [
       "Assumenda qui consequatur minima expedita autem eum. Quia ea veniam et sed ut aut repellat non minima. Reiciendis ex quis recusandae praesentium aut explicabo dicta. Iusto fugit consectetur assumenda facere neque itaque qui numquam. Aut ut quaerat mollitia et ullam voluptatum.\n \rConsectetur odio et ad occaecati ut laboriosam. Consequatur quidem cum ut ut adipisci dignissimos sint. Quisquam voluptates incidunt.",
     category: "Ethics",
     id: 66,
-    likeCount: 93,
-    commentCount: 18,
   },
   {
     title: "est ex sed",
@@ -800,8 +668,6 @@ export const booksData = [
       "Quisquam qui non quis soluta dolor molestias ut rem. Pariatur rerum recusandae quaerat possimus repudiandae ut est aliquid ut. Minus et iusto iusto sint ab quo aperiam optio id. Ipsum odit ipsam a molestiae rerum.\n \rNon quis mollitia quibusdam eos molestiae. Aut voluptas ratione eveniet officiis corporis. Ea ut corporis inventore dolores expedita. Ut sed totam iure distinctio corporis repellendus repellendus.",
     category: "Ethics",
     id: 67,
-    likeCount: 86,
-    commentCount: 32,
   },
   {
     title: "ea itaque alias",
@@ -812,8 +678,6 @@ export const booksData = [
       "Est perferendis aperiam perferendis et nam illo natus illo. Minima excepturi consectetur quia minima aut voluptatem minima debitis minus. Ex quos sunt.\n \rQuae molestiae itaque. Est aut autem. Quis reprehenderit ut ab voluptatem earum maxime eum nostrum. Et ea perferendis et eos in. Nemo enim illum sunt tempore iusto quos quis. Esse beatae dolores ut quasi ut voluptas eaque.",
     category: "Science",
     id: 68,
-    likeCount: 31,
-    commentCount: 42,
   },
   {
     title: "aut vel facilis",
@@ -824,8 +688,6 @@ export const booksData = [
       "Id facilis voluptatem reprehenderit reiciendis sint praesentium dolor. Enim porro omnis omnis qui doloribus. Architecto rerum exercitationem suscipit eos dolores mollitia quasi quia. Sapiente quia eos ducimus totam earum vero quasi. Sapiente omnis doloremque fugiat possimus voluptatem et quasi. Tenetur molestiae repudiandae commodi commodi alias est laboriosam necessitatibus.\n \rQui corrupti consequatur ut vitae vitae. Ut laborum veritatis et. Aspernatur in qui est aliquam necessitatibus. Rerum accusantium praesentium in dolorem et voluptatem. Vero quis facere deleniti esse est quia. Ipsam numquam a.",
     category: "Novel",
     id: 69,
-    likeCount: 12,
-    commentCount: 45,
   },
   {
     title: "praesentium rerum alias",
@@ -836,8 +698,6 @@ export const booksData = [
       "In ipsa ut asperiores. Delectus ut et illum nemo minus quisquam. Necessitatibus qui excepturi corporis blanditiis aut inventore enim.\n \rVel molestiae cumque amet error aliquam. Occaecati temporibus voluptas ut. Veniam sequi qui nisi minus aut et voluptatem sapiente. Impedit inventore porro impedit deleniti odio autem recusandae qui soluta. Amet dolor rem a in occaecati. Quam est et vitae.",
     category: "Biology",
     id: 70,
-    likeCount: 11,
-    commentCount: 47,
   },
   {
     title: "recusandae consequatur possimus",
@@ -848,8 +708,6 @@ export const booksData = [
       "Consectetur omnis deleniti atque doloribus. Autem voluptatum et dicta aliquid autem sed enim cumque mollitia. Dolorem ut qui voluptatum necessitatibus. Et sunt voluptates. Et dolor perspiciatis expedita itaque eum.\n \rIpsa nihil eos nisi harum est. Doloribus possimus qui. Ut sit sed ab nam. Ut vitae aut eligendi ab est sint. Ut quo sapiente quidem sunt. Est mollitia fugit et provident ex.",
     category: "Technology",
     id: 71,
-    likeCount: 25,
-    commentCount: 15,
   },
   {
     title: "quo amet architecto",
@@ -860,8 +718,6 @@ export const booksData = [
       "Inventore in aut saepe sint reprehenderit. Ut vitae quas fuga est voluptas ullam recusandae repellendus vitae. Et temporibus nesciunt quia ea id ad. Rem eum velit sunt natus nobis consequatur ea totam.\n \rPraesentium a autem est est. Optio enim quos magnam rem culpa. Dignissimos qui dolorum eum officia unde. Sit debitis aut commodi ratione ratione voluptate.",
     category: "Philosophy",
     id: 72,
-    likeCount: 13,
-    commentCount: 12,
   },
   {
     title: "officiis esse sit",
@@ -872,8 +728,6 @@ export const booksData = [
       "Natus quia quia. Est ratione mollitia voluptatibus officiis fuga laborum possimus aperiam. Eius beatae dolor necessitatibus dignissimos et sed non quo.\n \rNecessitatibus sit in voluptatem sit a. Ipsum qui vero labore quasi labore eos suscipit dolorem. Laborum eligendi excepturi natus possimus dolorem illo earum. Facere impedit fugiat omnis.",
     category: "Ethics",
     id: 73,
-    likeCount: 35,
-    commentCount: 10,
   },
   {
     title: "tempora officia esse",
@@ -884,8 +738,6 @@ export const booksData = [
       "Excepturi eveniet magni praesentium soluta rerum quasi consequatur. Enim ut perspiciatis et. Ea sint dicta quo quia.\n \rAsperiores ad voluptas est non perspiciatis. Temporibus et iste omnis fugiat praesentium. Porro veniam voluptas nulla et sint impedit assumenda dignissimos. Laboriosam itaque repudiandae perferendis fugiat nulla ut minus. Et quos distinctio minus laboriosam quia facilis.",
     category: "Chemistry",
     id: 74,
-    likeCount: 92,
-    commentCount: 43,
   },
   {
     title: "minus sint dolore",
@@ -896,8 +748,6 @@ export const booksData = [
       "Sit impedit minus. Soluta adipisci rerum nemo in alias. Necessitatibus ut qui quam velit non.\n \rQuisquam expedita debitis id similique dolor. Eligendi quia quisquam aperiam aliquid repellat. Vel exercitationem consequatur provident deserunt iste tempore similique qui. Repudiandae maxime fugit eligendi. Explicabo provident voluptates.",
     category: "Mathematics",
     id: 75,
-    likeCount: 77,
-    commentCount: 22,
   },
   {
     title: "et velit aut",
@@ -908,8 +758,6 @@ export const booksData = [
       "Cupiditate pariatur quam quia cumque dolorem dolor et. Labore ut sed tenetur aperiam est at at. Necessitatibus quia eum beatae.\n \rQuis reprehenderit qui eum natus consequatur ab fuga. Et neque consequatur voluptatem ducimus enim consectetur. Eum doloremque odit autem placeat quibusdam.",
     category: "Science",
     id: 76,
-    likeCount: 46,
-    commentCount: 44,
   },
   {
     title: "nisi quos sunt",
@@ -920,8 +768,6 @@ export const booksData = [
       "Quis laboriosam harum aut qui. Qui consequatur rerum. Ut natus cumque corrupti cum autem. Est doloremque eaque. Ipsa ex excepturi ipsa ipsam voluptatum quod autem unde.\n \rEt numquam magni illum consequuntur minima quasi minima. Sunt ut voluptatem aut ut inventore optio illo voluptas rerum. Dolorum fugit quas.",
     category: "Technology",
     id: 77,
-    likeCount: 42,
-    commentCount: 28,
   },
   {
     title: "porro in velit",
@@ -932,8 +778,6 @@ export const booksData = [
       "Consequatur nisi eos sit. Nulla voluptates veritatis numquam maiores et corporis. Quibusdam molestiae voluptatem non quis molestias quisquam. Libero ut laudantium qui consequatur autem. Quia corporis sed. Animi est laborum eaque quo reiciendis qui.\n \rAssumenda corporis quae suscipit natus. Itaque autem eos ea sit deleniti magnam quos corporis. Omnis asperiores error optio rerum minus. Quo consectetur quos labore consequatur.",
     category: "Technology",
     id: 78,
-    likeCount: 40,
-    commentCount: 33,
   },
   {
     title: "veniam maiores autem",
@@ -944,8 +788,6 @@ export const booksData = [
       "Pariatur doloribus voluptatem aut laborum. Beatae esse accusamus cumque. Optio facere officiis ad autem est voluptatem voluptas. Et repudiandae et exercitationem qui.\n \rAut ex porro nihil mollitia sit optio atque ducimus vitae. Aliquid ut optio qui illo omnis fuga odit quasi et. Dolores in praesentium molestiae quisquam animi sunt ut rerum. Voluptatem voluptate dignissimos ullam ut tempore nam labore. In quod esse sit mollitia illo quia quia et. Natus a recusandae accusamus animi error adipisci eveniet nesciunt.",
     category: "Philosophy",
     id: 79,
-    likeCount: 61,
-    commentCount: 43,
   },
   {
     title: "eveniet libero eaque",
@@ -956,8 +798,6 @@ export const booksData = [
       "Eos sint dignissimos modi unde. Vitae autem dolor et non. Consequatur qui ut architecto sed aliquam deserunt ab. Laborum doloremque dolores numquam. Quia illo sit odio soluta eveniet vero soluta. Ducimus occaecati distinctio atque dolorum alias et qui ab fugiat.\n \rEst veniam ullam quos nihil. Quisquam suscipit repellendus aspernatur molestiae. Voluptatem iure dolore exercitationem minima ullam ut.",
     category: "Cooking",
     id: 80,
-    likeCount: 52,
-    commentCount: 17,
   },
   {
     title: "veritatis pariatur ullam",
@@ -968,8 +808,6 @@ export const booksData = [
       "Inventore quia distinctio. Repellendus aut dignissimos est alias et impedit dolore quia. Ea quos earum voluptatem voluptatem. Commodi voluptate omnis amet.\n \rAutem enim nobis. Esse quis fuga eaque eaque nisi maiores aperiam non. Nihil tenetur voluptatem repellendus numquam voluptates dolorum. Ipsam omnis quibusdam corporis quo fugiat non culpa facere quo.",
     category: "Cooking",
     id: 81,
-    likeCount: 3,
-    commentCount: 22,
   },
   {
     title: "non consectetur consequatur",
@@ -980,8 +818,6 @@ export const booksData = [
       "Corrupti error possimus ex rerum blanditiis. Adipisci dolor est et ea possimus modi omnis officia eveniet. Aliquid nobis eaque ut dolore et qui officiis. Nobis ex delectus vitae. Nam nostrum excepturi cupiditate officia animi tenetur rerum alias.\n \rNostrum voluptatem maxime sit itaque. Minima dolorem quasi. Id mollitia dolorum placeat voluptas et qui. Iure accusamus animi quia non esse non omnis.",
     category: "Novel",
     id: 82,
-    likeCount: 61,
-    commentCount: 6,
   },
   {
     title: "minima aut ullam",
@@ -992,8 +828,6 @@ export const booksData = [
       "Explicabo cum expedita vel qui quo ut occaecati. Qui velit deserunt et. In voluptatibus atque incidunt non ipsum. Necessitatibus quibusdam aut ipsa. Sit dolorum eum et quibusdam dicta iure.\n \rOfficia dolor ab numquam qui assumenda dicta dolores non et. Quaerat alias aliquid molestiae provident et ut sint. Totam expedita maxime aspernatur. Ut libero itaque quaerat porro id voluptate voluptate doloribus. Dolor accusantium aspernatur fugit nam.",
     category: "Philosophy",
     id: 83,
-    likeCount: 74,
-    commentCount: 26,
   },
   {
     title: "laudantium voluptates sunt",
@@ -1004,8 +838,6 @@ export const booksData = [
       "Consectetur corporis quas repellat maxime molestiae. Pariatur dolorem dolorem tenetur eos ut ea. Animi est voluptas eligendi vel.\n \rSint aut dolorem dolores at numquam. Molestias aut ipsam atque quis molestiae ipsam optio eaque rem. Ut eos reprehenderit. Sint omnis omnis illo. Ea vitae sunt corrupti dolores alias autem quia sunt cumque. Porro natus doloribus qui culpa maxime tenetur enim.",
     category: "Travel",
     id: 84,
-    likeCount: 7,
-    commentCount: 33,
   },
   {
     title: "et impedit similique",
@@ -1016,8 +848,6 @@ export const booksData = [
       "Provident autem animi. Velit id nihil mollitia iusto molestiae quisquam dolorem illum alias. Consequatur quia molestias consequuntur quae illum nihil mollitia aut. Saepe neque et illum rerum possimus.\n \rPorro laborum dolorum debitis vero quia. Consequatur est consequatur voluptatem eos. Eos expedita neque aut omnis enim rerum sed suscipit. Cumque minima temporibus et dolor maiores cum. Vero doloremque dolorum optio saepe dolorem temporibus aliquam quaerat repellat.",
     category: "Philosophy",
     id: 85,
-    likeCount: 29,
-    commentCount: 22,
   },
   {
     title: "dolore reiciendis quaerat",
@@ -1028,8 +858,6 @@ export const booksData = [
       "Sequi illum vero debitis perferendis. Aperiam rerum est sit est ipsam expedita. Magnam optio mollitia tenetur saepe est omnis recusandae necessitatibus et. Exercitationem ut beatae et ea iste pariatur est consectetur.\n \rDoloribus qui aspernatur ipsam sed velit quo. Esse beatae consequuntur aut. Natus modi quo. Voluptatem corrupti velit qui vitae neque temporibus adipisci quod. Sit ut similique a. Odit veritatis mollitia ut.",
     category: "Novel",
     id: 86,
-    likeCount: 91,
-    commentCount: 43,
   },
   {
     title: "ratione debitis in",
@@ -1040,8 +868,6 @@ export const booksData = [
       "Quo modi sed. Et quisquam odio quae pariatur reiciendis voluptate. Quis expedita quidem nobis ut error ad occaecati.\n \rSunt voluptas itaque. Aut voluptas sit ducimus similique quis maiores nemo voluptatem quaerat. Alias quae nam quia eius voluptas ut dicta. Aspernatur praesentium harum maxime quis. Est enim est eum ullam ut.",
     category: "Mathematics",
     id: 87,
-    likeCount: 83,
-    commentCount: 26,
   },
   {
     title: "et unde enim",
@@ -1052,8 +878,6 @@ export const booksData = [
       "Aut minus in. Velit ut illum laborum. Et in vitae. Qui cumque autem eos at officia aut distinctio.\n \rQuas modi qui aut ipsam. Fugit voluptas rem aliquam odio distinctio. Voluptatum est ad optio et voluptas nemo in et in. Doloribus doloribus aut quae. Quia dolore odit maiores eum tempore consequatur nemo.",
     category: "Travel",
     id: 88,
-    likeCount: 44,
-    commentCount: 42,
   },
   {
     title: "doloremque numquam ad",
@@ -1064,8 +888,6 @@ export const booksData = [
       "Autem nulla excepturi sapiente dolor omnis quae aperiam itaque. Assumenda adipisci fugiat voluptatibus. Rerum architecto ut voluptate excepturi cum id. Omnis numquam aut rem possimus aut error voluptate perferendis omnis.\n \rCumque error beatae velit natus quos qui dolorum aut est. Illum sed quo ut omnis maiores suscipit. Optio autem veniam voluptatem voluptatem in.",
     category: "Biology",
     id: 89,
-    likeCount: 73,
-    commentCount: 15,
   },
   {
     title: "labore repellat modi",
@@ -1076,8 +898,6 @@ export const booksData = [
       "Architecto impedit ducimus magni officiis iusto repellendus asperiores inventore. Omnis consequatur maiores eum sed eum numquam quibusdam perferendis. Velit laborum eveniet eum dolores id beatae consectetur ut. Nobis rerum ut. Vel nesciunt beatae fuga sit aliquam fugit.\n \rQuod nam omnis minus magni placeat hic odio placeat. Sed culpa vero qui libero ipsum assumenda quia vel rerum. Repellendus iure beatae commodi sed veniam deserunt asperiores ducimus accusamus. Aut necessitatibus labore esse quam. Officiis porro voluptate illum. Sed rerum velit perferendis nesciunt explicabo laboriosam.",
     category: "Technology",
     id: 90,
-    likeCount: 51,
-    commentCount: 42,
   },
   {
     title: "et occaecati dignissimos",
@@ -1088,8 +908,6 @@ export const booksData = [
       "Occaecati quam soluta soluta. Similique inventore rerum doloremque autem. Non dolorem quo earum nam incidunt. Vel fugiat amet laboriosam modi sapiente occaecati molestiae. Atque delectus debitis soluta est ducimus est velit. Ut voluptatem aspernatur laudantium et ad id perferendis labore.\n \rEius eum nisi autem fugit. Atque facilis accusantium. Assumenda qui ea facilis sequi nobis animi. Sed consequatur et.",
     category: "Ethics",
     id: 91,
-    likeCount: 1,
-    commentCount: 41,
   },
   {
     title: "aut est libero",
@@ -1100,8 +918,6 @@ export const booksData = [
       "Sunt nisi quibusdam aspernatur saepe at fuga ab modi. Voluptatibus in quia rerum qui quasi aperiam quas ut nihil. Illum qui aut et dolorum nemo.\n \rEius rerum sunt voluptates perspiciatis est pariatur sint quasi amet. Eum quis et at. Laudantium occaecati adipisci soluta et ea. Adipisci ipsa nam atque vel occaecati. Unde quia consequatur dolorum molestiae occaecati ad ab sed illum. Ipsa quae a aut totam officia nisi.",
     category: "Mathematics",
     id: 92,
-    likeCount: 81,
-    commentCount: 14,
   },
   {
     title: "aut expedita in",
@@ -1112,8 +928,6 @@ export const booksData = [
       "Exercitationem dolorem accusamus veritatis voluptatum facere. Totam vero quae dolorem. Et et reiciendis odit a qui sit minima dignissimos. Dolores illo necessitatibus dolorem ipsa nulla. Non aspernatur nisi consequatur.\n \rNecessitatibus eaque iste occaecati. Aliquam alias occaecati explicabo autem. Qui cumque non quasi. Et est voluptatibus numquam. Doloribus voluptatem rerum et assumenda velit pariatur nobis perspiciatis non.",
     category: "Ethics",
     id: 93,
-    likeCount: 41,
-    commentCount: 4,
   },
   {
     title: "non voluptate nostrum",
@@ -1124,8 +938,6 @@ export const booksData = [
       "Explicabo saepe quas minima. Aperiam et cum voluptates optio pariatur. Numquam ipsam sunt qui expedita sunt accusantium quis. Ut cum autem aut sed. Quis provident soluta. Illo rerum nobis et dolorem magni.\n \rEst ratione veritatis officia quo molestiae. Eum harum est inventore quo necessitatibus eum blanditiis voluptatibus aspernatur. Ipsum porro et est optio totam. Nemo qui voluptatem quia. Omnis voluptas minima facere in rerum nemo culpa minima.",
     category: "Mathematics",
     id: 94,
-    likeCount: 21,
-    commentCount: 32,
   },
   {
     title: "ratione et vel",
@@ -1136,8 +948,6 @@ export const booksData = [
       "Distinctio voluptatibus doloremque cumque. Nihil velit deserunt dolorem aut fuga dignissimos incidunt et. Est neque officia debitis et qui. Distinctio nulla est fuga.\n \rAut voluptates necessitatibus ipsum voluptas maxime. Perspiciatis quod optio eos deserunt ullam porro molestiae architecto. Similique voluptates sint adipisci. Voluptas qui rerum aliquam consequatur veniam quam dolor.",
     category: "Philosophy",
     id: 95,
-    likeCount: 58,
-    commentCount: 26,
   },
   {
     title: "officia nesciunt quia",
@@ -1148,8 +958,6 @@ export const booksData = [
       "Aut voluptates animi nobis. Ex amet voluptates quis aliquid aperiam quaerat. Corporis ut corrupti. Ipsa commodi iusto ratione. Aspernatur at porro aliquid aliquam laboriosam quis consequatur. Et tempore enim non ad dolorem dolores odit.\n \rIllum totam delectus. Sunt consequatur in provident. Amet qui laboriosam ut odit natus ab nesciunt velit iste. Inventore non aspernatur quaerat sit temporibus perferendis.",
     category: "Travel",
     id: 96,
-    likeCount: 92,
-    commentCount: 26,
   },
   {
     title: "praesentium fugit doloremque",
@@ -1160,8 +968,6 @@ export const booksData = [
       "Et numquam odit aspernatur harum illum. Voluptatem beatae dicta porro quas autem quia tenetur quisquam. Rerum veritatis aut necessitatibus vitae autem ullam modi aut. Quae eveniet saepe modi maiores et quibusdam voluptas laboriosam repellat. Commodi cupiditate occaecati totam atque praesentium sit cumque. Iure ea aut fuga et et eum.\n \rVoluptates quia est nihil repudiandae consequuntur ullam ullam quae nemo. Eveniet vel consectetur aut amet quod quidem autem et consectetur. Minus neque cum voluptas quos illo beatae. Tenetur perspiciatis consectetur qui dolorem labore nesciunt rerum enim. Sint dolore eos eum ipsum quam eligendi labore voluptas aut.",
     category: "Ethics",
     id: 97,
-    likeCount: 94,
-    commentCount: 40,
   },
   {
     title: "impedit autem fugit",
@@ -1172,8 +978,6 @@ export const booksData = [
       "Veritatis dolor quasi quia explicabo dicta mollitia. Possimus quis et molestiae nesciunt excepturi totam asperiores. Minima sed quos accusantium quos quia debitis quaerat vitae odio. Eos est rerum et mollitia totam sit.\n \rNatus pariatur voluptatibus quibusdam et libero omnis. Repellat suscipit sed. Soluta rerum nobis facere aliquam adipisci harum. Sed molestias incidunt aliquid. Ea sed aut dolores eius.",
     category: "Chemistry",
     id: 98,
-    likeCount: 51,
-    commentCount: 6,
   },
   {
     title: "ex minima ea",
@@ -1184,8 +988,6 @@ export const booksData = [
       "Quas enim nulla qui sint voluptas sed sit nam. Sit neque eos quo asperiores exercitationem modi ullam. Repellendus eius sapiente illo dignissimos. Quae blanditiis illum. Ut exercitationem omnis sunt similique et doloremque qui.\n \rUt repudiandae esse cum tenetur vel minima aut hic minus. Et saepe sapiente sunt placeat a rerum minima. Veritatis soluta quas dolorem et velit mollitia placeat. Consequatur nihil quo aut. Incidunt non labore voluptatem repellendus unde enim adipisci qui. Eligendi facere reprehenderit suscipit repudiandae ratione eaque voluptatum.",
     category: "Technology",
     id: 99,
-    likeCount: 38,
-    commentCount: 36,
   },
   {
     title: "consequuntur ut esse",
@@ -1196,7 +998,5 @@ export const booksData = [
       "Facilis quia molestiae. Distinctio laudantium inventore. Quos doloribus vel tenetur unde distinctio et harum ut deserunt. Temporibus asperiores illum. Architecto aut et aliquid ut doloremque exercitationem quae reiciendis.\n \rRepellat asperiores eveniet quisquam quaerat. Vitae corrupti sapiente in qui exercitationem rerum et et vero. Hic fugit praesentium. Soluta quo veritatis libero sint earum nam dolores neque. Aut eos quo itaque doloribus nisi.",
     category: "Ethics",
     id: 100,
-    likeCount: 73,
-    commentCount: 47,
   },
 ];

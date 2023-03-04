@@ -13,8 +13,14 @@ import { getDrawerSideBarLinks, getNavbarSidebarLinks } from "./navbar.helper";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../state/auth/auth.slice";
 import { useDispatch } from "react-redux";
-import { homeButton, navbarDrawerContainer } from "./navbar.styles";
+import {
+  homeButton,
+  homeButtonLinkStyle,
+  navbarDrawerContainer,
+} from "./navbar.styles";
 import CssBaseline from "@mui/material/CssBaseline";
+import { Link } from "react-router-dom";
+import { UserType } from "../../constants/shared.constants";
 
 export default function Navbar(props) {
   const { window } = props;
@@ -32,11 +38,22 @@ export default function Navbar(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const getRedirectUrl = () => {
+    if (isAuth) {
+      if (userInfo.userType === UserType.USER) return "/dashboard/user";
+      else if (userInfo.userType === UserType.ADMIN) return "/dashboard/admin";
+    }
+    return "/";
+  };
+
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        Home
-      </Typography>
+      <Box sx={{ my: 2 }}>
+        <Link style={{ ...homeButtonLinkStyle }} to={getRedirectUrl()}>
+          Home
+        </Link>
+      </Box>
+
       <Divider />
       <List>{getDrawerSideBarLinks(isAuth, userInfo, handleLogout)}</List>
     </Box>
@@ -61,9 +78,10 @@ export default function Navbar(props) {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ ...homeButton }}>
+          <Link style={{ ...homeButton }} to={getRedirectUrl()}>
             Home
-          </Typography>
+          </Link>
+
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {getNavbarSidebarLinks(
               isAuth,

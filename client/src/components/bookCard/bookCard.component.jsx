@@ -5,12 +5,41 @@ import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import bookImage from "../../assets/books.jpeg";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import CommentIcon from "@mui/icons-material/Comment";
 import Box from "@mui/material/Box";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-export default function BookCard({ data, isAuth }) {
+export default function BookCard({ data }) {
+  const isAuth = useSelector((state) => state.auth.isAuth);
+
+  const handleRenewal = () => {
+    alert(`${data.title} is renewed`);
+  };
+
+  const handleReturn = () => {
+    alert(`${data.title} is returned`);
+  };
+
+  const handleRent = () => {
+    alert(`${data.title} is rented`);
+  };
+
+  const cardActionContent = (
+    <>
+      {data.stock > 0 && (
+        <Button onClick={handleRent} size="small">
+          Rent
+        </Button>
+      )}
+      <Button onClick={handleRenewal} size="small">
+        Renew
+      </Button>
+      <Button onClick={handleReturn} size="small">
+        Return
+      </Button>
+    </>
+  );
+
   return (
     <Card sx={{ maxWidth: 345 }}>
       <Link to={`/books/${data.id}`}>
@@ -33,16 +62,17 @@ export default function BookCard({ data, isAuth }) {
           {data.description.slice(0, 120)}
           <Link to={`/books/${data.id}`}> ...details</Link>
         </Typography>
+        {isAuth && (
+          <Typography>
+            {data.stock === 0 ? (
+              <span style={{ color: "red" }}>Stock out</span>
+            ) : (
+              <span>Stock: {data.stock}</span>
+            )}
+          </Typography>
+        )}
       </CardContent>
-      <CardActions>
-        <Button size="small">
-          <ThumbUpIcon /> ({data.likeCount})
-        </Button>
-        <Button size="small">
-          <CommentIcon /> ({data.commentCount})
-        </Button>
-        {isAuth && <Button size="small">Rent/Renew/Return</Button>}
-      </CardActions>
+      <CardActions>{isAuth && cardActionContent}</CardActions>
     </Card>
   );
 }
