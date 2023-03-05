@@ -46,7 +46,7 @@ export default function BookCard({ data }) {
         <CardMedia component="img" height="140" image={bookImage} alt="books" />
       </Link>
       <CardContent>
-        <Typography variant="h5" component="div">
+        <Typography variant="h5" component="div" my={2}>
           {data.title}
         </Typography>
         <Box
@@ -56,21 +56,20 @@ export default function BookCard({ data }) {
           }}
         >
           <Typography variant="body1">By: {data.author}</Typography>
-          <Typography variant="body1">Genre: {data.category}</Typography>
+          {isAuth && (
+            <Typography>
+              {data.stock === 0 ? (
+                <span style={{ color: "red" }}>Stock out</span>
+              ) : (
+                <span style={{ color: "green" }}>Available for rent</span>
+              )}
+            </Typography>
+          )}
         </Box>
         <Typography marginY={1} variant="body2" color="text.secondary">
-          {data.description.slice(0, 120)}
+          {data.description.slice(0, 50)}
           <Link to={`/books/${data.id}`}> ...details</Link>
         </Typography>
-        {isAuth && (
-          <Typography>
-            {data.stock === 0 ? (
-              <span style={{ color: "red" }}>Stock out</span>
-            ) : (
-              <span>Stock: {data.stock}</span>
-            )}
-          </Typography>
-        )}
       </CardContent>
       <CardActions>{isAuth && cardActionContent}</CardActions>
     </Card>
