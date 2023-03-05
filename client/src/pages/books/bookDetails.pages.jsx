@@ -7,7 +7,6 @@ import bookImage from "../../assets/books.jpeg";
 import Typography from "@mui/material/Typography";
 import { useEffect, useState } from "react";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 
 function BookDetails() {
   const { bookId } = useParams();

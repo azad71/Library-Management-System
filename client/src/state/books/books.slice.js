@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { fetchBookList, fetchBookById } from "./books.service";
+import { fetchBookList } from "./books.service";
 
 export const initialState = {
   booksList: [],
