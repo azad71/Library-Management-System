@@ -1,5 +1,0 @@
-- Serve all cdn from app directory(done, except fontawesome)
-- Remove passport dependency and use session authentication
-- Remove random string generator uuid and replace by custom function
-- Improve image upload middleware
-- Add Redis caching
