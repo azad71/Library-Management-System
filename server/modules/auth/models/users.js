@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const sequelize = require("../../../core/database");
 
-const Model = Sequelize.Model;
+const { Model } = Sequelize;
 
 class User extends Model {}
 
@@ -52,7 +52,7 @@ User.init(
   {
     sequelize,
     modelName: "users",
-  }
+  },
 );
 
 module.exports = User;
