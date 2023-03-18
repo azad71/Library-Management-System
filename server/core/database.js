@@ -1,6 +1,8 @@
-require("dotenv").config();
-
 const { Sequelize } = require("sequelize");
+
+const getEnv = require("../utils/getEnv.util");
+
+require("dotenv").config({ path: getEnv(process.env.NODE_ENV) });
 
 const sequelize = new Sequelize({
   dialect: process.env.DB_DIALECT,
@@ -8,6 +10,7 @@ const sequelize = new Sequelize({
   database: process.env.DB_NAME,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
+  logging: false,
   pool: {
     max: 60,
     min: 0,

@@ -1,5 +1,5 @@
-function register(req, res, next) {
+function userRegister(req, res, next) {
   res.send("HELLO");
 }
 
-module.exports = { register };
+module.exports = { userRegister };
