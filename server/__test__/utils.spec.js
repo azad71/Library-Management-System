@@ -1,8 +1,20 @@
 const getEnv = require("../utils/getEnv.util");
 
-describe("Testing NODE_ENV", () => {
+describe("Testing getEnv", () => {
   it("returns .env when env passed as development", () => {
     const result = getEnv("development");
+
+    expect(result).toBe(".env");
+  });
+
+  it("returns .env.test when env passed as test", () => {
+    const result = getEnv("test");
+
+    expect(result).toBe(".env.test");
+  });
+
+  it("returns .env when no env passed", () => {
+    const result = getEnv();
 
     expect(result).toBe(".env");
   });
