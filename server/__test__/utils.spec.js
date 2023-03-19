@@ -18,4 +18,10 @@ describe("Testing getEnv", () => {
 
     expect(result).toBe(".env");
   });
+
+  it("returns .env when anything other than development and test is passed as env", () => {
+    const result = getEnv("notValidParams");
+
+    expect(result).toBe(".env");
+  });
 });

@@ -19,4 +19,12 @@ describe("User registration", () => {
 
     expect(response.status).toBe(200);
   });
+
+  it('returns "Please provide fullname" when no "name" field value provided', async () => {
+    const response = await request(app)
+      .post("/api/v1/auth/user/register")
+      .send({});
+
+    expect(response.body.errorMessage).toBe("Please provide fullname");
+  });
 });
