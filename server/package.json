@@ -12,7 +12,7 @@
     "migrate": "sequelize-cli --options-path ./.sequelize-config db:migrate",
     "migrate:create": "sequelize-cli --options-path ./.sequelize-config migration:create --name",
     "migrate:undo": "sequelize-cli --options-path ./.sequelize-config db:migrate:undo",
-    "test": "cross-env NODE_ENV=test jest --watch"
+    "test": "cross-env NODE_ENV=test jest --watch --verbose"
   },
   "dependencies": {
     "dotenv": "^16.0.3",

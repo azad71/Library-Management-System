@@ -11,3 +11,5 @@ class NotFoundError extends CustomerError {
     return [{ message: "Requested resources not found" }];
   }
 }
+
+module.exports = NotFoundError;

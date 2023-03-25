@@ -1,4 +1,4 @@
-const getEnv = require("../utils/getEnv.util");
+const getEnv = require("../getEnv.util");
 
 describe("Testing getEnv", () => {
   it("returns .env when env passed as development", () => {
