@@ -5,8 +5,11 @@ const errorHandler = (err, req, res, next) => {
     return res.status(err.statusCode).send({ errors: err.serializeErrors() });
   }
 
+  let message = "Something went wrong";
+  if (err?.message) message = err.message;
+
   res.status(400).send({
-    errors: [{ message: "Something went wrong" }],
+    errors: { message },
   });
 };
 

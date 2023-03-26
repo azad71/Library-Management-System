@@ -1,4 +1,6 @@
 const { body } = require("express-validator");
+const { findUserByEmail } = require("../auth.repository");
+
 const userRegisterValidation = [
   body("name")
     .trim()
@@ -23,7 +25,13 @@ const userRegisterValidation = [
     .withMessage("Email is required")
     .bail()
     .isEmail()
-    .withMessage("Invalid email, please provide a valid email address"),
+    .withMessage("Invalid email, please provide a valid email address")
+    .custom(async (email) => {
+      const user = await findUserByEmail(email);
+      if (user) {
+        throw new Error("This email is already registered");
+      }
+    }),
   body("password")
     .notEmpty()
     .withMessage("Password is required")
