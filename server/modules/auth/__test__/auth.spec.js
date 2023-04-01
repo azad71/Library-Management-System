@@ -1,14 +1,51 @@
 const request = require("supertest");
 const User = require("../models/users");
+const AuthToken = require("../models/authToken");
 const app = require("../../../app");
 const sequelize = require("../../../core/database");
+const { USER_TYPE, AUTH_TOKEN_REASON } = require("../../../core/constants");
+const SMTPServer = require("smtp-server").SMTPServer;
+require("dotenv").config({ __dirname: `.env.test` });
+
+let mailContent, mailServer;
+let simulateSmtpFailure = false;
 
 beforeAll(async () => {
+  mailServer = new SMTPServer({
+    authOptional: true,
+    onData(stream, session, callback) {
+      let mailBody;
+
+      stream.on("data", (data) => {
+        mailBody += data.toString();
+      });
+
+      stream.on("end", () => {
+        if (simulateSmtpFailure) {
+          const err = new Error("Invalid mailbox");
+          err.responseCode = 553;
+          return callback(err);
+        }
+        mailContent = mailBody;
+        callback();
+      });
+    },
+  });
+
+  await mailServer.listen(
+    Math.floor(Math.random() * 2000) + 10000,
+    "localhost",
+  );
   await sequelize.sync();
 });
 
 beforeEach(async () => {
+  simulateSmtpFailure = false;
   return User.destroy({ truncate: true });
+});
+
+afterAll(async () => {
+  await mailServer.close();
 });
 
 const userPayload = {
@@ -91,10 +128,6 @@ describe("User registration", () => {
     );
   });
 
-  // it("returns 'This email is already registered' when duplicate email is used for registration", async() => {
-  //   const response = await createUser()
-  // })
-
   it("returns 'Password is required' when no 'password' field value provided", async () => {
     const response = await createUser({
       name: userPayload.name,
@@ -137,10 +170,10 @@ describe("User registration", () => {
     );
   });
 
-  it("returns http status 200 when user register request payload is valid", async () => {
+  it("returns http status 201 when user register request payload is valid", async () => {
     const response = await createUser(userPayload);
 
-    expect(response.status).toBe(200);
+    expect(response.status).toBe(201);
   });
 
   it("returns success message when successfully registers an user", async () => {
@@ -196,8 +229,53 @@ describe("User registration", () => {
 
     expect(users[0].userStatus).toBe("pending");
   });
-});
 
-// describe("Auth Utilities", () => {
-//   it('returns hashed password',)
-// })
+  it("saves auth token with email", async () => {
+    await createUser();
+
+    const authTokenInfo = await AuthToken.findOne({
+      where: { email: userPayload.email },
+    });
+
+    expect(authTokenInfo.email).toBe(userPayload.email);
+  });
+
+  it("saves userType as 'user' in authToken table", async () => {
+    await createUser();
+
+    const authTokenInfo = await AuthToken.findOne({
+      where: { email: userPayload.email },
+    });
+
+    expect(authTokenInfo.userType).toBe(USER_TYPE.USER);
+  });
+
+  it("saves reason as 'signup' in authToken table", async () => {
+    await createUser();
+
+    const authTokenInfo = await AuthToken.findOne({
+      where: { email: userPayload.email },
+    });
+
+    expect(authTokenInfo.reason).toBe(AUTH_TOKEN_REASON.SIGNUP);
+  });
+
+  it("saves token into authToken table", async () => {
+    await createUser();
+
+    const authTokenInfo = await AuthToken.findOne({
+      where: { email: userPayload.email },
+    });
+    expect(authTokenInfo.token).not.toBeUndefined();
+  });
+
+  it("generates token of length 6", async () => {
+    await createUser();
+
+    const authTokenInfo = await AuthToken.findOne({
+      where: { email: userPayload.email },
+    });
+
+    expect(authTokenInfo.token.length).toBe(6);
+  });
+});

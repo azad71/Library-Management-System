@@ -3,50 +3,37 @@ const sequelize = require("../../../core/database");
 
 const { Model } = Sequelize;
 
-class User extends Model {}
+class AuthToken extends Model {}
 
-User.init(
+AuthToken.init(
   {
     id: {
       type: Sequelize.INTEGER,
       autoIncrement: true,
       primaryKey: true,
     },
-    name: {
-      type: Sequelize.STRING,
-      allowNull: false,
-      field: "name",
-    },
     email: {
       type: Sequelize.STRING,
       field: "email",
       allowNull: false,
-      unique: true,
     },
-    password: {
+    token: {
       type: Sequelize.STRING,
       allowNull: false,
-      field: "password",
+      field: "token",
     },
-    userStatus: {
-      type: Sequelize.ENUM("active", "inactive", "pending", "banned"),
-      defaultValue: "pending",
-      field: "user_status",
+    userType: {
+      type: Sequelize.ENUM("user", "admin"),
+      field: "user_type",
     },
-    profilePicture: {
-      type: Sequelize.STRING,
-      field: "profile_picture",
-      defaultValue: "profile.png",
+    reason: {
+      type: Sequelize.ENUM("signup", "password_reset", "resend_token"),
+      field: "reason",
     },
-    address: {
-      type: Sequelize.STRING,
-      defaultValue: "",
-      field: "address",
-    },
-    lastLogin: {
-      type: Sequelize.DATE,
-      allowNull: true,
-      field: "last_login",
+    retryCount: {
+      type: Sequelize.INTEGER,
+      field: "retry_count",
+      defaultValue: 0,
     },
     createdAt: {
       type: Sequelize.DATE,
@@ -58,13 +45,18 @@ User.init(
       defaultValue: Sequelize.NOW,
       field: "updated_at",
     },
+    expiresAt: {
+      type: Sequelize.DATE,
+      defaultValue: Sequelize.NOW,
+      field: "expires_at",
+    },
   },
   {
     sequelize,
-    modelName: "users",
+    modelName: "auth_tokens",
     freezeTableName: true,
     timestamps: true,
   },
 );
 
-module.exports = User;
+module.exports = AuthToken;

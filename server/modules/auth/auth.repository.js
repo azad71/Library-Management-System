@@ -1,3 +1,4 @@
+const AuthToken = require("./models/authToken");
 const User = require("./models/users");
 
 const findUserByEmail = async (email) => {
@@ -8,4 +9,8 @@ const createUser = async (payload) => {
   return User.create(payload);
 };
 
-module.exports = { findUserByEmail, createUser };
+const addAuthTokenInfo = async (payload) => {
+  return AuthToken.create(payload);
+};
+
+module.exports = { findUserByEmail, createUser, addAuthTokenInfo };

@@ -2,3 +2,5 @@ node_modules
 images
 .env
 .vscode
+.env.test
+yarn.lock

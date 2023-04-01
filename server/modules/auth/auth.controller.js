@@ -1,5 +1,10 @@
 const authUtils = require("./auth.utils");
 const authRepository = require("./auth.repository");
+const {
+  USER_TYPE,
+  AUTH_TOKEN_REASON,
+  AUTH_TOKEN_EXPIRY_TIME,
+} = require("../../core/constants");
 
 async function registerUser(req, res, next) {
   try {
@@ -17,7 +22,18 @@ async function registerUser(req, res, next) {
 
     await authRepository.createUser(userPayload);
 
-    return res.json({
+    const token = authUtils.getOTP();
+    const expiresAt = Date.now() + AUTH_TOKEN_EXPIRY_TIME;
+
+    await authRepository.addAuthTokenInfo({
+      token,
+      email: payload.email,
+      userType: USER_TYPE.USER,
+      reason: AUTH_TOKEN_REASON.SIGNUP,
+      expiresAt,
+    });
+
+    return res.status(201).json({
       message: "User registered successfully! Please login to continue",
     });
   } catch (error) {
