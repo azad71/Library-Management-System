@@ -23,7 +23,7 @@ async function registerUser(req, res, next) {
     await authRepository.createUser(userPayload);
 
     const token = authUtils.getOTP();
-    const expiresAt = Date.now() + AUTH_TOKEN_EXPIRY_TIME;
+    const expiresAt = new Date(Date.now() + AUTH_TOKEN_EXPIRY_TIME);
 
     await authRepository.addAuthTokenInfo({
       token,

@@ -19,6 +19,7 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-validator": "^6.15.0",
+    "nodemailer": "^6.9.1",
     "sequelize": "^6.29.3",
     "sequelize-cli": "^6.6.0",
     "sqlite3": "^5.1.4"

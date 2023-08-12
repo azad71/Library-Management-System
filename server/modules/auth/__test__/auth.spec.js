@@ -3,7 +3,11 @@ const User = require("../models/users");
 const AuthToken = require("../models/authToken");
 const app = require("../../../app");
 const sequelize = require("../../../core/database");
-const { USER_TYPE, AUTH_TOKEN_REASON } = require("../../../core/constants");
+const {
+  USER_TYPE,
+  AUTH_TOKEN_REASON,
+  AUTH_TOKEN_EXPIRY_TIME,
+} = require("../../../core/constants");
 const SMTPServer = require("smtp-server").SMTPServer;
 require("dotenv").config({ __dirname: `.env.test` });
 
@@ -32,10 +36,7 @@ beforeAll(async () => {
     },
   });
 
-  await mailServer.listen(
-    Math.floor(Math.random() * 2000) + 10000,
-    "localhost",
-  );
+  mailServer.listen(Math.floor(Math.random() * 2000) + 10000, "localhost");
   await sequelize.sync();
 });
 
@@ -57,6 +58,13 @@ const userPayload = {
 
 const createUser = (payload = userPayload) => {
   return request(app).post("/api/v1/auth/user/register").send(payload);
+};
+
+const findAuthInfo = () => {
+  return AuthToken.findOne({
+    where: { email: userPayload.email },
+    raw: true,
+  });
 };
 
 describe("User registration", () => {
@@ -224,7 +232,7 @@ describe("User registration", () => {
   });
 
   it("creates account in pending status", async () => {
-    const response = await createUser();
+    await createUser();
     const users = await User.findAll();
 
     expect(users[0].userStatus).toBe("pending");
@@ -233,9 +241,7 @@ describe("User registration", () => {
   it("saves auth token with email", async () => {
     await createUser();
 
-    const authTokenInfo = await AuthToken.findOne({
-      where: { email: userPayload.email },
-    });
+    const authTokenInfo = await findAuthInfo();
 
     expect(authTokenInfo.email).toBe(userPayload.email);
   });
@@ -243,9 +249,7 @@ describe("User registration", () => {
   it("saves userType as 'user' in authToken table", async () => {
     await createUser();
 
-    const authTokenInfo = await AuthToken.findOne({
-      where: { email: userPayload.email },
-    });
+    const authTokenInfo = await findAuthInfo();
 
     expect(authTokenInfo.userType).toBe(USER_TYPE.USER);
   });
@@ -253,9 +257,7 @@ describe("User registration", () => {
   it("saves reason as 'signup' in authToken table", async () => {
     await createUser();
 
-    const authTokenInfo = await AuthToken.findOne({
-      where: { email: userPayload.email },
-    });
+    const authTokenInfo = await findAuthInfo();
 
     expect(authTokenInfo.reason).toBe(AUTH_TOKEN_REASON.SIGNUP);
   });
@@ -263,19 +265,32 @@ describe("User registration", () => {
   it("saves token into authToken table", async () => {
     await createUser();
 
-    const authTokenInfo = await AuthToken.findOne({
-      where: { email: userPayload.email },
-    });
+    const authTokenInfo = await findAuthInfo();
     expect(authTokenInfo.token).not.toBeUndefined();
   });
 
-  it("generates token of length 6", async () => {
+  it("generates token of  6 digits", async () => {
     await createUser();
 
-    const authTokenInfo = await AuthToken.findOne({
-      where: { email: userPayload.email },
-    });
+    const authTokenInfo = await findAuthInfo();
 
     expect(authTokenInfo.token.length).toBe(6);
+  });
+
+  it("should sets retryCount to 0 as default", async () => {
+    await createUser();
+
+    const authTokenInfo = await findAuthInfo();
+    expect(authTokenInfo.retryCount).toBe(0);
+  });
+
+  it("should set expiresAt to 5 minutes", async () => {
+    await createUser();
+
+    const authTokenInfo = await findAuthInfo();
+    const expiryDate = new Date(Date.now() + AUTH_TOKEN_EXPIRY_TIME).getTime();
+    const tokenExpiry = new Date(authTokenInfo.expiresAt).getTime();
+
+    expect(expiryDate).toBeGreaterThan(tokenExpiry);
   });
 });
