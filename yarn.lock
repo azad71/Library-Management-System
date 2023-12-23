@@ -600,6 +600,11 @@ expand-template@^2.0.3:
   resolved "https://registry.yarnpkg.com/expand-template/-/expand-template-2.0.3.tgz#6e14b3fcee0f3a6340ecb57d2e8918692052a47c"
   integrity sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==
 
+express-ejs-layouts@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/express-ejs-layouts/-/express-ejs-layouts-2.5.1.tgz#d204d9065ee2825fcbd718d820289fc81e691ccb"
+  integrity sha512-IXROv9n3xKga7FowT06n1Qn927JR8ZWDn5Dc9CJQoiiaaDqbhW5PDmWShzbpAa2wjWT1vJqaIM1S6vJwwX11gA==
+
 express-sanitizer@^1.0.5:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/express-sanitizer/-/express-sanitizer-1.0.6.tgz#b43ad9697f700cb59775f1ab3a1800a95313a928"

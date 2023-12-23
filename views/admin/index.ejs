@@ -1,12 +1,3 @@
-<%- include ('../partials/header.html') %>
-
-</head>
-
-<body>
-
-<!--NAVIGATION BAR FOR ADMIN-->
-<%- include ('../partials/adminNav.html') %>
-
 <!--DASHBOARD SECTION-->
 <header id="main-header" class="py-2 bg-primary text-white">
   <div class="container">
@@ -25,12 +16,7 @@
       <div class="col-md-6">
         <form action="/admin" method="POST">
           <div class="input-group">
-            <input
-              name="searchUser"
-              type="text"
-              class="form-control"
-              placeholder="Find activities by username, category"
-            />
+            <input name="searchUser" type="text" class="form-control" placeholder="Find activities by username, category" />
             <span class="input-group-btn">
               <button class="btn btn-primary">Search</button>
             </span>
@@ -40,8 +26,6 @@
     </div>
   </div>
 </section>
-
-<%- include ('../partials/alerts.html')%>
 
 <!-- POSTS -->
 <section id="posts" class="my-5">
@@ -67,8 +51,7 @@
                 <% if(activities[i].category =="Issue") { %>
                 <td>
                   <a href="/admin/users/profile/<%=activities[i].user_id.id%>" title="Visit profile">
-                    <%=activities[i].user_id.username || 'This user'%></a
-                  >
+                    <%=activities[i].user_id.username || 'This user'%></a>
                   issued <%=activities[i].info.title%>
                 </td>
                 <td>Issue</td>
@@ -202,5 +185,3 @@
     </div>
   </div>
 </section>
-
-<% include ('../partials/footer.html') %>

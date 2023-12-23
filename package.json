@@ -23,6 +23,7 @@
     "dotenv": "^8.2.0",
     "ejs": "^3.1.8",
     "express": "^4.16.4",
+    "express-ejs-layouts": "^2.5.1",
     "express-sanitizer": "^1.0.5",
     "express-session": "^1.17.1",
     "method-override": "^3.0.0",
