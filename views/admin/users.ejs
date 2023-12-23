@@ -1,11 +1,4 @@
-<%- include ('../partials/header.html') %>
-
-</head>
-
-<body>
-
 <!--NAVIGATION BAR FOR ADMIN-->
-<%- include ('../partials/adminNav.html') %>
 
 <header id="main-header" class="py-2 bg-primary text-white">
   <div class="container">
@@ -27,12 +20,7 @@
       <div class="col-md-6">
         <form action="/admin/users/1" method="POST">
           <div class="input-group">
-            <input
-              name="searchUser"
-              type="text"
-              class="form-control"
-              placeholder="Search User by First Name, Last Name, username, E-mail"
-            />
+            <input name="searchUser" type="text" class="form-control" placeholder="Search User by First Name, Last Name, username, E-mail" />
             <span class="input-group-btn">
               <button class="btn btn-primary">Search</button>
             </span>
@@ -42,8 +30,6 @@
     </div>
   </div>
 </section>
-
-<% include ("../partials/alerts.html") %>
 
 <!-- USERS -->
 <section id="users">
@@ -79,11 +65,7 @@
                 <td>$<%=user.fines%></td>
                 <td>
                   <%if(user.bookIssueInfo.length> 0) { %>
-                  <a
-                    href="/admin/users/delete/<%=user._id%>"
-                    title="This user has books in possession. Are you sure to delete this user?"
-                    class="btn btn-sm btn-danger"
-                  >
+                  <a href="/admin/users/delete/<%=user._id%>" title="This user has books in possession. Are you sure to delete this user?" class="btn btn-sm btn-danger">
                     <i class="fa fa-trash"></i>
                   </a>
                   <% } else { %>
@@ -133,5 +115,3 @@
     </div>
   </div>
 </section>
-
-<% include ('../partials/footer.html') %>
