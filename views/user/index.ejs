@@ -59,158 +59,15 @@
           <div class="card-header text-center">
             <h4>Recent Activities</h4>
           </div>
-          <table class="table table-striped">
+          <table id="activitiesTable" class="table table-striped">
             <thead class="thead-inverse">
               <tr>
                 <th>Info</th>
                 <th>Category</th>
                 <th>Date</th>
-                <th></th>
               </tr>
             </thead>
-            <tbody>
-              <% activities.forEach(activity => { %>
-              <% if(activity.category == 'Issue') { %>
-              <tr>
-                <td>You have <span class="table-text">issued</span> <%=activity.info.title%></td>
-                </td>
-                <td><%=activity.category%></td>
-                <td>
-                  <p>Issue : <%=activity.time.issueDate.toDateString()%></p>
-                  <p>Return : <%=activity.time.returnDate.toDateString()%></p>
-                </td>
-              </tr>
-              <%  } else if(activity.category == 'Return') { %>
-              <tr>
-                <td>You have <span class="table-text">returned</span> <%=activity.info.title%></td>
-                </td>
-                <td><%=activity.category%></td>
-                <td>
-                  <p>Issue : <%=activity.time.issueDate.toDateString()%></p>
-                  <p>Return : <%=activity.time.returnDate.toDateString()%></p>
-                </td>
-              </tr>
-              <%  } else if(activity.category == 'Comment') { %>
-              <tr>
-                <td>You <span class="table-text">commented</span> on <%=activity.info.title%></td>
-                <td><%= activity.category %></td>
-                <td><%=activity.entryTime.toDateString()%></td>
-                <td><a href="/books/details/<%=activity.info.id%>" class="btn btn-sm btn-secondary">
-                    <i class="fa fa-angle-double-right"></i> Details
-                  </a></td>
-              </tr>
-              <%  } else if(activity.category == 'Fine') {%>
-              <tr>
-                <td>You <span class="table-text">paid</span> $<%=activity.fine.amount%> fines</td>
-                <td><%=activity.category%></td>
-                <td><%=activity.fine.date%></td>
-                <td>
-                  <button class="btn btn-sm btn-secondary">
-                    <i class="fa fa-check"></i> Paid Successfully
-                  </button>
-                </td>
-              </tr>
-              <%  } else if(activity.category == 'Renew') { %>
-              <tr>
-                <td>You have <span class="table-text">renewed</span> <%=activity.info.title%></td>
-                <td><%=activity.category%></td>
-                <td>
-                  <p>Issue : <%=activity.time.issueDate.toDateString()%></p>
-                  <p>Return : <%=activity.time.returnDate.toDateString()%></p>
-                </td>
-              </tr>
-              <% } else if(activity.category == 'Update Profile') { %>
-              <tr>
-                <td>You have recently <span class="table-text">updated your profile info</span> </td>
-                <td><%=activity.category%></td>
-                <td>
-                  <%=activity.entryTime.toDateString()%>
-                </td>
-                <td>
-                  <a href="/user/1/profile" class="btn btn-sm btn-success" role="button">Visit Profile</a>
-                </td>
-              </tr>
-              <% } else if(activity.category == 'Update Password') { %>
-              <tr>
-                <td>You have recently <span class="table-text">updated your password</span></td>
-                <td><%=activity.category%></td>
-                <td>
-                  <%=activity.entryTime.toDateString()%>
-                </td>
-                <td>
-                  <button class="btn btn-sm btn-success">Changed Successfully!</button>
-                </td>
-              </tr>
-              <% } else if(activity.category == 'Upload Photo') { %>
-              <tr>
-                <td>You have recently <span class="table-text">updated your profile picture</span></td>
-                <td><%=activity.category%></td>
-                <td>
-                  <%=activity.entryTime.toDateString()%>
-                </td>
-                <td>
-                  <button class="btn btn-sm btn-success">Changed Successfully!</button>
-                </td>
-              </tr>
-              <% } else if(activity.category == 'Update Comment') { %>
-              <tr>
-                <td>You have <span class="table-text">updated your comment</span> on <%=activity.info.title%></td>
-                <td><%= activity.category %></td>
-                <td><%=activity.entryTime.toDateString()%></td>
-                <td><a href="/books/details/<%=activity.info.id%>" class="btn btn-sm btn-secondary">
-                    <i class="fa fa-angle-double-right"></i> Details
-                  </a></td>
-              </tr>
-              <%  } else if(activity.category == 'Delete Comment') { %>
-              <tr>
-                <td>You have <span class="table-text">deleted your comment</span> on <%=activity.info.title%></td>
-                <td><%= activity.category %></td>
-                <td><%=activity.entryTime.toDateString()%></td>
-                <td><a href="/books/details/<%=activity.info.id%>" class="btn btn-sm btn-secondary">
-                    <i class="fa fa-angle-double-right"></i> Details
-                  </a></td>
-              </tr>
-              <%  } %>
-              <% }); %>
-
-            </tbody>
           </table>
-
-          <% if (pages > 0) { %>
-          <nav class="ml-3 mb-2">
-            <ul class="pagination offset-md-3">
-
-              <% if (current == 1) { %>
-              <li class="page-item disabled"><a class="page-link">First</a></li>
-              <% } else { %>
-              <li class="page-item"><a href="/user/1" class="page-link">First</a></li>
-              <% } %>
-
-              <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
-              <% if (i !== 1) { %>
-              <li class="page-item disabled"><a class="page-link">...</a></li>
-              <% } %>
-              <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
-              <% if (i == current) { %>
-              <li class="page-item active"><a class="page-link"><%= i %></a></li>
-              <% } else { %>
-              <li class="page-item"><a class="page-link" href="/user/<%= i %>"><%= i %></a></li>
-              <% } %>
-              <% if (i == Number(current) + 4 && i < pages) { %>
-              <li class="page-item disabled"><a class="page-link">...</a></li>
-              <% } %>
-              <% } %>
-              <% if (current == pages) { %>
-              <li class="page-item disabled"><a class="page-link">Last</a></li>
-              <% } else { %>
-              <li class="page-item"><a href="/user/<%= pages %>" class="page-link">Last</a></li>
-              <% } %>
-            </ul>
-          </nav>
-          <% } %>
-
-
-
         </div>
       </div>
     </div>

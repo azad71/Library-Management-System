@@ -9,6 +9,7 @@ const Activity = require("../models/activity");
 const Book = require("../models/book");
 const Issue = require("../models/issue");
 const Comment = require("../models/comment");
+const datatablesQuery = require("datatables-query");
 
 // importing utilities
 const deleteImage = require("../utils/delete_image");
@@ -42,21 +43,27 @@ exports.getUserDashboard = async (req, res, next) => {
         }
       }
     }
-    const activities = await Activity.find({ "user_id.id": req.user._id })
-      .sort({ _id: -1 })
-      .skip(PER_PAGE * page - PER_PAGE)
-      .limit(PER_PAGE);
-
-    const activity_count = await Activity.find({
-      "user_id.id": req.user._id,
-    }).countDocuments();
 
     res.render("user/index", {
       user: user,
-      current: page,
-      pages: Math.ceil(activity_count / PER_PAGE),
-      activities: activities,
+      layout: "userActivities-layout",
     });
+  } catch (err) {
+    console.log(err);
+    return res.redirect("back");
+  }
+};
+
+//user -> post dashboard
+exports.postUserDashboard = async (req, res, next) => {
+  const params = req.body;
+  try {
+    const activity = Activity.find({ "user_id.id": req.user._id })
+      .populate("time")
+      .lean();
+    const query = datatablesQuery(activity);
+    const activities = await query.run(params);
+    res.json(activities);
   } catch (err) {
     console.log(err);
     return res.redirect("back");

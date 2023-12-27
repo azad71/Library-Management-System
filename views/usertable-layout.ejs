@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/jquery.dataTables.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheet/app.css">
+
+  <title>Library Manangement System</title>
+</head>
+
+<body>
+  <%if(currentUser && currentUser.isAdmin) { %>
+  <%- include ('./partials/adminNav.ejs') %>
+  <% } else { %>
+  <%- include ('./partials/userNav.ejs') %>
+  <% } %>
+  <main>
+    <% if(error || success || warning){ %>
+    <%- include ('./partials/alerts.ejs') %>
+    <% } %>
+    <%- body %>
+    <%- include ('./partials/footer.ejs') %>
+  </main>
+
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    let table = new DataTable('#usersTable', {
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/admin/users/all',
+        type: 'POST'
+      },
+      columns: [{
+          data: 'firstName',
+          defaultContent: "",
+          name: 'Name'
+        },
+        {
+          data: 'lastName',
+          defaultContent: "",
+          name: 'last Name',
+          searchable: false,
+        },
+        {
+          data: 'username',
+          defaultContent: "",
+          name: 'User Name'
+        },
+        {
+          data: 'email',
+          defaultContent: "",
+          name: 'Email'
+        },
+        {
+          data: 'gender',
+          defaultContent: "",
+          name: 'Gender'
+        },
+        {
+          data: 'joined',
+          defaultContent: "",
+          name: 'Date Regisetered',
+          searchable: false,
+          orderable: false
+        },
+        {
+          data: 'violationFlag',
+          defaultContent: "",
+          name: 'Violation Flag',
+          searchable: false,
+        },
+        {
+          data: 'fines',
+          defaultContent: "",
+          name: 'Fine',
+          searchable: false,
+        },
+        {
+          data: 'null',
+          defaultContent: "",
+          name: 'Edit',
+          searchable: false,
+          orderable: false
+        },
+        {
+          data: 'null',
+          defaultContent: "",
+          name: 'Edit',
+          searchable: false,
+          orderable: false
+        },
+      ],
+      columnDefs: [{
+          targets: 0,
+          data: "firstName",
+          "render": function(data, type, row, meta) {
+            return `${row.firstName} ${row.lastName}`;
+          }
+        },
+        {
+          targets: 1,
+          visible: false,
+        },
+        {
+          targets: 2,
+          data: "_id",
+          "render": function(data, type, row, meta) {
+            return `<a href="/admin/users/profile/${row._id}" title="Visit this user"> ${row.username} </a>`;
+          }
+        },
+        {
+          targets: 8,
+          data: "_id",
+          "render": function(data, type, row, meta) {
+            if (row.bookIssueInfo.length > 0) {
+              return `<span><a href="/admin/users/delete/${row._id}" title="This user has books in possession. Are you sure to delete this user?" class="btn btn-sm btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </a></span>`;
+            } else {
+              return `<span><a href="/admin/users/delete/${row._id}" title="Delete User" class="btn btn-sm btn-danger">
+                      <i class="fa fa-trash"></i>
+                    </a></span>`;
+            }
+          }
+        },
+        {
+          targets: 9,
+          data: "_id",
+          "render": function(data, type, row, meta) {
+            if (row.violationFlag) {
+              return `<span><a href="/admin/users/flagged/${row._id}" title="Lift the flag" class="btn btn-sm btn-warning">
+                      <i class="fa fa-flag"></i>
+                    </a></span>`;
+            } else {
+              return `<span><a href="/admin/users/flagged/${row._id}" title="Warn user" class="btn btn-sm btn-success">
+                      <i class="fa fa-flag"></i>
+                    </a></span>`;
+            }
+          }
+        },
+      ]
+    });
+  </script>
+</body>
+
+</html>

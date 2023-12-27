@@ -7,9 +7,11 @@ const User = require("../models/user");
 const Activity = require("../models/activity");
 const Issue = require("../models/issue");
 const Comment = require("../models/comment");
+const datatablesQuery = require("datatables-query");
 
 // importing utilities
 const deleteImage = require("../utils/delete_image");
+const { isAdmin } = require("../middleware");
 
 // GLOBAL_VARIABLES
 const PER_PAGE = 10;
@@ -23,20 +25,13 @@ const PER_PAGE = 10;
 exports.getDashboard = async (req, res, next) => {
   var page = req.query.page || 1;
   try {
-    const users_count = (await User.find().countDocuments()) - 1;
+    const users_count = await User.find({ isAdmin: false }).countDocuments();
     const books_count = await Book.find().countDocuments();
-    const activity_count = await Activity.find().countDocuments();
-    const activities = await Activity.find()
-      .sort("-entryTime")
-      .skip(PER_PAGE * page - PER_PAGE)
-      .limit(PER_PAGE);
 
     res.render("admin/index", {
       users_count: users_count,
       books_count: books_count,
-      activities: activities,
-      current: page,
-      pages: Math.ceil(activity_count / PER_PAGE),
+      layout: "activities-layout",
     });
   } catch (err) {
     console.log(err);
@@ -51,29 +46,14 @@ exports.getDashboard = async (req, res, next) => {
     **pagination is not done
 */
 exports.postDashboard = async (req, res, next) => {
+  const params = req.body;
   try {
-    const search_value = req.body.searchUser;
-
-    // getting user and book count
-    const books_count = await Book.find().countDocuments();
-    const users_count = await User.find().countDocuments();
-
-    // fetching activities by search query
-    const activities = await Activity.find({
-      $or: [{ "user_id.username": search_value }, { category: search_value }],
-    });
-
-    // rendering
-    res.render("admin/index", {
-      users_count: users_count,
-      books_count: books_count,
-      activities: activities,
-      current: 1,
-      pages: 0,
-    });
+    const activity = Activity.find().populate("user_id").lean();
+    const query = datatablesQuery(activity);
+    const activities = await query.run(params);
+    res.json(activities);
   } catch (err) {
     console.log(err);
-    return res.redirect("back");
   }
 };
 
@@ -100,33 +80,9 @@ exports.deleteAdminProfile = async (req, res, next) => {
 */
 exports.getAdminBookInventory = async (req, res, next) => {
   try {
-    let page = req.params.page || 1;
-    const filter = req.params.filter;
-    const value = req.params.value;
-
-    // console.log(filter, value);
-    // // constructing search object
-    let searchObj = {};
-    if (filter !== "all" && value !== "all") {
-      // fetch books by search value and filter
-      searchObj[filter] = value;
-    }
-
-    // get the book counts
-    const books_count = await Book.find(searchObj).countDocuments();
-
-    // fetching books
-    const books = await Book.find(searchObj)
-      .skip(PER_PAGE * page - PER_PAGE)
-      .limit(PER_PAGE);
-
     // rendering admin/bookInventory
     res.render("admin/bookInventory", {
-      books: books,
-      current: page,
-      pages: Math.ceil(books_count / PER_PAGE),
-      filter: filter,
-      value: value,
+      layout: "inventory-layout",
     });
   } catch (err) {
     // console.log(err.messge);
@@ -226,23 +182,22 @@ exports.getDeleteBook = async (req, res, next) => {
 // admin -> get user list
 exports.getUserList = async (req, res, next) => {
   try {
-    const page = req.params.page || 1;
-
-    const users = await User.find()
-      .sort("-joined")
-      .skip(PER_PAGE * page - PER_PAGE)
-      .limit(PER_PAGE);
-
-    const users_count = await User.find().countDocuments();
-
-    res.render("admin/users", {
-      users: users,
-      current: page,
-      pages: Math.ceil(users_count / PER_PAGE),
-    });
+    res.render("admin/users", { layout: "usertable-layout" });
   } catch (err) {
     console.log(err);
     res.redirect("back");
+  }
+};
+
+exports.getAllUsers = async (req, res, next) => {
+  const params = req.body;
+  try {
+    const user = User.find({ isAdmin: false }).populate("bookIssueInfo").lean();
+    const query = datatablesQuery(user);
+    const users = await query.run(params);
+    res.json(users);
+  } catch (err) {
+    console.log(err);
   }
 };
 

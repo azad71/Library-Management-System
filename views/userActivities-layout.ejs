@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/jquery.dataTables.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheet/app.css">
+
+  <title>Library Manangement System</title>
+</head>
+
+<body>
+  <%if(currentUser && currentUser.isAdmin) { %>
+  <%- include ('./partials/adminNav.ejs') %>
+  <% } else { %>
+  <%- include ('./partials/userNav.ejs') %>
+  <% } %>
+  <main>
+    <% if(error || success || warning){ %>
+    <%- include ('./partials/alerts.ejs') %>
+    <% } %>
+    <%- body %>
+    <%- include ('./partials/footer.ejs') %>
+  </main>
+
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    let table = new DataTable('#activitiesTable', {
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/user',
+        type: 'POST'
+      },
+      columns: [{
+          data: 'info',
+          defaultContent: "",
+          name: 'Info'
+        },
+        {
+          data: 'category',
+          defaultContent: "",
+          name: 'Category'
+        },
+        {
+          data: 'entryTime',
+          defaultContent: "",
+          name: 'Date Posted'
+        },
+      ],
+      columnDefs: [{
+          targets: 0,
+          data: "_id",
+          "render": function(data, type, row, meta) {
+            if (row.category == "Issue") {
+              return `You have <span class="table-text">issued</span> ${row.info.title}`;
+            } else if (row.category == "Return") {
+              return `You have <span class="table-text">returned</span> ${row.info.title}`;
+            } else if (row.category == "Renew") {
+              return `You have <span class="table-text">renewed</span> ${row.info.title}`;
+            } else if (row.category == "Fine") {
+              return `You <span class="table-text">paid</span> ${row.fine.amount} fines on ${row.fine.date} <button class="btn btn-sm btn-secondary">
+                    <i class="fa fa-check"></i> Paid Successfully
+                  </button>`;
+            } else if (row.category == "Update Profile") {
+              return `You have recently <span class="table-text">update your profile</span> ${row.info.title} <a href="/user/1/profile" class="btn btn-sm btn-success" role="button">Visit Profile</a>`;
+            } else if (row.category == "Update Password") {
+              return `You have recently <span class="table-text">updated your password</span>`;
+            } else if (row.category == "Upload Photo") {
+              return `You have recently <span class="table-text">updated your profile picture Successfully!</span>`;
+            } else if (row.category == "Comment") {
+              return `You have <span class="table-text">commented</span> on ${row.info.title}`;
+            } else if (row.category == "Update Comment") {
+              return `You have <span class="table-text">updated your comment</span> on ${row.info.title} <a href="/books/details/${row.info._id}" class="btn btn-sm btn-secondary">
+                    <i class="fa fa-angle-double-right"></i> Details
+                  </a>`;
+            } else if (row.category == "Delete Comment") {
+              return `You have <span class="table-text">deleted your comment</span> on ${row.info.title} <a href="/books/details/${row.info._id}" class="btn btn-sm btn-secondary">
+                    <i class="fa fa-angle-double-right"></i> Details
+                  </a>`;
+            }
+          }
+        },
+        {
+          targets: 2,
+          data: "time",
+          "render": function(data, type, row, meta) {
+            return `<p>Issue : ${new Date(row.time.issueDate).toDateString()}</p>
+                  <p>Return : ${new Date(row.time.returnDate).toDateString()}</p>`;
+          }
+        },
+      ]
+    });
+  </script>
+</body>
+
+</html>
