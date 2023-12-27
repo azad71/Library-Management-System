@@ -53,11 +53,18 @@ router.get(
   adminController.getDeleteBook
 );
 
-//admin -> users list
+//admin -> users list page
 router.get(
   "/admin/users/:page",
   middleware.isAdmin,
   adminController.getUserList
+);
+
+//admin -> users list
+router.post(
+  "/admin/users/all",
+  middleware.isAdmin,
+  adminController.getAllUsers
 );
 
 //admin -> show searched user

@@ -5,6 +5,7 @@ const router = express.Router();
 const bookController = require("../controllers/books");
 
 // Browse books
+router.post("/books/all", bookController.getAllBooks);
 router.get("/books/:filter/:value/:page", bookController.getBooks);
 
 // Fetch books by search value

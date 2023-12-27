@@ -1,22 +1,23 @@
-<%- include ('./partials/header.html') %>
-
-</head>
-
-<body>
-
-<!-- ALERTS -->
-<%- include ('./partials/alerts.html') %>
-
 <section id="usersignUpForm">
   <div class="container mt-5">
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card">
           <div class="card-header text-center">
-            <h4>Admin Sign Up</h4>
+            <h4>User Sign Up</h4>
           </div>
           <div class="card-block">
-            <form class="p-3" action="/auth/admin-signup" method="POST">
+            <form class="p-3" action="/auth/user-signUp" method="POST">
+              <div class="form-group">
+                <label class="form-control-label">First Name</label>
+                <input type="text" name="firstName" placeholder="firstName" class="form-control" required />
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label">Last Name</label>
+                <input type="text" name="lastName" placeholder="lastName" class="form-control" required />
+              </div>
+
               <div class="form-group">
                 <label class="form-control-label">Pick a username</label>
                 <input type="text" name="username" placeholder="Username" class="form-control" required />
@@ -33,8 +34,17 @@
               </div>
 
               <div class="form-group">
-                <label class="form-control-label">Secret Code</label>
-                <input type="text" name="adminCode" placeholder="Enter the secret code" class="form-control" required />
+                <label class="form-control-label">Gender</label>
+                <select name="gender" class="form-control">
+                  <option name="male">Male</option>
+                  <option name="female">Female</option>
+                  <option name="others">Others</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label class="form-control-label">Address</label>
+                <input type="text" name="address" placeholder="Address" class="form-control" required />
               </div>
 
               <button type="submit" class="btn btn-primary btn-block">Submit</button>
@@ -45,5 +55,3 @@
     </div>
   </div>
 </section>
-
-<% include ('./partials/footer.html') %>
