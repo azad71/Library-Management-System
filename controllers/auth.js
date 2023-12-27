@@ -1,13 +1,11 @@
 // importing libraries
 const passport = require("passport");
 
-if (process.env.NODE_ENV !== "production") require("dotenv").config();
-
 // importing models
 const User = require("../models/user");
 
 exports.getLandingPage = async (_req, res) => {
-  return res.render("landing.html");
+  return res.render("landing.ejs");
 };
 
 exports.getAdminLoginPage = (req, res, next) => {
@@ -15,8 +13,12 @@ exports.getAdminLoginPage = (req, res, next) => {
 };
 
 exports.getAdminLogout = (req, res, next) => {
-  req.logout();
-  res.redirect("/");
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 };
 
 exports.getAdminSignUp = (req, res, next) => {
@@ -58,9 +60,12 @@ exports.getUserLoginPage = (req, res, next) => {
 };
 
 exports.getUserLogout = async (req, res, next) => {
-  await req.session.destroy();
-  req.logout();
-  res.redirect("/");
+  req.logout(function (err) {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
 };
 
 exports.getUserSignUp = (req, res, next) => {

@@ -42,10 +42,10 @@ Open git bash or command line tools at application file and run following npm co
 
 ## Run the application
 
-- create a `.env` file in app directory
+- create a `.env` file in app directory. run `cp .env.example .env`
 - add `SESSION_SECRET=<your session secret>`, `ADMIN_SECRET=<your admin secret>` and `DB_URL=<your mongodb url>` into that file.
 - run `npm run dev`
-- App will open at [http://localhost:3000](http://localhost:3000)
+- App will open at [http://localhost:5005](http://localhost:5005)
 
 ## Functionalitites
 

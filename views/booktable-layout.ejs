@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/jquery.dataTables.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheet/app.css">
+
+  <title>Library Manangement System</title>
+</head>
+
+<body>
+  <%if(currentUser && currentUser.isAdmin) { %>
+  <%- include ('./partials/adminNav.ejs') %>
+  <% } else { %>
+  <%- include ('./partials/userNav.ejs') %>
+  <% } %>
+  <main>
+    <% if(error || success || warning){ %>
+    <%- include ('./partials/alerts.ejs') %>
+    <% } %>
+    <%- body %>
+    <%- include ('./partials/footer.ejs') %>
+  </main>
+
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    const userName = '<%- currentUser && currentUser.username %>';
+    let bookIssueInfo ;
+    let userId;
+    if(userName != "") {
+      bookIssueInfo = '<%- currentUser && JSON.stringify(user.bookIssueInfo) %>';
+      userId = "<%- currentUser && user._id %>";
+      bookIssueInfo = JSON.parse(bookIssueInfo);
+    }
+    console.log(bookIssueInfo, userId);
+      let table = new DataTable('#booksTable', {
+        processing: true,
+        serverSide: true,
+        ajax: {
+          url: '/books/all',
+          type: 'POST'
+        },
+        columns: [{
+            data: 'title',
+            defaultContent: "",
+            name: 'Title'
+          },
+          {
+            data: 'author',
+            defaultContent: "",
+            name: 'Author'
+          },
+          {
+            data: 'category',
+            defaultContent: "",
+            name: 'Category'
+          },
+          {
+            data: 'stock',
+            defaultContent: "",
+            name: 'Stock',
+            searchable: false
+          },
+          {
+            data: 'null',
+            defaultContent: "",
+            name: 'Edit',
+            searchable: false,
+            orderable: false
+          },
+          {
+            data: 'null',
+            defaultContent: "",
+            name: 'Action',
+            searchable: false,
+            orderable: false
+          }
+        ],
+        columnDefs: [{
+            targets: 4,
+            visible: userName === '' ? false : true,
+            data: "_id",
+            "render": function(data, type, row, meta) {
+              if (userName && row.stock > 0) {
+                const filter = bookIssueInfo.filter(book => book._id === row._id)
+
+                if (filter.length > 0) {
+                  return `<button class="btn btn-xs btn-warning disabled" aria-disabled="true">Issued!</button><span><a href="/books/return-renew" class="btn btn-xs btn-success" role="button">Return/Renew</a></span>`;
+                } else {
+                  return `<form action="/books/${row._id}/issue/${userId}" method="POST" class="d-inline">
+            <input class="btn btn-xs btn-success" type="submit" value="Issue">
+          </form>`;
+                }
+
+              }
+            }
+          },
+          {
+            targets: 5,
+            data: "_id",
+            "render": function(data, type, row, meta) {
+              return `<a href="/books/details/${row._id}" class="btn btn-xs btn-primary">Details</a>`;
+            }
+          },
+        ]
+      });
+    
+   
+  </script>
+</body>
+
+</html>

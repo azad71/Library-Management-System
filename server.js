@@ -2,6 +2,8 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const ejs = require("ejs");
+const expressLayouts = require("express-ejs-layouts");
+const morgan = require("morgan");
 const session = require("express-session");
 const passport = require("passport");
 const multer = require("multer");
@@ -18,7 +20,7 @@ const adminRoutes = require("./routes/admin");
 const bookRoutes = require("./routes/books");
 const authRoutes = require("./routes/auth");
 
-// const Seed = require("./seed");
+const Seed = require("./seed");
 
 // uncomment below line for first time to seed database;
 // Seed(1000);
@@ -26,10 +28,16 @@ const authRoutes = require("./routes/auth");
 if (process.env.NODE_ENV !== "production") require("dotenv").config();
 
 // app config
-app.engine(".html", ejs.renderFile);
-app.set("view engine", "html");
-app.set("views", path.join(__dirname, "views"));
+app.set("view engine", "ejs");
+app.set("layout extractScripts", true);
+app.use(expressLayouts);
 
+// Logging
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
+//Use forms for put / delete
 app.use(methodOverride("_method"));
 
 app.use(express.static(__dirname + "/public"));

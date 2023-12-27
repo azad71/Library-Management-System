@@ -12,6 +12,12 @@ router.get(
   middleware.isLoggedIn,
   userController.getUserDashboard
 );
+// user -> post dashboard
+router.post(
+  "/user",
+  middleware.isLoggedIn,
+  userController.postUserDashboard
+);
 
 // user -> profile
 router.get(

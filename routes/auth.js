@@ -24,7 +24,7 @@ router.post(
 );
 
 //admin logout handler
-router.get("/auth/admin-logout", authController.getAdminLogout);
+router.post("/auth/admin-logout", authController.getAdminLogout);
 
 // admin sign up handler
 router.get("/auth/admin-signup", authController.getAdminSignUp);
@@ -44,7 +44,7 @@ router.post(
 );
 
 //user -> user logout handler
-router.get("/auth/user-logout", authController.getUserLogout);
+router.post("/auth/user-logout", authController.getUserLogout);
 
 //user sign up handler
 router.get("/auth/user-signUp", authController.getUserSignUp);

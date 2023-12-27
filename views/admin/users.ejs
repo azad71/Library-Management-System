@@ -1,0 +1,63 @@
+<!--NAVIGATION BAR FOR ADMIN-->
+
+<header id="main-header" class="py-2 bg-primary text-white">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h1><i class="fa fa-users"></i> Users</h1>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ACTIONS -->
+<section id="actions" class="py-4 mb-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mr-auto">
+        <a href="/admin" class="btn btn-light btn-block"> <i class="fa fa-arrow-left"></i> Back To Dashboard </a>
+      </div>
+      <div class="col-md-6">
+        <form action="/admin/users/1" method="POST">
+          <div class="input-group">
+            <input name="searchUser" type="text" class="form-control" placeholder="Search User by First Name, Last Name, username, E-mail" />
+            <span class="input-group-btn">
+              <button class="btn btn-primary">Search</button>
+            </span>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- USERS -->
+<section id="users">
+  <div class="container">
+    <div class="row">
+      <div class="col">
+        <div class="card">
+          <div class="card-header">
+            <h4>Users</h4>
+          </div>
+          <table id="usersTable" class="table table-striped">
+            <thead class="thead-inverse">
+              <tr>
+                <th>Name</th>
+                <th>last Name</th>
+                <th>User name</th>
+                <th>Email</th>
+                <th>Gender</th>
+                <th>Date Regisetered</th>
+                <th>Violation flag</th>
+                <th>Fine</th>
+                <th>Action</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

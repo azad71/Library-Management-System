@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/jquery.dataTables.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheet/app.css">
+
+  <title>Library Manangement System</title>
+</head>
+
+<body>
+  <%if(currentUser && currentUser.isAdmin) { %>
+  <%- include ('./partials/adminNav.ejs') %>
+  <% } else { %>
+  <%- include ('./partials/userNav.ejs') %>
+  <% } %>
+  <main>
+    <% if(error || success || warning){ %>
+    <%- include ('./partials/alerts.ejs') %>
+    <% } %>
+    <%- body %>
+    <%- include ('./partials/footer.ejs') %>
+  </main>
+
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    let table = new DataTable('#activitiesTable', {
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/admin',
+        type: 'POST'
+      },
+      columns: [{
+          data: 'info',
+          defaultContent: "",
+          name: 'Info'
+        },
+        {
+          data: 'category',
+          defaultContent: "",
+          name: 'Category'
+        },
+        {
+          data: 'entryTime',
+          defaultContent: "",
+          name: 'Date Posted'
+        },
+      ],
+      columnDefs: [{
+          targets: 0,
+          data: "_id",
+          "render": function(data, type, row, meta) {
+            if (row.category == "Issue") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> issued ${row.title}`;
+            } else if (row.category == "Return") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> returned ${row.title}`;
+            } else if (row.category == "Renew") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> renewed ${row.title}`;
+            } else if (row.category == "Update Profile") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> updated profile`;
+            } else if (row.category == "Update Password") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a>  updated password`;
+            } else if (row.category == "Upload Photo") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> uploaded profile photo`;
+            } else if (row.category == "Comment") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> commented on ${row.title}`;
+            } else if (row.category == "Update Comment") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> updated comment on ${row.title}`;
+            } else if (row.category == "Delete Comment") {
+              return `<a href="/admin/users/profile/${row._id}" title="Visit profile">
+                  This ${row.user_id.username}</a> deleted comment on ${row.title}`;
+            }
+          }
+        },
+        {
+          targets: 2,
+          data: "_id",
+          "render": function(data, type, row, meta) {
+            return `${new Date(row.entryTime).toDateString()}`;
+          }
+        },
+      ]
+    });
+  </script>
+</body>
+
+</html>
