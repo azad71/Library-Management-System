@@ -1,35 +1,20 @@
 const Book = require("../models/book");
+const datatablesQuery = require('datatables-query');
 const PER_PAGE = 16;
 
 exports.getBooks = async (req, res, next) => {
-  var page = req.params.page || 1;
-  const filter = req.params.filter;
-  const value = req.params.value;
-  let searchObj = {};
-
-  // constructing search object
-  if (filter != "all" && value != "all") {
-    // fetch books by search value and filter
-    searchObj[filter] = value;
-  }
-
   try {
-    // Fetch books from database
-    const books = await Book.find(searchObj)
-      .skip(PER_PAGE * page - PER_PAGE)
-      .limit(PER_PAGE);
-
-    // Get the count of total available book of given filter
-    const count = await Book.find(searchObj).countDocuments();
-
-    res.render("books", {
-      books: books,
-      current: page,
-      pages: Math.ceil(count / PER_PAGE),
-      filter: filter,
-      value: value,
-      user: req.user,
-    });
+    res.render("books", { layout: 'booktable-layout', user: req.user, });
+  } catch (err) {
+    console.log(err);
+  }
+};
+exports.getAllBooks = async (req, res, next) => {
+  const params = req.body;
+  try {
+    const query = datatablesQuery(Book);
+    const books = await query.run(params);
+    res.json(books);
   } catch (err) {
     console.log(err);
   }

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheet/app.css">
+
+  <title>Library Manangement System</title>
+</head>
+
+<body>
+  <%if(currentUser) { %>
+  <%if(currentUser.isAdmin) { %>
+  <%- include ('./partials/adminNav.ejs') %>
+  <% } else { %>
+  <%- include ('./partials/userNav.ejs') %>
+  <% } %>
+  <% } %>
+  <main>
+    <% if(error || success || warning){ %>
+    <%- include ('./partials/alerts.ejs') %>
+    <% } %>
+    <%- body %>
+    <%- include ('./partials/footer.ejs') %>
+  </main>
+
+  <!-- <script src="/assets/js/jquery-3.2.1.slim.min.js"></script> -->
+  <script src="/assets/js/popper.min.js"></script>
+  <script src="/assets/js/bootstrap.min.js"></script>
+
+  <script>
+    $('#confirmPassword').on('keyup', function() {
+      if ($(this).val() == $('#password').val()) {
+        $('#message').html('Matched').css('color', 'green');
+        $('#button').removeClass("d-none")
+      } else {
+        $('#message').html('Not matched!').css('color', 'red');
+        $('#button').addClass("d-none");
+      }
+    });
+  </script>
+</body>
+
+</html>

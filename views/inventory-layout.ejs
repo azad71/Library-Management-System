@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+  <script src="/assets/js/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.2/font/bootstrap-icons.min.css">
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/assets/css/jquery.dataTables.min.css">
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/stylesheet/app.css">
+
+  <title>Library Manangement System</title>
+</head>
+
+<body>
+  <%if(currentUser && currentUser.isAdmin) { %>
+  <%- include ('./partials/adminNav.ejs') %>
+  <% } else { %>
+  <%- include ('./partials/userNav.ejs') %>
+  <% } %>
+  <main>
+    <% if(error || success || warning){ %>
+    <%- include ('./partials/alerts.ejs') %>
+    <% } %>
+    <%- body %>
+    <%- include ('./partials/footer.ejs') %>
+  </main>
+
+  <script src="/assets/js/bootstrap.min.js"></script>
+  <script src="/assets/js/jquery.dataTables.min.js"></script>
+
+  <script>
+    let table = new DataTable('#booksTable', {
+      processing: true,
+      serverSide: true,
+      ajax: {
+        url: '/books/all',
+        type: 'POST'
+      },
+      columns: [{
+          data: 'title',
+          defaultContent: "",
+          name: 'Title'
+        },
+        {
+          data: 'author',
+          defaultContent: "",
+          name: 'Author'
+        },
+        {
+          data: 'category',
+          defaultContent: "",
+          name: 'Category'
+        },
+        {
+          data: 'stock',
+          defaultContent: "",
+          name: 'Stock',
+          searchable: false
+        },
+        {
+          data: 'null',
+          defaultContent: "",
+          name: 'Edit',
+          searchable: false,
+          orderable: false
+        }
+      ],
+      columnDefs: [{
+        targets: 4,
+        data: "_id",
+        "render": function(data, type, row, meta) {
+          return `<span>
+                    <a href="/admin/book/update/${row._id}" class="btn btn-info btn-sm">Update</a>
+                    <a href="/admin/book/delete/${row._id}" class="btn btn-sm btn-danger">Delete</a>
+                  </span>`;
+        }
+      }, ]
+    });
+  </script>
+</body>
+
+</html>
